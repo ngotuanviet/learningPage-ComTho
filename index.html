@@ -3,609 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cơm Đốt Thố Hội An — Chuỗi Ẩm Thực Di Sản & Cơ Hội Nhượng Quyền</title>
-  <meta name="description" content="Thương hiệu Cơm Đốt Thố Hội An — Hệ thống chuỗi nhà hàng ẩm thực phố cổ cao cấp và cơ hội hợp tác nhượng quyền kinh doanh F&B sinh lời bền vững.">
+  <title>Cơm Đốt Thố Hội An — Hợp Tác & Nhượng Quyền</title>
+  <meta name="description" content="Cơm Đốt Thố Hội An: các hình thức hợp tác, nhượng quyền. Đăng ký tư vấn hợp tác.">
+  <link rel="preload" as="image" href="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20261103p">
+  <link rel="stylesheet" href="css/franchise.css?v=20261103p">
 </head>
-<body>
+<body class="fr-body fr-home">
 
-  <!-- ─── NAVIGATION (Apple-style glass, transparent over hero) ─── -->
-  <nav class="nav" id="nav">
+  <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#" class="nav__logo">
-        <img src="images/04-dai-dien-logo.jpg" alt="Logo Cơm Đốt Thố Hội An">
-        <div class="nav__brand-info">
-          <span class="nav__logo-text">Cơm Đốt Thố</span>
-          <span class="nav__logo-sub">Chuỗi Ẩm Thực Phố Cổ</span>
-        </div>
+      <a href="index.html" class="nav__logo" aria-label="Cơm Đốt Thố Hội An — trang chủ">
+        <img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo Cơm Đốt Thố Hội An">
+        <span class="nav__brand"><span class="nav__brand-l1">Cơm Đốt Thố</span><span class="nav__brand-l2">Hội An</span></span>
       </a>
-      <ul class="nav__links">
-        <li><a href="#brand">Thương Hiệu</a></li>
-        <li><a href="#culinary">Thực Đơn</a></li>
-        <li><a href="#experience">Không Gian</a></li>
-        <li><a href="#stores">Chuỗi Cửa Hàng</a></li>
-        <li><a href="#franchise">Nhượng Quyền</a></li>
-      </ul>
+      <nav class="nav__links" id="frLinks" aria-label="Điều hướng">
+        <a href="cong-thuc.html">Bộ Công Thức</a><a href="van-hanh.html">Quy Trình Vận Hành</a><a href="nhuong-quyen.html">Nhượng Quyền</a><a href="he-thong.html">Hệ Thống Nhà Hàng</a>
+        <a href="dang-ky.html" class="nav__cta-mobile">Đăng Ký Tư Vấn</a>
+      </nav>
       <div class="nav__actions">
-        <a href="#franchise-form" class="nav__btn-franchise">
-          <span>🤝</span> Hợp Tác Nhượng Quyền
-        </a>
+        <a href="dang-ky.html" class="nav__btn-franchise">Đăng Ký Tư Vấn</a>
       </div>
-      <button class="nav__menu-btn" id="menuBtn" aria-label="Mở menu">
+      <button class="nav__menu-btn" id="frToggle" aria-label="Mở menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
-  </nav>
+  </header>
 
-  <!-- ─── HERO SECTION ─── -->
-  <section class="hero" id="hero">
-    <div class="hero__bg">
-      <img src="images/03-bia-mat-tien.jpg" alt="Mặt tiền chuỗi Cơm Đốt Thố Hội An">
-    </div>
-    <div class="hero__overlay"></div>
-    <div class="hero__content">
-      <div class="hero__badge">
-        <span>✦</span> Hệ Thống Chuỗi F&B Bản Sắc Phố Cổ
+  <main class="">
+    <section class="fr-hero" id="tong-quan">
+      <img src="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png" alt="Thố cơm đốt cháy giòn cùng các món ăn Hội An" fetchpriority="high">
+      <div class="fr-hero__content">
+        <h1><span class="fr-ln">Cơm Vàng </span><br><span class="fr-ln">Giòn Rụm</span></h1>
+        <p class="fr-hero__sub">Bộ công thức độc quyền</p>
+        <div class="fr-hero__actions">
+          <a href="cong-thuc.html" class="fr-btn fr-btn--cta">Xem Bộ Công Thức <span class="fr-arr" aria-hidden="true">→</span></a>
+        </div>
       </div>
-      <h1 class="hero__title">
-        Hương Vị <em>Di Sản</em>.<br>Mô Hình Nhượng Quyền Vững Bền.
-      </h1>
-      <p class="hero__subtitle">
-        Cơm Đốt Thố Hội An — Thương hiệu tiên phong chuẩn hóa nghệ thuật đốt niêu lửa than truyền thống thành mô hình chuỗi nhà hàng ẩm thực cao cấp, sinh lời vượt trội và giàu bản sắc.
-      </p>
-      <div class="hero__actions">
-        <a href="#franchise" class="btn btn--primary">
-          Khám Phá Mô Hình Nhượng Quyền
-        </a>
-        <a href="#stores" class="btn btn--ghost">
-          Hệ Thống Cơ Sở
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ─── METRICS IMPACT BAR (Apple Keynote Numbers) ─── -->
-  <div class="metrics-bar">
-    <div class="container">
-      <div class="metrics__grid">
-        <div class="metric-item">
-          <div class="metric-number">10+</div>
-          <div class="metric-label">Cửa hàng & Điểm Nhượng Quyền</div>
+    <!-- Chi phí là dữ liệu tham khảo theo PLAN, cần doanh nghiệp xác nhận trước khi công bố. -->
+    <section class="fr-hop" id="hop-tac">
+      <div class="fr-hop__wrap">
+        <h2 class="fr-hop__title">Chọn hình thức hợp tác</h2>
+        <div class="fr-hop__grid">
+        <article class="fr-hcard">
+          <div class="fr-hcard__img"><img src="images/brand%20story/b%E1%BB%99%20c%C3%B4ng%20th%E1%BB%A9c.jpg" alt="Chuyển giao công thức" loading="lazy" style="object-position:50% 30%"></div>
+          <h3>Chuyển giao<br>công thức</h3>
+          <p class="fr-hcard__price">30 triệu</p>
+          <a href="cong-thuc.html" class="fr-hcard__link">Xem công thức</a>
+        </article>
+        <article class="fr-hcard">
+          <div class="fr-hcard__img is-fit"><img class="fr-bg" src="images/brand%20story/quy%20tr%C3%ACnh%20v%E1%BA%ADn%20h%C3%A0nh.jpg" alt="" aria-hidden="true" loading="lazy"><img src="images/brand%20story/quy%20tr%C3%ACnh%20v%E1%BA%ADn%20h%C3%A0nh.jpg" alt="Quy trình vận hành" loading="lazy"></div>
+          <h3>Quy trình<br>vận hành</h3>
+          <p class="fr-hcard__price">15 triệu</p>
+          <a href="van-hanh.html" class="fr-hcard__link">Xem quy trình</a>
+        </article>
+        <article class="fr-hcard">
+          <div class="fr-hcard__img is-fit"><img class="fr-bg" src="images/brand%20story/%C4%91%C3%A0o%20t%E1%BA%A1o%202.jpg" alt="" aria-hidden="true" loading="lazy"><img src="images/brand%20story/%C4%91%C3%A0o%20t%E1%BA%A1o%202.jpg" alt="Đào tạo trực tiếp" loading="lazy"></div>
+          <h3>Đào tạo<br>trực tiếp</h3>
+          <p class="fr-hcard__price">30 triệu</p>
+          <a href="van-hanh.html" class="fr-hcard__link">Xem đào tạo</a>
+        </article>
+        <article class="fr-hcard">
+          <div class="fr-hcard__img is-fit"><img class="fr-bg" src="images/brand%20story/th%C6%B0%C6%A1ng%20hi%E1%BB%87u%201.jpg" alt="" aria-hidden="true" loading="lazy"><img src="images/brand%20story/th%C6%B0%C6%A1ng%20hi%E1%BB%87u%201.jpg" alt="Nhượng quyền thương hiệu" loading="lazy"></div>
+          <h3>Nhượng quyền<br>thương hiệu</h3>
+          <p class="fr-hcard__price">170 triệu / chi nhánh</p>
+          <a href="nhuong-quyen.html" class="fr-hcard__link">Xem nhượng quyền</a>
+        </article>
+        <article class="fr-hcard">
+          <div class="fr-hcard__img is-fit"><img class="fr-bg" src="images/brand%20story/setup.jpg" alt="" aria-hidden="true" loading="lazy"><img src="images/brand%20story/setup.jpg" alt="Setup nhà hàng" loading="lazy"></div>
+          <h3>Setup<br>nhà hàng</h3>
+          <p class="fr-hcard__price">Báo giá riêng</p>
+          <a href="dang-ky.html?model=Setup%20nh%C3%A0%20h%C3%A0ng" class="fr-hcard__link">Yêu cầu báo giá</a>
+        </article>
         </div>
-        <div class="metric-item">
-          <div class="metric-number">100%</div>
-          <div class="metric-label">Quy Trình Chuẩn Bếp Trung Tâm</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-number">12–18</div>
-          <div class="metric-label">Tháng Thời Gian Hoàn Vốn Trung Bình</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-number">96%</div>
-          <div class="metric-label">Khách Hàng Hài Lòng & Quay Lại</div>
-        </div>
+        <p class="fr-fine">Chi phí mang tính tham khảo, chưa bao gồm các chi phí phát sinh. Phạm vi bàn giao được thống nhất khi tư vấn và ký kết.</p>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <!-- ─── BRAND STORY SECTION ─── -->
-  <section class="section" id="brand">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Tầm Vóc & Sứ Mệnh</span>
-        <h2 class="section__title">Một Thương Hiệu — Vạn Niềm Tin</h2>
-        <p class="section__desc">
-          Từ ngọn lửa than đỏ rực trong lòng phố cổ Hội An đến hệ thống chuỗi nhà hàng hiện đại, chúng tôi giữ trọn hồn ẩm thực dân tộc trong từng niêu cơm đốt thố giòn rụm.
-        </p>
+  <footer class="fr-footer">
+    <div class="fr-footer__grid">
+      <div>
+        <div class="fr-footer__brand"><img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo"><span>Cơm Đốt Thố Hội An</span></div>
+        <p>Nghệ thuật đốt thố trên than hồng, chuẩn hóa để hợp tác và nhân rộng.</p>
       </div>
-    </div>
-
-    <!-- Story Item 1 -->
-    <div class="brand-story reveal">
-      <div class="brand-story__media">
-        <img src="images/13-poster-xuyen-le-29-8.jpg" alt="Tinh hoa ẩm thực Cơm Đốt Thố Hội An">
-      </div>
-      <div class="brand-story__content">
-        <span class="section__label">Bản Sắc Độc Bản</span>
-        <h3 class="brand-story__title">Nghệ Thuật Đốt Thố<br>Thủ Công Chuẩn Hóa</h3>
-        <p class="brand-story__text">
-          Khác biệt hoàn toàn với cơm chiên chảo hay nướng điện công nghiệp, Cơm Đốt Thố giữ trọn bí quyết đốt thố trực tiếp trên than hồng. Lớp cháy vàng óng ả, giòn tan nhưng không hề ngấy mỡ, giữ ấm suốt bữa ăn.
-        </p>
-        <div class="brand-pillars">
-          <div class="pillar-item">
-            <h4 class="pillar-title">Gia Vị Miền Trung Độc Quyền</h4>
-            <p class="pillar-desc">Nước mắm nhỉ truyền thống, tiêu sọ cay nồng và ớt rim phố Hội hòa quyện.</p>
-          </div>
-          <div class="pillar-item">
-            <h4 class="pillar-title">Chuẩn Hóa Cho Đối Tác</h4>
-            <p class="pillar-desc">Quy trình bán tự động giúp bất kỳ cơ sở nhượng quyền nào cũng giữ được 100% hương vị gốc.</p>
-          </div>
-        </div>
+      <div>
+        <h4>Liên hệ</h4>
+        <p>Số 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội</p>
+        <p>Hotline: <a href="tel:0866888118">0866 888 118</a></p>
+        <p><a href="https://facebook.com/comdotthhoian" target="_blank" rel="noopener">Facebook</a></p>
       </div>
     </div>
-
-    <!-- Story Item 2 -->
-    <div class="brand-story brand-story--reverse brand-story--dark" style="background: var(--espresso);">
-      <div class="brand-story__media">
-        <img src="images/680448542_122188959488827478_7391090815713346482_n.jpg" alt="Mâm cơm nhà trọn vẹn">
-      </div>
-      <div class="brand-story__content">
-        <span class="section__label">Giá Trị Cốt Lõi</span>
-        <h3 class="brand-story__title">Không Gian Kết Nối —<br>Hương Vị Ấm Lòng</h3>
-        <p class="brand-story__text">
-          Chúng tôi xây dựng mỗi nhà hàng như một "ngôi nhà thứ ba" thân thuộc: nơi đồng nghiệp sum họp buổi trưa, gia đình quây quần buổi tối, và đối tác tin tưởng lựa chọn cho những bữa tiệc gắn kết.
-        </p>
-        <div class="brand-pillars">
-          <div class="pillar-item">
-            <h4 class="pillar-title">Không Gian Hội An Tinh Tế</h4>
-            <p class="pillar-desc">Đèn lồng tre, tường gạch mộc và tông gỗ ấm lấy cảm hứng từ kiến trúc phố cổ.</p>
-          </div>
-          <div class="pillar-item">
-            <h4 class="pillar-title">Dịch Vụ Tận Tâm Chuẩn F&B</h4>
-            <p class="pillar-desc">Đào tạo nhân sự chuyên nghiệp từ nụ cười chào đón đến nghệ thuật phục vụ thố cơm nóng bỏng tay.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SIGNATURE MENU & CULINARY STANDARDS ─── -->
-  <section class="section section--latte" id="culinary">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Bộ Thực Đơn Cốt Lõi Chuỗi</span>
-        <h2 class="section__title">Tinh Hoa Món Ngon Hội Tụ</h2>
-        <p class="section__desc">
-          Bộ menu được nghiên cứu kỹ lưỡng để đạt tỷ lệ gọi món cao nhất, cân bằng giữa tốc độ chế biến và trải nghiệm ẩm thực trọn vẹn.
-        </p>
-      </div>
-
-      <div class="dishes__grid">
-        <div class="dish-card reveal reveal-delay-1">
-          <div class="dish-card__img">
-            <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80&auto=format&fit=crop" alt="Cơm đốt thố niêu đất">
-            <span class="dish-card__tag">Món Trọng Tâm (Signature)</span>
-          </div>
-          <div class="dish-card__body">
-            <h3 class="dish-card__name">Cơm Đốt Thố Cháy Giòn</h3>
-            <p class="dish-card__desc">Niêu đất nung giữ nhiệt siêu tốc, hạt gạo dẻo thơm miền Trung với lớp cháy vàng ruộm đáy thố, tỏa khói ngào ngạt.</p>
-          </div>
-        </div>
-
-        <div class="dish-card reveal reveal-delay-2">
-          <div class="dish-card__img">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format&fit=crop" alt="Sườn rim kho tộ">
-            <span class="dish-card__tag">Bán Chạy Nhất</span>
-          </div>
-          <div class="dish-card__body">
-            <h3 class="dish-card__name">Sườn Non & Cá Bống Kho Tộ</h3>
-            <p class="dish-card__desc">Kho tộ sền sệt đậm vị theo chuẩn công thức tương bần và mật mía, ăn kèm cơm cháy tạo nên sự hòa quyện khó quên.</p>
-          </div>
-        </div>
-
-        <div class="dish-card reveal reveal-delay-3">
-          <div class="dish-card__img">
-            <img src="images/680448542_122188959488827478_7391090815713346482_n.jpg" alt="Mâm combo cơm nhà">
-            <span class="dish-card__tag">Combo Gia Đình</span>
-          </div>
-          <div class="dish-card__body">
-            <h3 class="dish-card__name">Combo Mâm Cơm Đoàn Viên</h3>
-            <p class="dish-card__desc">Giải pháp bữa trưa công sở và bữa tối gia đình trọn vẹn: 1 thố cơm, 2 món mặn, rau xào tươi, canh thanh nhiệt và tráng miệng.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── STORE ATMOSPHERE / GALLERY ─── -->
-  <section class="section" id="experience">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Trải Nghiệm Khách Hàng</span>
-        <h2 class="section__title">Hình Ảnh Thực Tế Tại Chuỗi</h2>
-        <p class="section__desc">
-          Minh chứng sống động về tỷ lệ lấp đầy bàn và không gian ẩm thực sang trọng, ấm cúng chuẩn mực.
-        </p>
-      </div>
-
-      <div class="gallery__grid reveal">
-        <div class="gallery__item gallery__item--wide">
-          <img src="images/09-1110-sanh-chinh.jpg" alt="Sảnh chính giờ cao điểm">
-          <span class="gallery__caption">Sảnh chính cơ sở Flagship — Đón lượng khách đông đúc mỗi ngày</span>
-        </div>
-        <div class="gallery__item">
-          <img src="images/11-1110-tang2-1.jpg" alt="Không gian tầng 2">
-          <span class="gallery__caption">Khu bàn gia đình ấm cúng tầng 2</span>
-        </div>
-        <div class="gallery__item gallery__item--tall">
-          <img src="images/07-2010-khong-gian-3.jpg" alt="Kiến trúc đèn lồng Hội An">
-          <span class="gallery__caption">Không gian văn hóa truyền thống</span>
-        </div>
-        <div class="gallery__item">
-          <img src="images/10-1110-tang2-2.jpg" alt="Bàn tiệc đông khách">
-          <span class="gallery__caption">Không gian tiệc trưa văn phòng</span>
-        </div>
-        <div class="gallery__item">
-          <img src="images/06-2010-khong-gian-2.jpg" alt="Khách hàng quây quần">
-          <span class="gallery__caption">Tỷ lệ lấp đầy bàn đạt 100% giờ cao điểm</span>
-        </div>
-        <div class="gallery__item">
-          <img src="images/12-1110-tang2-3.jpg" alt="Góc chill Hội An">
-          <span class="gallery__caption">Không gian yên tĩnh thưởng thức món ngon</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── STORE LOCATIONS (CHUỖI CỬA HÀNG) ─── -->
-  <section class="section section--latte" id="stores">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Mạng Lưới Chi Nhánh</span>
-        <h2 class="section__title">Hệ Thống Chuỗi Cửa Hàng</h2>
-        <p class="section__desc">
-          Các cơ sở trực thuộc và nhượng quyền chính thức của Cơm Đốt Thố Hội An sẵn sàng đón tiếp quý thực khách trên toàn quốc.
-        </p>
-      </div>
-
-      <div class="stores-nav reveal">
-        <button class="stores-tab active">Tất Cả Điểm Bán</button>
-        <button class="stores-tab">Hà Nội (Khu Đông)</button>
-        <button class="stores-tab">Hà Nội (Trung Tâm)</button>
-        <button class="stores-tab">Cơ Sở Sắp Khai Trương</button>
-      </div>
-
-      <div class="stores__grid">
-        <!-- Store 1: Flagship Nguyễn Sơn -->
-        <div class="store-card reveal reveal-delay-1">
-          <div class="store-card__img">
-            <img src="images/03-bia-mat-tien.jpg" alt="Flagship Nguyễn Sơn">
-            <span class="store-card__badge">Flagship Store</span>
-            <span class="store-card__status">Đang mở cửa</span>
-          </div>
-          <div class="store-card__body">
-            <h3 class="store-card__name">Cơ Sở 1 — Nguyễn Sơn (HQ)</h3>
-            <ul class="store-card__meta">
-              <li>
-                <span class="store-card__meta-icon">📍</span>
-                <span>Số 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">🏢</span>
-                <span>Tòa nhà 5 tầng độc lập, sức chứa 250+ khách, có phòng VIP</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">📞</span>
-                <span>Hotline: 0866 888 118 (Đặt bàn & Tiệc)</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">⏰</span>
-                <span>10:00 – 14:00 | 17:00 – 22:00 hàng ngày</span>
-              </li>
-            </ul>
-            <div class="store-card__actions">
-              <a href="tel:0866888118" class="btn-store-call">Gọi Đặt Bàn</a>
-              <a href="https://maps.google.com" target="_blank" class="btn-store-sub">Chỉ Đường Google</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Store 2: Cơ sở Cầu Giấy (Nhượng quyền) -->
-        <div class="store-card reveal reveal-delay-2">
-          <div class="store-card__img">
-            <img src="images/09-1110-sanh-chinh.jpg" alt="Cơ sở Cầu Giấy">
-            <span class="store-card__badge">Nhượng Quyền #02</span>
-            <span class="store-card__status">Đang mở cửa</span>
-          </div>
-          <div class="store-card__body">
-            <h3 class="store-card__name">Cơ Sở 2 — Khu Vực Cầu Giấy</h3>
-            <ul class="store-card__meta">
-              <li>
-                <span class="store-card__meta-icon">📍</span>
-                <span>Tuyến phố ẩm thực trung tâm Cầu Giấy, Hà Nội</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">🏢</span>
-                <span>Không gian 2 tầng hiện đại, sức chứa 150 khách</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">📞</span>
-                <span>Hotline liên hệ hệ thống: 0866 888 118</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">⏰</span>
-                <span>10:00 – 14:00 | 17:00 – 22:00 hàng ngày</span>
-              </li>
-            </ul>
-            <div class="store-card__actions">
-              <a href="tel:0866888118" class="btn-store-call">Gọi Đặt Bàn</a>
-              <a href="https://maps.google.com" target="_blank" class="btn-store-sub">Chỉ Đường</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Store 3: Cơ sở Đang Setup -->
-        <div class="store-card reveal reveal-delay-3">
-          <div class="store-card__img">
-            <img src="images/11-1110-tang2-1.jpg" alt="Điểm nhượng quyền mới">
-            <span class="store-card__badge" style="background: var(--gold); color: var(--espresso);">Sắp Ra Mắt</span>
-            <span class="store-card__status" style="color: #d97706;">Đang thi công</span>
-          </div>
-          <div class="store-card__body">
-            <h3 class="store-card__name">Cơ Sở 3 — Hai Bà Trưng / Đống Đa</h3>
-            <ul class="store-card__meta">
-              <li>
-                <span class="store-card__meta-icon">📍</span>
-                <span>Vị trí đắc địa tiếp giáp trung tâm thương mại</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">🏢</span>
-                <span>Mô hình chuẩn Starbucks-dining 180m²</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">🤝</span>
-                <span>Hợp tác nhượng quyền cùng đối tác chiến lược 2026</span>
-              </li>
-              <li>
-                <span class="store-card__meta-icon">📅</span>
-                <span>Dự kiến đón khách trong quý tới</span>
-              </li>
-            </ul>
-            <div class="store-card__actions" style="grid-template-columns: 1fr;">
-              <a href="#franchise-form" class="btn-store-call" style="background: var(--gold); color: var(--espresso);">
-                Đăng Ký Mở Điểm Tương Tự
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FRANCHISE BUSINESS MODEL (NHƯỢNG QUYỀN THƯƠNG HIỆU) ─── -->
-  <section class="section section--dark" id="franchise">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Cơ Hội Đầu Tư F&B 2026</span>
-        <h2 class="section__title">Mô Hình Nhượng Quyền Toàn Diện</h2>
-        <p class="section__desc">
-          Gia nhập chuỗi ẩm thực di sản tăng trưởng vững chắc. Chúng tôi trao quyền và đồng hành cùng nhà đầu tư từ mặt bằng thô đến khi sinh lời đều đặn.
-        </p>
-      </div>
-
-      <!-- Bento Grid for Franchise Advantages -->
-      <div class="franchise-bento reveal">
-        <div class="bento-card bento-card--large">
-          <div>
-            <span class="bento-badge">Trụ Cột #1</span>
-            <h3 class="bento-title">Bếp Trung Tâm & Công Thức Độc Quyền 100%</h3>
-            <p class="bento-desc">
-              Xóa bỏ rủi ro phụ thuộc vào bếp trưởng. Toàn bộ nước sốt, gia vị tẩm ướp và thố đất được sản xuất tập trung theo tiêu chuẩn ISO, giao hàng định kỳ tận cửa hàng nhượng quyền.
-            </p>
-          </div>
-          <ul class="bento-list">
-            <li>Định lượng chính xác đến từng gram, hương vị 10 quán như 1</li>
-            <li>Rút ngắn thời gian ra món dưới 8 phút ngay cả giờ cao điểm</li>
-            <li>Tối ưu chi phí nhân sự bếp lên tới 40% so với nhà hàng truyền thống</li>
-          </ul>
-        </div>
-
-        <div class="bento-card bento-card--medium">
-          <div>
-            <span class="bento-badge">Trụ Cột #2</span>
-            <h3 class="bento-title">Biên Lợi Nhuận Gộp 60% – 68%</h3>
-            <p class="bento-desc">
-              Nguyên liệu nông sản Việt và chuỗi cung ứng tận gốc giúp biên độ lợi nhuận luôn đạt mức lý tưởng của ngành F&B.
-            </p>
-          </div>
-          <ul class="bento-list">
-            <li>Vòng quay bàn nhanh: 3.5 – 5 lượt/bàn mỗi ngày</li>
-            <li>Doanh thu cân bằng cả 2 buổi Trưa (dân văn phòng) & Tối (gia đình)</li>
-            <li>Thời gian hoàn vốn tính toán thực tế 12 – 18 tháng</li>
-          </ul>
-        </div>
-
-        <div class="bento-card bento-card--medium">
-          <div>
-            <span class="bento-badge">Trụ Cột #3</span>
-            <h3 class="bento-title">Setup Không Gian Chuẩn Định Vị</h3>
-            <p class="bento-desc">
-              Đội ngũ kiến trúc sư nội bộ thiết kế bản vẽ 2D/3D phù hợp từng mặt bằng thực tế, thi công nhanh trong 20–25 ngày.
-            </p>
-          </div>
-          <ul class="bento-list">
-            <li>Nhận diện thương hiệu đồng bộ, thu hút khách check-in tự nhiên</li>
-            <li>Bố trí luồng giao thông tối ưu cho vận hành và shipper giao hàng</li>
-          </ul>
-        </div>
-
-        <div class="bento-card bento-card--large">
-          <div>
-            <span class="bento-badge">Trụ Cột #4</span>
-            <h3 class="bento-title">Đào Tạo & Marketing Tổng Lực Từ Tập Đoàn</h3>
-            <p class="bento-desc">
-              Đối tác nhượng quyền không phải tự loay hoay tìm khách. Chúng tôi triển khai chiến dịch truyền thông đa kênh toàn quốc và hỗ trợ trực tiếp tại cơ sở.
-            </p>
-          </div>
-          <ul class="bento-list">
-            <li>Đào tạo toàn bộ đội ngũ: Quản lý, thu ngân, phục vụ, bếp phụ trước ngày khai trương</li>
-            <li>Chiến dịch quảng cáo địa phương (Meta Ads, TikTok, Google Maps SEO) phủ kín bán kính 5km</li>
-            <li>Phần mềm quản trị bán hàng, kiểm soát kho từ xa qua điện thoại 24/7</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 4 Steps of Franchise Process -->
-      <div class="section__header reveal" style="margin-bottom: var(--space-xl);">
-        <span class="section__label">Quy Trình 4 Bước</span>
-        <h3 class="section__title" style="font-size: 2rem;">Lộ Trình Khởi Nghiệp Cùng Chúng Tôi</h3>
-      </div>
-
-      <div class="franchise-steps reveal">
-        <div class="step-item">
-          <div class="step-num">01</div>
-          <h4 class="step-title">Tư Vấn & Thẩm Định</h4>
-          <p class="step-desc">Trao đổi hồ sơ năng lực, tìm hiểu chính sách chi phí và khảo sát lưu lượng giao thông mặt bằng mục tiêu.</p>
-        </div>
-        <div class="step-item">
-          <div class="step-num">02</div>
-          <h4 class="step-title">Ký Kết & Thiết Kế</h4>
-          <p class="step-desc">Ký hợp đồng nhượng quyền chính thức, nhận bàn giao bản vẽ kỹ thuật kiến trúc và dự toán chi tiết.</p>
-        </div>
-        <div class="step-item">
-          <div class="step-num">03</div>
-          <h4 class="step-title">Setup & Đào Tạo</h4>
-          <p class="step-desc">Thi công hoàn thiện, lắp đặt thiết bị bếp độc quyền, chuyển giao công nghệ và huấn luyện nhân sự.</p>
-        </div>
-        <div class="step-item">
-          <div class="step-num">04</div>
-          <h4 class="step-title">Khai Trương Bùng Nổ</h4>
-          <p class="step-desc">Bật chiến dịch truyền thông khai trương, cử đội ngũ chuyên gia hỗ trợ vận hành trực tiếp trong tuần đầu.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── TESTIMONIAL ─── -->
-  <section class="section section--dark">
-    <div class="testimonial reveal">
-      <blockquote class="testimonial__quote">
-        Đầu tư vào chuỗi Cơm Đốt Thố Hội An là quyết định sáng suốt nhất của tôi trong năm vừa rồi. Đội ngũ tổng công ty hỗ trợ cực kỳ bài bản từ khâu chọn mặt bằng đến quy trình bếp, điểm hòa vốn đạt sớm hơn 4 tháng so với kế hoạch ban đầu.
-      </blockquote>
-      <div class="testimonial__author">Anh Nguyễn Minh Hoàng</div>
-      <div class="testimonial__role">Chủ Cơ Sở Nhượng Quyền #02 — Hà Nội</div>
-    </div>
-  </section>
-
-  <!-- ─── FRANCHISE CONSULTATION REGISTRATION FORM ─── -->
-  <section class="section section--subtle" id="franchise-form">
-    <div class="container">
-      <div class="section__header reveal">
-        <span class="section__label">Đăng Ký Tư Vấn Trực Tiếp</span>
-        <h2 class="section__title">Khởi Nghiệp Cùng Cơm Đốt Thố Hội An</h2>
-        <p class="section__desc">
-          Điền thông tin bên dưới để nhận trọn bộ Hồ Sơ Năng Lực & Bảng Tính Toán Tài Chính Nhượng Quyền chi tiết trong vòng 24 giờ.
-        </p>
-      </div>
-
-      <div class="franchise-form-wrap reveal">
-        <form id="franchiseForm" onsubmit="event.preventDefault(); alert('Cảm ơn quý đối tác! Đội ngũ phát triển chuỗi Cơm Đốt Thố Hội An sẽ liên hệ tư vấn trong 24h.');">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label">Họ và tên của bạn *</label>
-              <input type="text" class="form-input" placeholder="Ví dụ: Nguyễn Văn An" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Số điện thoại liên hệ *</label>
-              <input type="tel" class="form-input" placeholder="Ví dụ: 0912 345 678" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Khu vực dự kiến mở cửa hàng *</label>
-              <select class="form-select" required>
-                <option value="">-- Chọn khu vực mong muốn --</option>
-                <option value="hanoi_dong">Hà Nội — Long Biên / Gia Lâm</option>
-                <option value="hanoi_tay">Hà Nội — Cầu Giấy / Mỹ Đình / Tây Hồ</option>
-                <option value="hanoi_nam">Hà Nội — Thanh Xuân / Đống Đa / Hoàng Mai</option>
-                <option value="quangninh">Quảng Ninh — Hạ Long / Cẩm Phả</option>
-                <option value="haiphong">Hải Phòng</option>
-                <option value="danang">Đà Nẵng / Hội An</option>
-                <option value="other">Tỉnh / Thành phố khác</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Ngân sách đầu tư dự kiến *</label>
-              <select class="form-select" required>
-                <option value="">-- Chọn mức ngân sách --</option>
-                <option value="tier1">800 triệu — 1.2 tỷ VNĐ</option>
-                <option value="tier2">1.2 tỷ — 2 tỷ VNĐ</option>
-                <option value="tier3">Trên 2 tỷ VNĐ (Mô hình Flagship)</option>
-              </select>
-            </div>
-            <div class="form-group form-group--full">
-              <label class="form-label">Tình trạng mặt bằng & Ghi chú bổ sung</label>
-              <textarea class="form-textarea" rows="3" placeholder="Đã có sẵn mặt bằng tại đường..., diện tích khoảng... hoặc cần hỗ trợ tìm kiếm mặt bằng."></textarea>
-            </div>
-          </div>
-          <div style="text-align: center;">
-            <button type="submit" class="btn btn--primary" style="padding: 1rem 3rem; font-size: 1rem;">
-              Gửi Yêu Cầu Tư Vấn Nhượng Quyền
-            </button>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
-              🔒 Thông tin đầu tư của quý đối tác được cam kết bảo mật 100%. Hotline trực tiếp: 0866 888 118
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─── -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__grid">
-        <div>
-          <div class="footer__brand-title">
-            <img src="images/04-dai-dien-logo.jpg" alt="Logo">
-            <span>Cơm Đốt Thố Hội An</span>
-          </div>
-          <p class="footer__brand-desc">
-            Hệ thống chuỗi nhà hàng ẩm thực di sản phố cổ Hội An hàng đầu Việt Nam. Chuẩn hóa nghệ thuật đốt niêu lửa than với không gian tinh tế và mô hình nhượng quyền F&B thịnh vượng.
-          </p>
-          <p style="font-size: var(--text-xs); color: var(--gold);">
-            Trụ sở & Flagship: Số 8 ngõ 158 Nguyễn Sơn, Long Biên, Hà Nội
-          </p>
-        </div>
-
-        <div>
-          <h4 class="footer__col-title">Về Thương Hiệu</h4>
-          <ul class="footer__links">
-            <li><a href="#brand">Câu Chuyện & Tầm Nhìn</a></li>
-            <li><a href="#culinary">Tiêu Chuẩn Bếp Trung Tâm</a></li>
-            <li><a href="#experience">Trải Nghiệm Không Gian</a></li>
-            <li><a href="#stores">Hệ Thống Cơ Sở</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer__col-title">Hợp Tác Nhượng Quyền</h4>
-          <ul class="footer__links">
-            <li><a href="#franchise">Mô Hình Vận Hành</a></li>
-            <li><a href="#franchise">Chính Sách & Quyền Lợi</a></li>
-            <li><a href="#franchise">Quy Trình 4 Bước</a></li>
-            <li><a href="#franchise-form">Đăng Ký Khảo Sát</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer__col-title">Hotline Liên Hệ</h4>
-          <ul class="footer__links">
-            <li>
-              <span style="display:block; font-size: 0.7rem; color: var(--warm-gray);">TƯ VẤN NHƯỢNG QUYỀN TOÀN QUỐC</span>
-              <a href="tel:0866888118" style="font-size: var(--text-lg); font-weight: 700; color: var(--gold);">0866 888 118</a>
-            </li>
-            <li style="margin-top: 0.5rem;">
-              <span style="display:block; font-size: 0.7rem; color: var(--warm-gray);">ĐẶT BÀN & CHĂM SÓC KHÁCH HÀNG</span>
-              <a href="tel:0866888118" style="color: var(--cream);">0866 888 118</a>
-            </li>
-            <li style="margin-top: 0.5rem;">
-              <a href="https://facebook.com/comdotthhoian" target="_blank" style="color: var(--gold);">Facebook Official Fanpage →</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer__bottom">
-        <span>© 2026 Cơm Đốt Thố Hội An Franchise System. Tất cả các quyền được bảo lưu.</span>
-        <span>Thiết kế nhận diện chuẩn Apple × Starbucks</span>
-      </div>
-    </div>
+    <div class="fr-footer__bottom">© 2026 Cơm Đốt Thố Hội An. Bảo lưu mọi quyền.</div>
   </footer>
 
-  <!-- ─── JAVASCRIPT ─── -->
-  <script src="js/main.js"></script>
+  <div class="fr-lightbox" id="frLightbox" hidden><button aria-label="Đóng" id="frLightboxClose">×</button><img alt=""></div>
 
+  <script src="js/franchise.js?v=20261103p"></script>
 </body>
 </html>
