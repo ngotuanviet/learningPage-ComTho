@@ -99,10 +99,9 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  /* Nền trong suốt dạng kính: vẫn thấy ảnh phía sau, chữ vẫn đọc được */
-  background: rgba(12, 12, 12, 0.32);
-  backdrop-filter: saturate(160%) blur(14px);
-  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  background: rgba(12, 12, 12, 0.8);
+  backdrop-filter: saturate(120%) blur(10px);
+  -webkit-backdrop-filter: saturate(120%) blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 

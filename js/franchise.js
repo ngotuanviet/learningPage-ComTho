@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setMsg('Đã gửi thành công. Chúng tôi sẽ liên hệ bạn trong 24 giờ làm việc.', 'ok');
       form.reset();
     } catch (err) {
-      setMsg('Gửi chưa được, vui lòng thử lại hoặc gọi 0866 888 118.', 'err');
+      setMsg('Gửi chưa được, vui lòng thử lại hoặc gọi 097 538 88 86.', 'err');
     } finally {
       btn.disabled = false;
     }
