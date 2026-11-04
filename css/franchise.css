@@ -932,3 +932,132 @@ main section[id] { scroll-margin-top: 60px; }
     order: 2;
   }
 }
+
+
+/* ─── Phần Quyền Lợi Nhượng Quyền (nhuong-quyen.html) ─── */
+.fr-head--dk .fr-eyebrow {
+  color: var(--bronze);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.fr-head--dk .fr-title {
+  color: var(--text-main);
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0.4rem 0 0.85rem;
+}
+.fr-head--dk p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.fr-gets {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.fr-get {
+  background: #ffffff;
+  border: 1px solid rgba(28, 23, 20, 0.08);
+  border-radius: 16px;
+  padding: 1.85rem 1.65rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(42, 33, 24, 0.04);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease;
+}
+
+.fr-get:hover {
+  transform: translateY(-5px);
+  border-color: rgba(199, 138, 42, 0.45);
+  box-shadow: 0 16px 36px rgba(42, 33, 24, 0.09);
+}
+
+.fr-get::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--nav-gold), var(--bronze));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fr-get:hover::before {
+  opacity: 1;
+}
+
+.fr-get__n {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--bronze);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 0.2rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(199, 138, 42, 0.1);
+  border: 1px solid rgba(199, 138, 42, 0.22);
+  transition: all 0.25s ease;
+}
+
+.fr-get:hover .fr-get__n {
+  background: var(--nav-gold);
+  color: #111;
+  border-color: var(--nav-gold);
+  transform: translateY(-1px);
+}
+
+.fr-get h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.01em;
+}
+
+.fr-get p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+@media (max-width: 980px) {
+  .fr-gets {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .fr-gets {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .fr-get {
+    padding: 1.4rem 1.25rem;
+    border-radius: 14px;
+  }
+}

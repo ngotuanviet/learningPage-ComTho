@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Hiện dần khi cuộn tới (các khối nội dung của mọi trang) ──
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-map-section, .fr-pkg-box, .fr-pkg-card, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
+    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-get, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-map-section, .fr-pkg-box, .fr-pkg-card, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
     const rvIo = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
