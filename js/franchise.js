@@ -1,6 +1,7 @@
 /**
  * Website hợp tác & nhượng quyền: menu, tô sáng trang hiện tại, lightbox ảnh,
- * chọn sẵn hình thức hợp tác (?model=...), gửi form lên Google Sheet.
+ * chọn sẵn hình thức hợp tác (?model=...), gửi form lên Google Sheet,
+ * chọn cơ sở & bản đồ tương tác.
  *
  * Cách nối Google Sheet: xem google-apps-script.gs, deploy dạng Web app
  * rồi dán URL (kết thúc bằng /exec) vào biến dưới đây.
@@ -39,9 +40,80 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
   }
 
+  // ── Bản đồ tương tác & Chọn cơ sở (trang Hệ thống nhà hàng) ──
+  const mapSection = document.getElementById('bando');
+  if (mapSection) {
+    const storeFrame = document.getElementById('storeMapFrame');
+    const curBadge = document.getElementById('mapActiveBadge');
+    const curName = document.getElementById('mapActiveName');
+    const curAddr = document.getElementById('mapActiveAddr');
+    const curCall = document.getElementById('mapActiveCall');
+    const curDir = document.getElementById('mapActiveDir');
+    const mapItems = mapSection.querySelectorAll('.fr-map-item');
+
+    // Chuyển cơ sở đang hiển thị trên bản đồ
+    const selectStore = (item, doScroll = false) => {
+      if (!item) return;
+      mapItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      const name = item.dataset.name || '';
+      const addr = item.dataset.addr || '';
+      const tag = item.dataset.tag || '';
+      const tel = item.dataset.tel || '';
+      const telDisplay = item.dataset.telDisplay || tel;
+      const query = item.dataset.query || `Cơm Đốt Thố Hội An, ${addr}`;
+      const isGold = item.dataset.gold === 'true';
+      const mapPending = item.dataset.mapPending === 'true';
+
+      if (curName) curName.textContent = name;
+      if (curAddr) curAddr.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+      if (curBadge) {
+        curBadge.textContent = tag;
+        curBadge.className = 'fr-map-info-tag' + (isGold ? ' fr-map-info-tag--gold' : '');
+      }
+      if (curCall) {
+        curCall.href = 'tel:' + tel;
+        curCall.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${telDisplay}`;
+      }
+      if (curDir) {
+        curDir.hidden = mapPending;
+        if (mapPending) curDir.removeAttribute('href');
+        else curDir.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
+      }
+      if (storeFrame) {
+        storeFrame.title = `${mapPending ? 'Khu vực dự kiến' : 'Bản đồ'} ${name} — Cơm Đốt Thố Hội An`;
+        storeFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${mapPending ? 12 : 17}&hl=vi&output=embed`;
+      }
+
+      if (doScroll) {
+        mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    // Click chọn cơ sở trong danh sách bên cạnh map
+    mapItems.forEach(item => {
+      item.addEventListener('click', () => selectStore(item, false));
+    });
+
+    selectStore([...mapItems].find(item => item.classList.contains('active')) || mapItems[0]);
+
+    // Nút "Xem trên bản đồ" trên mỗi thẻ cơ sở phía trên
+    document.querySelectorAll('[data-view-store]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const storeId = btn.dataset.viewStore;
+        const targetItem = [...mapItems].find(it => it.dataset.storeId === storeId);
+        if (targetItem) {
+          selectStore(targetItem, true);
+        }
+      });
+    });
+  }
+
   // ── Hiện dần khi cuộn tới (các khối nội dung của mọi trang) ──
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
+    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-map-section, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
     const rvIo = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
