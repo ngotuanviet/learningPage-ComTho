@@ -33,7 +33,7 @@ main section[id] { scroll-margin-top: 60px; }
 
 /* 01 Hero — phủ kín màn hình đầu tiên, nằm dưới navbar trong suốt.
    Ảnh hiện đủ chiều ngang, bám đáy; phía trên là phần tường vàng nối tiếp. */
-.fr-hero { position: relative; height: 100vh; height: 100svh; min-height: 540px; overflow: hidden; background: linear-gradient(90deg, #efb02a 0%, #f2b632 55%, #f6c24a 100%); }
+.fr-hero { position: relative; height: 100vh; height: 100svh; min-height: 540px; overflow: hidden; background: linear-gradient(90deg, #c39e6c 0%, #d3ac75 12.5%, #edc586 25%, #f8d698 37.5%, #e8c286 50%, #ddb983 62.5%, #d4ab73 75%, #d1a66d 87.5%, #d1a66d 100%); }
 /* --img-top: ảnh bám đáy (màn siêu rộng thì mép trên ảnh bị cắt bớt phần tường) */
 .fr-hero { --img-top: calc(100% - 42.87vw); }
 .fr-hero img {
@@ -213,7 +213,7 @@ main section[id] { scroll-margin-top: 60px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 
 /* Đầu trang của các trang con */
-.fr-pagehead { background: var(--ink); color: var(--cream); text-align: center; padding: calc(4.5rem + 60px) 1.5rem 3.5rem; }
+.fr-pagehead { background: var(--ink); color: var(--cream); text-align: center; padding: calc(2.25rem + 60px) 1.5rem 2.25rem; }
 .fr-pagehead .fr-eyebrow { color: var(--nav-gold); }
 .fr-pagehead h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.12; }
 .fr-pagehead p { margin-top: 0.9rem; color: rgba(250, 246, 240, 0.72); }
@@ -284,7 +284,7 @@ main section[id] { scroll-margin-top: 60px; }
 /* Trang Bộ công thức: thu khoảng trống giữa tiêu đề và ba nhóm món */
 .fr-pagehead + .fr-sec--flush { padding-top: 0; }
 .fr-pagehead + .fr-sec--flush .fr-groups { margin-top: 0; }
-.fr-pagehead:has(+ .fr-sec--flush) { padding: calc(2.75rem + 60px) 1.5rem 2.75rem; } /* khoảng trên (dưới navbar) = khoảng dưới */
+.fr-pagehead:has(+ .fr-sec--flush) { padding: calc(2.25rem + 60px) 1.5rem 2.25rem; } /* khoảng trên (dưới navbar) = khoảng dưới */
 .fr-pagehead + .fr-sec--flush .fr-mh { margin-top: 2rem; }
 
 /* Thẻ hợp tác: hiện nguyên cả ảnh ngang, phần thừa lấp bằng bản mờ của ảnh */
