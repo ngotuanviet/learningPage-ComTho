@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng Ký Tư Vấn — Cơm Đốt Thố Hội An</title>
   <meta name="description" content="Đăng ký tư vấn hợp tác Cơm Đốt Thố Hội An.">
+  <link rel="icon" type="image/x-icon" href="images/brand%20identity/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20261103v">
+  <link rel="stylesheet" href="css/franchise.css?v=20261104k">
   <link rel="stylesheet" href="css/style.css?v=20261104n">
   <link rel="stylesheet" href="css/franchise.css?v=20261104n">
 </head>
-<body class="fr-body">
+<body class="fr-body fr-page-dangky">
 
   <header class="nav" id="nav">
     <div class="nav__inner">
@@ -33,59 +37,114 @@
   </header>
 
   <main class="fr-sub">
-    <div class="fr-pagehead">
-      <span class="fr-eyebrow">Đăng ký tư vấn</span>
-      <h1><span class="fr-ln">Đăng Ký Tư Vấn Hợp Tác</span></h1>
-      <p>Chúng tôi liên hệ trong 24 giờ làm việc.</p>
-    </div>
     <section class="fr-sec">
       <div class="fr-wrap fr-contact">
-        <div>
-          <span class="fr-eyebrow">Câu hỏi thường gặp</span>
-          <h2 class="fr-title">Giải Đáp Nhanh</h2>
-          <div class="fr-faqs">
-          <details class="fr-faq"><summary>Cần bao nhiêu vốn để hợp tác?<i aria-hidden="true">+</i></summary><p>Chi phí phụ thuộc hình thức hợp tác: từ 15 triệu (quy trình vận hành) đến 170 triệu/chi nhánh (nhượng quyền thương hiệu). Setup nhà hàng được báo giá riêng theo mặt bằng. Các mức này là tham khảo, chưa gồm chi phí phát sinh.</p></details>
-          <details class="fr-faq"><summary>Có những hình thức hợp tác nào?<i aria-hidden="true">+</i></summary><p>Có 5 hình thức: chuyển giao công thức, quy trình vận hành, đào tạo trực tiếp, nhượng quyền thương hiệu và setup nhà hàng. Bạn có thể chọn một hoặc kết hợp nhiều hình thức.</p></details>
-          <details class="fr-faq"><summary>Thời gian triển khai một chi nhánh?<i aria-hidden="true">+</i></summary><p>Thời gian phụ thuộc hình thức hợp tác và tình trạng mặt bằng. Bộ phận phát triển sẽ đưa lộ trình cụ thể khi tư vấn.</p></details>
-          <details class="fr-faq"><summary>Thương hiệu hỗ trợ đào tạo như thế nào?<i aria-hidden="true">+</i></summary><p>Đào tạo trực tiếp cho đội ngũ bếp và vận hành theo quy trình chuẩn của thương hiệu. Phạm vi cụ thể được thống nhất khi ký kết.</p></details>
-          <details class="fr-faq"><summary>Có yêu cầu về mặt bằng không?<i aria-hidden="true">+</i></summary><p>Mặt bằng được đánh giá theo từng trường hợp. Nếu chưa có mặt bằng, hãy ghi chú trong form để được tư vấn.</p></details>
-          <details class="fr-faq"><summary>Chính sách hỗ trợ sau khai trương?<i aria-hidden="true">+</i></summary><p>Chính sách hỗ trợ sau khai trương được nêu rõ trong hợp đồng hợp tác. Vui lòng đăng ký tư vấn để nhận thông tin chi tiết.</p></details>
-          <details class="fr-faq"><summary>Điều kiện ký kết hợp tác?<i aria-hidden="true">+</i></summary><p>Điều kiện được thống nhất theo từng hình thức hợp tác. Bộ phận phát triển sẽ gửi đầy đủ thông tin khi tiếp nhận yêu cầu của bạn.</p></details>
-          </div>
-        </div>
+        <!-- Form đăng ký đưa lên đầu trang (hiển thị ưu tiên trên cả PC và Mobile) -->
         <form id="franchiseForm" class="fr-form" novalidate>
+          <div class="fr-form__head">
+            <span class="fr-eyebrow">Thông tin tiếp nhận</span>
+            <h2 class="fr-form__title">Điền Thông Tin Hợp Tác</h2>
+            <p class="fr-form__desc">Chúng tôi sẽ bảo mật thông tin và liên hệ lại trong 24 giờ làm việc.</p>
+          </div>
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label" for="f-name">Họ và tên *</label>
-              <input id="f-name" name="name" type="text" class="form-input" required autocomplete="name">
+              <input id="f-name" name="name" type="text" class="form-input" required autocomplete="name" placeholder="Nguyễn Văn A">
             </div>
             <div class="form-group">
               <label class="form-label" for="f-phone">Số điện thoại *</label>
-              <input id="f-phone" name="phone" type="tel" class="form-input" required autocomplete="tel" inputmode="tel">
+              <input id="f-phone" name="phone" type="tel" class="form-input" required autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx">
             </div>
             <div class="form-group">
               <label class="form-label" for="f-email">Email</label>
-              <input id="f-email" name="email" type="email" class="form-input" autocomplete="email">
+              <input id="f-email" name="email" type="email" class="form-input" autocomplete="email" placeholder="email@vi-du.com">
             </div>
             <div class="form-group">
               <label class="form-label" for="f-area">Tỉnh/thành phố dự kiến *</label>
-              <input id="f-area" name="area" type="text" class="form-input" required placeholder="Ví dụ: Hà Nội" autocomplete="address-level1">
-            </div>
-            <div class="form-group form-group--full">
-              <label class="form-label" for="f-model">Hình thức hợp tác quan tâm *</label>
-              <select id="f-model" name="model" class="form-select" required>
-                <option value="">-- Chọn hình thức --</option>
-                <option>Chuyển giao công thức</option><option>Quy trình vận hành</option><option>Đào tạo trực tiếp</option><option>Nhượng quyền thương hiệu</option><option>Setup nhà hàng</option>
-                <option>Chưa xác định, cần tư vấn</option>
+              <select id="f-area" name="area" class="form-select" required autocomplete="address-level1">
+                <option value="">-- Chọn tỉnh / thành phố --</option>
+                <optgroup label="Thành phố lớn">
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Hải Phòng">Hải Phòng</option>
+                  <option value="Cần Thơ">Cần Thơ</option>
+                </optgroup>
+                <optgroup label="Khu vực Miền Bắc">
+                  <option value="Bắc Giang">Bắc Giang</option>
+                  <option value="Bắc Kạn">Bắc Kạn</option>
+                  <option value="Bắc Ninh">Bắc Ninh</option>
+                  <option value="Cao Bằng">Cao Bằng</option>
+                  <option value="Điện Biên">Điện Biên</option>
+                  <option value="Hà Giang">Hà Giang</option>
+                  <option value="Hà Nam">Hà Nam</option>
+                  <option value="Hải Dương">Hải Dương</option>
+                  <option value="Hòa Bình">Hòa Bình</option>
+                  <option value="Hưng Yên">Hưng Yên</option>
+                  <option value="Lai Châu">Lai Châu</option>
+                  <option value="Lạng Sơn">Lạng Sơn</option>
+                  <option value="Lào Cai">Lào Cai</option>
+                  <option value="Nam Định">Nam Định</option>
+                  <option value="Ninh Bình">Ninh Bình</option>
+                  <option value="Phú Thọ">Phú Thọ</option>
+                  <option value="Quảng Ninh">Quảng Ninh</option>
+                  <option value="Sơn La">Sơn La</option>
+                  <option value="Thái Bình">Thái Bình</option>
+                  <option value="Thái Nguyên">Thái Nguyên</option>
+                  <option value="Tuyên Quang">Tuyên Quang</option>
+                  <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                  <option value="Yên Bái">Yên Bái</option>
+                </optgroup>
+                <optgroup label="Khu vực Miền Trung & Tây Nguyên">
+                  <option value="Bình Định">Bình Định</option>
+                  <option value="Bình Thuận">Bình Thuận</option>
+                  <option value="Đắk Lắk">Đắk Lắk</option>
+                  <option value="Đắk Nông">Đắk Nông</option>
+                  <option value="Gia Lai">Gia Lai</option>
+                  <option value="Hà Tĩnh">Hà Tĩnh</option>
+                  <option value="Khánh Hòa">Khánh Hòa</option>
+                  <option value="Kon Tum">Kon Tum</option>
+                  <option value="Lâm Đồng">Lâm Đồng</option>
+                  <option value="Nghệ An">Nghệ An</option>
+                  <option value="Ninh Thuận">Ninh Thuận</option>
+                  <option value="Phú Yên">Phú Yên</option>
+                  <option value="Quảng Bình">Quảng Bình</option>
+                  <option value="Quảng Nam">Quảng Nam</option>
+                  <option value="Quảng Ngãi">Quảng Ngãi</option>
+                  <option value="Quảng Trị">Quảng Trị</option>
+                  <option value="Thanh Hóa">Thanh Hóa</option>
+                  <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
+                </optgroup>
+                <optgroup label="Khu vực Miền Nam">
+                  <option value="An Giang">An Giang</option>
+                  <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                  <option value="Bạc Liêu">Bạc Liêu</option>
+                  <option value="Bến Tre">Bến Tre</option>
+                  <option value="Bình Dương">Bình Dương</option>
+                  <option value="Bình Phước">Bình Phước</option>
+                  <option value="Cà Mau">Cà Mau</option>
+                  <option value="Đồng Nai">Đồng Nai</option>
+                  <option value="Đồng Tháp">Đồng Tháp</option>
+                  <option value="Hậu Giang">Hậu Giang</option>
+                  <option value="Kiên Giang">Kiên Giang</option>
+                  <option value="Long An">Long An</option>
+                  <option value="Sóc Trăng">Sóc Trăng</option>
+                  <option value="Tây Ninh">Tây Ninh</option>
+                  <option value="Tiền Giang">Tiền Giang</option>
+                  <option value="Trà Vinh">Trà Vinh</option>
+                  <option value="Vĩnh Long">Vĩnh Long</option>
+                </optgroup>
+                <option value="Tỉnh/thành khác">Tỉnh/thành khác</option>
               </select>
             </div>
+         
             <div class="form-group form-group--full">
               <label class="form-label" for="f-budget">Ngân sách dự kiến (không bắt buộc)</label>
               <input id="f-budget" name="budget" type="text" class="form-input" placeholder="Ví dụ: 200 triệu">
             </div>
             <div class="form-group form-group--full">
               <label class="form-label" for="f-note">Nội dung cần tư vấn</label>
-              <textarea id="f-note" name="note" class="form-textarea" rows="3"></textarea>
+              <textarea id="f-note" name="note" class="form-textarea" rows="3" placeholder="Chia sẻ thêm về mặt bằng, thời gian dự kiến khai trương..."></textarea>
             </div>
             <input type="text" name="website" tabindex="-1" autocomplete="off" class="fr-hp" aria-hidden="true">
           </div>
@@ -94,6 +153,21 @@
             <p class="fr-form__msg" id="frMsg" role="status" aria-live="polite"></p>
           </div>
         </form>
+
+        <!-- Khối Giải Đáp Nhanh (FAQ) -->
+        <div class="fr-contact__faq">
+          <span class="fr-eyebrow">Câu hỏi thường gặp</span>
+          <h2 class="fr-title">Giải Đáp Nhanh</h2>
+          <div class="fr-faqs">
+            <details class="fr-faq"><summary>Cần bao nhiêu vốn để hợp tác?<i aria-hidden="true">+</i></summary><p>Chi phí phụ thuộc hình thức hợp tác: từ 15 triệu (quy trình vận hành) đến 170 triệu/chi nhánh (nhượng quyền thương hiệu). Setup nhà hàng được báo giá riêng theo mặt bằng. Các mức này là tham khảo, chưa gồm chi phí phát sinh.</p></details>
+            <details class="fr-faq"><summary>Có những hình thức hợp tác nào?<i aria-hidden="true">+</i></summary><p>Có 5 hình thức: chuyển giao công thức, quy trình vận hành, đào tạo trực tiếp, nhượng quyền thương hiệu và setup nhà hàng. Bạn có thể chọn một hoặc kết hợp nhiều hình thức.</p></details>
+            <details class="fr-faq"><summary>Thời gian triển khai một chi nhánh?<i aria-hidden="true">+</i></summary><p>Thời gian phụ thuộc hình thức hợp tác và tình trạng mặt bằng. Bộ phận phát triển sẽ đưa lộ trình cụ thể khi tư vấn.</p></details>
+            <details class="fr-faq"><summary>Thương hiệu hỗ trợ đào tạo như thế nào?<i aria-hidden="true">+</i></summary><p>Đào tạo trực tiếp cho đội ngũ bếp và vận hành theo quy trình chuẩn của thương hiệu. Phạm vi cụ thể được thống nhất khi ký kết.</p></details>
+            <details class="fr-faq"><summary>Có yêu cầu về mặt bằng không?<i aria-hidden="true">+</i></summary><p>Mặt bằng được đánh giá theo từng trường hợp. Nếu chưa có mặt bằng, hãy ghi chú trong form để được tư vấn.</p></details>
+            <details class="fr-faq"><summary>Chính sách hỗ trợ sau khai trương?<i aria-hidden="true">+</i></summary><p>Chính sách hỗ trợ sau khai trương được nêu rõ trong hợp đồng hợp tác. Vui lòng đăng ký tư vấn để nhận thông tin chi tiết.</p></details>
+            <details class="fr-faq"><summary>Điều kiện ký kết hợp tác?<i aria-hidden="true">+</i></summary><p>Điều kiện được thống nhất theo từng hình thức hợp tác. Bộ phận phát triển sẽ gửi đầy đủ thông tin khi tiếp nhận yêu cầu của bạn.</p></details>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -115,6 +189,7 @@
 
   <div class="fr-lightbox" id="frLightbox" hidden><button aria-label="Đóng" id="frLightboxClose">×</button><img alt=""></div>
 
+  <script src="js/franchise.js?v=20261104f"></script>
   <script src="js/franchise.js?v=20261104n"></script>
 </body>
 </html>

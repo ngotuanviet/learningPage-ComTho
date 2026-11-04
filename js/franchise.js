@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Hiện dần khi cuộn tới (các khối nội dung của mọi trang) ──
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-map-section, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
+    const rvSel = '.fr-hop__title, .fr-hcard, .fr-groups li, .fr-mh, .fr-op, .fr-proc, .fr-split > *, .fr-head, .fr-store, .fr-shot, .fr-map, .fr-map-section, .fr-pkg-box, .fr-pkg-card, .fr-faq, .fr-form, .fr-chips, .fr-center, .fr-fine';
     const rvIo = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
     document.querySelectorAll(rvSel).forEach(el => {
       if (el.closest('.fr-mrow')) return; // thực đơn dạng sách có hiệu ứng riêng
+      if (document.body.classList.contains('fr-page-congthuc')) return; // trang công thức có orchestrator từ trên xuống riêng
       const idx = [...el.parentElement.children].indexOf(el);
       // khối đã nằm trong màn hình khi mở trang: chờ phần tiêu đề chạy xong rồi mới hiện (đọc từ trên xuống)
       const inView = el.getBoundingClientRect().top < innerHeight * 0.95;
@@ -154,6 +155,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+  // ── Hiệu ứng xuất hiện tuần tự TỪ TRÊN XUỐNG cho trang Bộ Công Thức (cong-thuc.html) ──
+  const isCongThuc = document.body.classList.contains('fr-page-congthuc') || location.pathname.includes('cong-thuc.html');
+  if (isCongThuc && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // 1. Phục vụ trên màn hình đầu tiên (Above the fold):
+    // Tabs nhóm món -> Tiêu đề "Món chính" -> Sổ thực đơn "Món chính"
+    const groupItems = [...document.querySelectorAll('.fr-groups li')];
+    const mcHeading = document.querySelector('#mon-chinh');
+    const mcReader = document.querySelector('[data-menu-book="Món chính"]');
+
+    const aboveFold = [
+      ...groupItems,
+      mcHeading,
+      mcReader
+    ].filter(Boolean);
+
+    aboveFold.forEach((el, i) => {
+      el.classList.add('fr-down');
+      // Chạy nối tiếp nhịp nhàng ngay sau khi tiêu đề pagehead hoàn tất (~0.45s)
+      const delay = 0.45 + i * 0.12;
+      el.style.setProperty('--d', `${delay.toFixed(2)}s`);
+      setTimeout(() => el.classList.add('fr-in'), 30);
+    });
+
+    // 2. Các phần tử bên dưới (Below the fold) khi cuộn chuột tới:
+    // Nhóm Món phụ, Đồ uống, và Khối Bộ công thức
+    const belowFoldSections = [
+      {
+        trigger: document.querySelector('#mon-phu'),
+        items: [
+          document.querySelector('#mon-phu'),
+          document.querySelector('[data-menu-book="Món phụ"]')
+        ].filter(Boolean)
+      },
+      {
+        trigger: document.querySelector('#do-uong'),
+        items: [
+          document.querySelector('#do-uong'),
+          document.querySelector('[data-menu-book="Đồ uống"]')
+        ].filter(Boolean)
+      },
+      {
+        trigger: document.querySelector('.fr-pkg-box'),
+        items: [
+          document.querySelector('.fr-pkg-box'),
+          document.querySelector('.fr-pkg-header'),
+          ...document.querySelectorAll('.fr-pkg-card'),
+          document.querySelector('.fr-pkg-cta')
+        ].filter(Boolean)
+      }
+    ];
+
+    const ctIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        ctIo.unobserve(en.target);
+        const sec = belowFoldSections.find(s => s.trigger === en.target);
+        if (!sec) return;
+        sec.items.forEach((item, idx) => {
+          item.style.setProperty('--d', `${(idx * 0.12).toFixed(2)}s`);
+          setTimeout(() => item.classList.add('fr-in'), 40);
+        });
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    belowFoldSections.forEach(sec => {
+      if (!sec.trigger) return;
+      sec.items.forEach(item => item.classList.add('fr-down'));
+      ctIo.observe(sec.trigger);
+    });
+  }
+
   // ── Form tư vấn (trang Đăng ký) ──
   const form = document.getElementById('franchiseForm');
   if (!form) return;
@@ -166,6 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (wanted) {
     const opt = [...form.elements.model.options].find(o => o.textContent.trim() === wanted);
     if (opt) form.elements.model.value = opt.value || opt.textContent;
+  }
+  // Chọn sẵn tỉnh / thành từ ?area= hoặc ?city=
+  const wantedArea = new URLSearchParams(location.search).get('area') || new URLSearchParams(location.search).get('city');
+  if (wantedArea && form.elements.area) {
+    const optArea = [...form.elements.area.options].find(o => o.value.toLowerCase() === wantedArea.toLowerCase() || o.textContent.trim().toLowerCase() === wantedArea.toLowerCase());
+    if (optArea) form.elements.area.value = optArea.value;
   }
 
   form.addEventListener('submit', async (e) => {
