@@ -48,42 +48,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const curName = document.getElementById('mapActiveName');
     const curAddr = document.getElementById('mapActiveAddr');
     const curCall = document.getElementById('mapActiveCall');
+    const curCallText = document.getElementById('mapActiveCallText');
     const curDir = document.getElementById('mapActiveDir');
-    const mapItems = mapSection.querySelectorAll('.fr-map-item');
+    const curCounter = document.getElementById('mapActiveCounter');
+    const curOpenFull = document.getElementById('mapOpenFullBtn');
+    const mapItems = mapSection.querySelectorAll('.fr-map-tab, .fr-map-item');
 
     // Chuyển cơ sở đang hiển thị trên bản đồ
     const selectStore = (item, doScroll = false) => {
       if (!item) return;
-      mapItems.forEach(i => i.classList.remove('active'));
+      mapItems.forEach(i => {
+        i.classList.remove('active');
+        i.setAttribute('aria-selected', 'false');
+      });
       item.classList.add('active');
+      item.setAttribute('aria-selected', 'true');
 
       const name = item.dataset.name || '';
       const addr = item.dataset.addr || '';
       const tag = item.dataset.tag || '';
       const tel = item.dataset.tel || '';
       const telDisplay = item.dataset.telDisplay || tel;
-      const query = item.dataset.query || `Cơm Đốt Thố Hội An, ${addr}`;
+      const query = item.dataset.query || addr;
+      const dirQuery = item.dataset.dirQuery || `Cơm Đốt Thố Hội An, ${addr}`;
       const isGold = item.dataset.gold === 'true';
       const mapPending = item.dataset.mapPending === 'true';
 
       if (curName) curName.textContent = name;
-      if (curAddr) curAddr.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+      if (curAddr) {
+        const addrSpan = curAddr.querySelector('span');
+        if (addrSpan) {
+          addrSpan.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+        } else {
+          curAddr.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+        }
+      }
       if (curBadge) {
         curBadge.textContent = tag;
-        curBadge.className = 'fr-map-info-tag' + (isGold ? ' fr-map-info-tag--gold' : '');
+        curBadge.className = (curBadge.className.includes('fr-map-spotlight__badge') ? 'fr-map-spotlight__badge' : 'fr-map-info-tag') + (isGold ? ' is-gold' : '');
       }
       if (curCall) {
         curCall.href = 'tel:' + tel;
-        curCall.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${telDisplay}`;
+        if (curCallText) {
+          curCallText.textContent = telDisplay;
+        }
       }
       if (curDir) {
         curDir.hidden = mapPending;
         if (mapPending) curDir.removeAttribute('href');
-        else curDir.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
+        else curDir.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dirQuery)}`;
       }
       if (storeFrame) {
         storeFrame.title = `${mapPending ? 'Khu vực dự kiến' : 'Bản đồ'} ${name} — Cơm Đốt Thố Hội An`;
-        storeFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${mapPending ? 12 : 17}&hl=vi&output=embed`;
+        storeFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${mapPending ? 12 : 16}&hl=vi&output=embed`;
+      }
+
+      const itemIndex = [...mapItems].indexOf(item);
+      if (curCounter && itemIndex >= 0) {
+        curCounter.textContent = `Cơ sở ${itemIndex + 1} / ${mapItems.length}`;
+      }
+      if (curOpenFull) {
+        curOpenFull.hidden = mapPending;
+        if (mapPending) curOpenFull.removeAttribute('href');
+        else curOpenFull.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dirQuery)}`;
+      }
+
+      if (item.scrollIntoView) {
+        item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
 
       if (doScroll) {

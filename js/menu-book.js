@@ -36,6 +36,31 @@ document.addEventListener('DOMContentLoaded', () => {
       stage.append(page);
     });
 
+    const makeSideButton = (label, direction) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `fr-reader__side-nav fr-reader__side-nav--${direction < 0 ? 'prev' : 'next'}`;
+      button.setAttribute('aria-label', `${label} — ${title}`);
+      button.setAttribute('aria-controls', stage.id);
+      const icon = direction < 0
+        ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>'
+        : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+      button.innerHTML = icon;
+      button.addEventListener('pointerdown', (e) => e.stopPropagation());
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(current + direction * perView);
+      });
+      return button;
+    };
+    const sidePrev = makeSideButton('Trang trước', -1);
+    const sideNext = makeSideButton('Trang sau', 1);
+
+    const stageWrap = document.createElement('div');
+    stageWrap.className = 'fr-reader__wrap';
+    stageWrap.append(sidePrev, stage, sideNext);
+
     const controls = document.createElement('div');
     controls.className = 'fr-reader__controls';
     const makeButton = (label, direction) => {
@@ -60,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const hint = document.createElement('p');
     hint.className = 'fr-reader__hint';
-    hint.textContent = 'Vuốt sang trái để lật trang · Chạm ảnh để phóng to';
-    book.replaceChildren(caption, stage, controls, hint);
+    hint.textContent = 'Bấm nút 2 bên hoặc vuốt để lật trang · Chạm ảnh để phóng to';
+    book.replaceChildren(caption, stageWrap, controls, hint);
 
     const lastStart = () => Math.floor((pages.length - 1) / perView) * perView;
     const show = (index, column) => {
@@ -72,8 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const hidePages = () => pages.forEach(page => { page.hidden = true; });
     const updateControls = () => {
-      previous.disabled = busy || current === 0;
-      next.disabled = busy || current === lastStart();
+      const isFirst = current === 0;
+      const isLast = current === lastStart();
+      previous.disabled = busy || isFirst;
+      if (sidePrev) {
+        sidePrev.disabled = busy || isFirst;
+        sidePrev.setAttribute('aria-disabled', String(busy || isFirst));
+      }
+      next.disabled = busy || isLast;
+      if (sideNext) {
+        sideNext.disabled = busy || isLast;
+        sideNext.setAttribute('aria-disabled', String(busy || isLast));
+      }
     };
     const render = () => {
       hidePages();
