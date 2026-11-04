@@ -36,7 +36,7 @@ main section[id] { scroll-margin-top: 60px; }
 .fr-hero { position: relative; height: 100vh; height: 100svh; min-height: 540px; overflow: hidden; background: linear-gradient(90deg, #efb02a 0%, #f2b632 55%, #f6c24a 100%); }
 /* --img-top: ảnh bám đáy (màn siêu rộng thì mép trên ảnh bị cắt bớt phần tường) */
 .fr-hero { --img-top: calc(100% - 42.87vw); }
-.fr-hero > img {
+.fr-hero img {
   position: absolute; left: 0; top: var(--img-top); width: 100%; height: auto;
   min-height: calc(100% - var(--img-top)); object-fit: cover; /* luôn kín tới đáy (bù chênh lệch thanh cuộn) */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
@@ -202,7 +202,7 @@ main section[id] { scroll-margin-top: 60px; }
   /* điện thoại: vùng tường chiếm nửa trên, chữ xuống 2 dòng */
   .fr-hero { --text-w: 100%; --text-h: calc(52% - 60px); --text-left: 1.5rem; --glow-x: 50%; }
   .fr-hero__content { justify-content: center; }
-  .fr-hero > img { top: 0; height: 100%; object-fit: cover; object-position: 30% bottom; -webkit-mask-image: none; mask-image: none; }
+  .fr-hero img { top: 0; height: 100%; object-fit: cover; object-position: 30% bottom; -webkit-mask-image: none; mask-image: none; }
 }
 @media (max-width: 640px) {
   .fr-models { grid-template-columns: 1fr; }
@@ -325,3 +325,15 @@ main section[id] { scroll-margin-top: 60px; }
 /* Hiện dần khi cuộn tới (JS thêm .fr-rv rồi .fr-in) */
 .fr-rv { opacity: 0; transform: translateY(30px); }
 .fr-rv.fr-in { opacity: 1; transform: none; transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0s); }
+
+/* Điện thoại: dùng ảnh dọc 3:4 riêng (Rustic Crispy Rice Feast.png).
+   Ảnh rộng bằng màn hình, bám đáy; nửa trên của ảnh là tường vàng nối với nền để đặt chữ. */
+@media (max-width: 640px) {
+  .fr-hero { height: max(100svh, calc(390px + 93vw)); min-height: 0; --text-h: calc(100% - 60px - 93vw); }
+  .fr-hero img {
+    top: auto; bottom: 0; left: 0; width: 100%; max-width: none; height: auto; min-height: 0;
+    object-fit: cover; object-position: center bottom;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
+  }
+}

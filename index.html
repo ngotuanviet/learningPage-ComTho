@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cơm Đốt Thố Hội An — Hợp Tác & Nhượng Quyền</title>
   <meta name="description" content="Cơm Đốt Thố Hội An: các hình thức hợp tác, nhượng quyền. Đăng ký tư vấn hợp tác.">
-  <link rel="preload" as="image" href="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png">
+  <link rel="preload" as="image" href="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png" media="(min-width: 641px)">
+  <link rel="preload" as="image" href="images/hero/hero-mobile.webp" media="(max-width: 640px)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261103p">
-  <link rel="stylesheet" href="css/franchise.css?v=20261103p">
+  <link rel="stylesheet" href="css/style.css?v=20261103v">
+  <link rel="stylesheet" href="css/franchise.css?v=20261103v">
 </head>
 <body class="fr-body fr-home">
 
@@ -35,7 +36,10 @@
 
   <main class="">
     <section class="fr-hero" id="tong-quan">
-      <img src="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png" alt="Thố cơm đốt cháy giòn cùng các món ăn Hội An" fetchpriority="high">
+      <picture>
+        <source media="(max-width: 640px)" srcset="images/hero/hero-mobile.webp">
+        <img src="images/hero/Rustic%20Stone%20Pot%20Rice%20Feast.png" alt="Thố cơm đốt cháy giòn cùng các món ăn Hội An" fetchpriority="high">
+      </picture>
       <div class="fr-hero__content">
         <h1><span class="fr-ln">Cơm Vàng </span><br><span class="fr-ln">Giòn Rụm</span></h1>
         <p class="fr-hero__sub">Bộ công thức độc quyền</p>
@@ -104,6 +108,6 @@
 
   <div class="fr-lightbox" id="frLightbox" hidden><button aria-label="Đóng" id="frLightboxClose">×</button><img alt=""></div>
 
-  <script src="js/franchise.js?v=20261103p"></script>
+  <script src="js/franchise.js?v=20261103v"></script>
 </body>
 </html>
