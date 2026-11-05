@@ -59,7 +59,7 @@ main section[id] { scroll-margin-top: 60px; }
   display: grid; justify-content: start; align-content: center; justify-items: start;
   text-align: left; padding: 0 1.5rem 0 var(--text-left, 5vw);
 }
-.fr-hero h1 { font-family: var(--serif); font-weight: 800; text-transform: uppercase; font-size: clamp(2.6rem, min(7.6vw, 11.5vh), 8.8rem); line-height: 1.04; color: #15100a; letter-spacing: -0.025em; }
+.fr-hero h1 { font-family: var(--serif); font-weight: 800; text-transform: uppercase; font-size: clamp(2rem, min(4.7vw, 8.6vh), 6.4rem); line-height: 1.06; color: #15100a; letter-spacing: -0.025em; }
 .fr-hero__sub { margin-top: clamp(0.7rem, 1.2vw, 1.2rem); font-family: var(--font-serif-nav); font-size: clamp(0.8rem, 1.25vw, 1.35rem); font-weight: 600; text-transform: uppercase; letter-spacing: 0.26em; color: #2a1d0b; }
 .fr-hero__actions { margin-top: clamp(1rem, 1.6vw, 1.7rem); }
 .fr-hero .fr-btn { padding: clamp(0.7rem, 0.9vw, 1rem) clamp(1.7rem, 2vw, 2.4rem); font-size: clamp(0.82rem, 0.95vw, 1.05rem); }
@@ -286,6 +286,9 @@ main section[id] { scroll-margin-top: 60px; }
 .fr-pagehead + .fr-sec--flush .fr-groups { margin-top: 0; }
 .fr-pagehead:has(+ .fr-sec--flush) { padding: calc(2.25rem + 60px) 1.5rem 2.25rem; } /* khoảng trên (dưới navbar) = khoảng dưới */
 .fr-pagehead + .fr-sec--flush .fr-mh { margin-top: 2rem; }
+.fr-pagehead + .fr-sec--flush { padding-top: 0.1px; } /* chặn margin của khối gói chui ra ngoài, lộ nền kem */
+.fr-pagehead + .fr-sec--flush .fr-pkg-box { margin-top: 0; margin-bottom: 0; }
+.fr-pagehead + .fr-sec--flush .fr-wrap { padding-top: 2rem; }
 
 /* Thẻ hợp tác: hiện nguyên cả ảnh ngang, phần thừa lấp bằng bản mờ của ảnh */
 .fr-hcard__img { position: relative; }
@@ -304,6 +307,7 @@ main section[id] { scroll-margin-top: 60px; }
 .fr-hero .fr-ln { display: inline-block; animation: frSlide 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fr-hero .fr-ln:nth-of-type(1) { animation-delay: 0.1s; }
 .fr-hero .fr-ln:nth-of-type(2) { animation-delay: 0.28s; }
+.fr-hero .fr-ln:nth-of-type(3) { animation-delay: 0.46s; }
 .fr-hero__sub { animation: frUp 0.8s 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fr-hero__actions { animation: frUp 0.8s 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fr-hero::before { animation: frGlow 1.4s 0.1s ease-out both; }
@@ -1147,3 +1151,49 @@ main section[id] { scroll-margin-top: 60px; }
     border-radius: 14px;
   }
 }
+
+/* Hero 3 dòng: Kinh doanh (nhỏ) < Nhà hàng < Chuyên nghiệp, độ dài tăng dần như một bậc dốc */
+.fr-hero .fr-ln--s { font-size: 0.5em; letter-spacing: 0.01em; }
+@media (max-width: 860px) { .fr-hero h1 { font-size: clamp(1.9rem, 9vw, 3.2rem); } }
+
+/* Trang Hồ sơ năng lực */
+.fr-stats { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; text-align: center; }
+.fr-stats li { padding: 1.25rem 0.5rem; border-top: 1px solid rgba(245, 184, 46, 0.4); }
+.fr-stats strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 700; line-height: 1; color: var(--nav-gold); font-variant-numeric: tabular-nums; }
+.fr-stats li > span { display: block; margin-top: 0.6rem; font-size: var(--text-sm); color: rgba(250, 246, 240, 0.75); }
+.fr-branches { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.fr-branch { background: #fff; border: 1px solid var(--border-warm); border-radius: 14px; padding: 1.25rem 1.3rem 1.4rem; }
+.fr-branch h3 { margin: 0.8rem 0 0.35rem; font-family: var(--serif); font-size: 1.1rem; font-weight: 700; line-height: 1.25; }
+.fr-branch p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; }
+.fr-branch--soon { background: transparent; border-style: dashed; }
+.fr-sec--latte .fr-center { margin-top: 2rem; }
+@media (max-width: 1100px) { .fr-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .fr-stats { grid-template-columns: repeat(2, 1fr); row-gap: 0.5rem; } .fr-branches { grid-template-columns: 1fr; } }
+
+/* Quyền lợi nhượng quyền: danh sách gọn, số và tiêu đề cùng một dòng */
+.fr-gets { max-width: 880px; grid-template-columns: repeat(2, 1fr); gap: 0 3rem; }
+.fr-gets .fr-get { display: grid; grid-template-columns: auto 1fr; column-gap: 0.9rem; align-items: baseline; padding: 1.35rem 0 1.4rem; background: transparent; border: 0; border-top: 1px solid var(--border-warm); border-radius: 0; box-shadow: none; overflow: visible; transform: none; transition: none; }
+.fr-gets .fr-get:hover { transform: none; box-shadow: none; border-color: var(--border-warm); }
+.fr-gets .fr-get::before { display: none; }
+.fr-gets .fr-get__n { grid-column: 1; grid-row: 1; margin: 0; padding: 0; background: none; border: 0; border-radius: 0; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; color: var(--bronze); transform: none; }
+.fr-gets .fr-get:hover .fr-get__n { background: none; color: var(--bronze); border: 0; transform: none; }
+.fr-gets .fr-get h3 { grid-column: 2; grid-row: 1; margin: 0; font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+.fr-gets .fr-get p { grid-column: 2; grid-row: 2; margin-top: 0.4rem; font-size: 0.9rem; line-height: 1.65; }
+@media (max-width: 760px) { .fr-gets { grid-template-columns: 1fr; } }
+
+/* Dải kêu gọi cuối trang Hồ sơ năng lực: gọn lại */
+.fr-sec--cta { padding: 2.75rem 0; }
+.fr-sec--cta .fr-head { margin-bottom: 1.4rem; max-width: 960px; }
+.fr-sec--cta .fr-eyebrow { margin-bottom: 0.6rem; }
+.fr-sec--cta .fr-title { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+
+/* Dải số liệu gọn */
+.fr-pagehead + .fr-sec--stats { padding-bottom: 2.25rem; }
+.fr-pagehead + .fr-sec--stats .fr-wrap { padding-top: 1.25rem; }
+.fr-stats { gap: 1rem; }
+.fr-stats li { padding: 0.9rem 0.4rem 0.2rem; }
+.fr-stats strong { font-size: clamp(2.2rem, 4.6vw, 3.4rem); }
+.fr-stats strong em { font-style: normal; font-size: 0.42em; font-weight: 600; letter-spacing: 0; margin-left: 0.15em; }
+.fr-stats li > span { margin-top: 0.4rem; }
+@media (max-width: 1000px) { .fr-stats { grid-template-columns: repeat(3, 1fr); row-gap: 1rem; } }
+@media (max-width: 640px) { .fr-stats { grid-template-columns: repeat(2, 1fr); } }

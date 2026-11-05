@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const curBadge = document.getElementById('mapActiveBadge');
     const curName = document.getElementById('mapActiveName');
     const curAddr = document.getElementById('mapActiveAddr');
-    const curCall = document.getElementById('mapActiveCall');
-    const curCallText = document.getElementById('mapActiveCallText');
     const curDir = document.getElementById('mapActiveDir');
     const curCounter = document.getElementById('mapActiveCounter');
     const curOpenFull = document.getElementById('mapOpenFullBtn');
@@ -67,10 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = item.dataset.name || '';
       const addr = item.dataset.addr || '';
       const tag = item.dataset.tag || '';
-      const tel = item.dataset.tel || '';
-      const telDisplay = item.dataset.telDisplay || tel;
-      const query = item.dataset.query || addr;
-      const dirQuery = item.dataset.dirQuery || `Cơm Đốt Thố Hội An, ${addr}`;
+      const query = item.dataset.query || `Cơm Đốt Thố Hội An, ${addr}`;
       const isGold = item.dataset.gold === 'true';
       const mapPending = item.dataset.mapPending === 'true';
 
@@ -86,12 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (curBadge) {
         curBadge.textContent = tag;
         curBadge.className = (curBadge.className.includes('fr-map-spotlight__badge') ? 'fr-map-spotlight__badge' : 'fr-map-info-tag') + (isGold ? ' is-gold' : '');
-      }
-      if (curCall) {
-        curCall.href = 'tel:' + tel;
-        if (curCallText) {
-          curCallText.textContent = telDisplay;
-        }
       }
       if (curDir) {
         curDir.hidden = mapPending;
@@ -258,6 +247,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Số liệu đếm lên (trang Hồ sơ năng lực) ──
+  const counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    const run = (el) => {
+      const end = Number(el.dataset.count);
+      if (!end || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = end; return; }
+      const t0 = performance.now();
+      const step = (t) => {
+        const k = Math.min(1, (t - t0) / 1400);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: 0.4 });
+      counters.forEach(el => io.observe(el));
+    } else counters.forEach(run);
+  }
+
   // ── Form tư vấn (trang Đăng ký) ──
   const form = document.getElementById('franchiseForm');
   if (!form) return;
@@ -267,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Chọn sẵn hình thức hợp tác từ ?model=
   const wanted = new URLSearchParams(location.search).get('model');
-  if (wanted) {
+  if (wanted && form.elements.model) {
     const opt = [...form.elements.model.options].find(o => o.textContent.trim() === wanted);
     if (opt) form.elements.model.value = opt.value || opt.textContent;
   }
@@ -291,9 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const phone = String(data.get('phone')).replace(/[\s.\-()]/g, '');
     if (!/^(\+?84|0)\d{9}$/.test(phone)) { form.elements.phone.classList.add('invalid'); ok = false; }
-    const email = String(data.get('email')).trim();
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { form.elements.email.classList.add('invalid'); ok = false; }
-    if (!ok) { setMsg('Vui lòng điền đủ thông tin bắt buộc và kiểm tra lại số điện thoại, email.', 'err'); return; }
+    if (!ok) { setMsg('Vui lòng điền đủ thông tin bắt buộc và kiểm tra lại số điện thoại.', 'err'); return; }
 
     if (!SHEET_ENDPOINT) { setMsg('Form chưa được nối Google Sheet (thiếu SHEET_ENDPOINT).', 'err'); return; }
 
@@ -301,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setMsg('Đang gửi...');
     try {
       const body = new URLSearchParams();
-      ['name', 'phone', 'email', 'area', 'model', 'budget', 'note'].forEach(k => body.append(k, data.get(k) || ''));
+      ['name', 'phone', 'area', 'model', 'note'].forEach(k => body.append(k, data.get(k) || ''));
       body.append('source', location.href);
       // no-cors: Apps Script không trả CORS header; request vẫn được ghi nhận
       await fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body });
