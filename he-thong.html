@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261105r">
-  <link rel="stylesheet" href="css/franchise.css?v=20261105r">
+  <link rel="stylesheet" href="css/style.css?v=20261105s">
+  <link rel="stylesheet" href="css/franchise.css?v=20261105s">
 </head>
 <body class="fr-body">
 
@@ -60,99 +60,59 @@
           </div>
 
           <div class="fr-map-card">
-            <!-- Sidebar: Danh sách toàn bộ 8 cơ sở -->
-            <aside class="fr-map-sidebar" aria-label="Danh sách cơ sở trên bản đồ">
-              <div class="fr-map-sidebar__header">
-                <span>Chọn cơ sở để xem bản đồ</span>
-                <span class="fr-map-count">8 / 8 cơ sở</span>
-              </div>
-              <div class="fr-map-list" id="mapStoreList" role="list">
-                <button type="button" class="fr-map-item active" data-store-id="nguyen-son" data-name="Cơ Sở 1 — Nguyễn Sơn" data-addr="Số 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội" data-tag="Flagship · Đang hoạt động" data-tel="0866888118" data-tel-display="0866 888 118" data-query="Cơm Đốt Thố Hội An, 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Flagship</span>
-                    <span class="fr-map-idx">#01</span>
-                  </div>
-                  <h4>Cơ Sở 1 — Nguyễn Sơn</h4>
-                  <p>Số 8 Ngõ 158 Nguyễn Sơn, Long Biên, Hà Nội</p>
+            <!-- 1. Thanh Tab Viên Thuốc (Pill Tabs) chọn nhanh cơ sở -->
+            <div class="fr-map-tabs-bar" aria-label="Danh sách các cơ sở">
+              <div class="fr-map-tabs-track" id="mapStoreList" role="tablist">
+                <button type="button" class="fr-map-tab active" data-store-id="nguyen-son" data-name="Cơ Sở 1 — Nguyễn Sơn" data-addr="Số 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội" data-tag="Flagship · Đang hoạt động" data-tel="0866888118" data-tel-display="0866 888 118" data-query="8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội" data-dir-query="Cơm Đốt Thố Hội An, 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội" data-gold="false" role="tab" aria-selected="true">
+                  <span class="fr-map-tab__num">01</span>
+                  <span class="fr-map-tab__name">Nguyễn Sơn</span>
+                  <span class="fr-map-tab__star">★</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="to-hieu" data-name="Cơ Sở 249 Tô Hiệu" data-addr="249 Tô Hiệu, Nghĩa Đô, Hà Nội" data-tag="Đang hoạt động" data-tel="0387131988" data-tel-display="038 713 1988" data-query="Cơm Đốt Thố Hội An, 249 Tô Hiệu, Nghĩa Đô, Cầu Giấy, Hà Nội" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#02</span>
-                  </div>
-                  <h4>Cơ Sở 249 Tô Hiệu</h4>
-                  <p>249 Tô Hiệu, Nghĩa Đô, Hà Nội</p>
+                <button type="button" class="fr-map-tab" data-store-id="to-hieu" data-name="Cơ Sở 249 Tô Hiệu" data-addr="249 Tô Hiệu, Nghĩa Đô, Cầu Giấy, Hà Nội" data-tag="Đang hoạt động" data-tel="0387131988" data-tel-display="038 713 1988" data-query="249 Tô Hiệu, Dịch Vọng, Cầu Giấy, Hà Nội" data-dir-query="Cơm Đốt Thố Hội An, 249 Tô Hiệu, Nghĩa Đô, Cầu Giấy, Hà Nội" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">02</span>
+                  <span class="fr-map-tab__name">Tô Hiệu</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="sai-dong" data-name="Cơ Sở 42 Sài Đồng" data-addr="42 Sài Đồng, Long Biên, Hà Nội" data-tag="Đang hoạt động" data-tel="0866888118" data-tel-display="0866 888 118" data-query="Cơm Đốt Thố Hội An, 42 Sài Đồng, Long Biên, Hà Nội" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#03</span>
-                  </div>
-                  <h4>Cơ Sở 42 Sài Đồng</h4>
-                  <p>42 Sài Đồng, Long Biên, Hà Nội</p>
+                <button type="button" class="fr-map-tab" data-store-id="sai-dong" data-name="Cơ Sở 42 Sài Đồng" data-addr="42 Sài Đồng, Long Biên, Hà Nội" data-tag="Đang hoạt động" data-tel="0866888118" data-tel-display="0866 888 118" data-query="42 Sài Đồng, Long Biên, Hà Nội" data-dir-query="Cơm Đốt Thố Hội An, 42 Sài Đồng, Long Biên, Hà Nội" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">03</span>
+                  <span class="fr-map-tab__name">Sài Đồng</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="bac-giang" data-name="Cơ Sở Bắc Giang" data-addr="75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang" data-tag="Đang hoạt động" data-tel="0915534688" data-tel-display="091 553 46 88" data-query="Cơm Đốt Thố Hội An, 75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#04</span>
-                  </div>
-                  <h4>Cơ Sở Bắc Giang</h4>
-                  <p>75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang</p>
+                <button type="button" class="fr-map-tab" data-store-id="bac-giang" data-name="Cơ Sở Bắc Giang" data-addr="75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang" data-tag="Đang hoạt động" data-tel="0915534688" data-tel-display="091 553 46 88" data-query="75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang" data-dir-query="Cơm Đốt Thố Hội An, 75 Hoàng Quốc Việt, Phường Xương Giang, Bắc Giang" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">04</span>
+                  <span class="fr-map-tab__name">Bắc Giang</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="viet-tri" data-name="Cơ Sở Việt Trì" data-addr="Số 1 Lê Quang Ấn, Phường Việt Trì, Phú Thọ" data-tag="Đang hoạt động" data-tel="0975374318" data-tel-display="097 537 43 18" data-query="Cơm Đốt Thố Hội An, 1 Lê Quang Ấn, Việt Trì, Phú Thọ" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#05</span>
-                  </div>
-                  <h4>Cơ Sở Việt Trì</h4>
-                  <p>Số 1 Lê Quang Ấn, Phường Việt Trì, Phú Thọ</p>
+                <button type="button" class="fr-map-tab" data-store-id="viet-tri" data-name="Cơ Sở Việt Trì" data-addr="Số 1 Lê Quang Ấn, Phường Việt Trì, Phú Thọ" data-tag="Đang hoạt động" data-tel="0975374318" data-tel-display="097 537 43 18" data-query="1 Lê Quang Ấn, Việt Trì, Phú Thọ" data-dir-query="Cơm Đốt Thố Hội An, 1 Lê Quang Ấn, Việt Trì, Phú Thọ" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">05</span>
+                  <span class="fr-map-tab__name">Việt Trì</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="tuyen-quang" data-name="Cơ Sở Tuyên Quang" data-addr="254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang" data-tag="Đang hoạt động" data-tel="0889323663" data-tel-display="0889 323 663" data-query="Cơm Đốt Thố Hội An, 254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#06</span>
-                  </div>
-                  <h4>Cơ Sở Tuyên Quang</h4>
-                  <p>254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang</p>
+                <button type="button" class="fr-map-tab" data-store-id="tuyen-quang" data-name="Cơ Sở Tuyên Quang" data-addr="254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang" data-tag="Đang hoạt động" data-tel="0889323663" data-tel-display="0889 323 663" data-query="254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang" data-dir-query="Cơm Đốt Thố Hội An, 254 Lý Nam Đế, Phường Minh Xuân, Tuyên Quang" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">06</span>
+                  <span class="fr-map-tab__name">Tuyên Quang</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="thai-nguyen" data-name="Cơ Sở Thái Nguyên" data-addr="451 Phan Đình Phùng, Thái Nguyên" data-tag="Đang hoạt động" data-tel="0944534332" data-tel-display="094 453 43 32" data-query="Cơm Đốt Thố Hội An, 451 Phan Đình Phùng, Thái Nguyên" data-gold="false">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge">Đang hoạt động</span>
-                    <span class="fr-map-idx">#07</span>
-                  </div>
-                  <h4>Cơ Sở Thái Nguyên</h4>
-                  <p>451 Phan Đình Phùng, Thái Nguyên</p>
+                <button type="button" class="fr-map-tab" data-store-id="thai-nguyen" data-name="Cơ Sở Thái Nguyên" data-addr="451 Phan Đình Phùng, Thái Nguyên" data-tag="Đang hoạt động" data-tel="0944534332" data-tel-display="094 453 43 32" data-query="451 Phan Đình Phùng, Thái Nguyên" data-dir-query="Cơm Đốt Thố Hội An, 451 Phan Đình Phùng, Thái Nguyên" data-gold="false" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">07</span>
+                  <span class="fr-map-tab__name">Thái Nguyên</span>
                 </button>
 
-                <button type="button" class="fr-map-item" data-store-id="tx-phu-tho" data-name="Cơ Sở Thị Xã Phú Thọ" data-addr="Thị Xã Phú Thọ, Tỉnh Phú Thọ" data-tag="Sắp ra mắt" data-tel="0866888118" data-tel-display="0866 888 118" data-query="Thị xã Phú Thọ, Phú Thọ" data-map-pending="true" data-gold="true">
-                  <div class="fr-map-item__top">
-                    <span class="fr-map-badge fr-map-badge--gold">Sắp ra mắt</span>
-                    <span class="fr-map-idx">#08</span>
-                  </div>
-                  <h4>Cơ Sở Thị Xã Phú Thọ</h4>
-                  <p>Thị Xã Phú Thọ, Tỉnh Phú Thọ (Đang hoàn thiện)</p>
+                <button type="button" class="fr-map-tab fr-map-tab--pending" data-store-id="tx-phu-tho" data-name="Cơ Sở Thị Xã Phú Thọ" data-addr="Thị Xã Phú Thọ, Tỉnh Phú Thọ" data-tag="Sắp ra mắt" data-tel="0866888118" data-tel-display="0866 888 118" data-query="Thị xã Phú Thọ, Phú Thọ" data-dir-query="Thị xã Phú Thọ, Phú Thọ" data-map-pending="true" data-gold="true" role="tab" aria-selected="false">
+                  <span class="fr-map-tab__num">08</span>
+                  <span class="fr-map-tab__name">TX. Phú Thọ</span>
+                  <span class="fr-map-tab__dot"></span>
                 </button>
               </div>
-            </aside>
+            </div>
 
-            <!-- Main: Header thông tin cơ sở đang chọn + Bản đồ tương tác -->
-            <div class="fr-map-main">
-              <div class="fr-map-info-bar" id="mapInfoBar">
-                <div class="fr-map-info-bar__text">
-                  <span class="fr-map-info-tag" id="mapActiveBadge">Flagship · Đang hoạt động</span>
-                  <h3 id="mapActiveName">Cơ Sở 1 — Nguyễn Sơn</h3>
-                  <p id="mapActiveAddr">Số 8 Ngõ 158 Nguyễn Sơn, Bồ Đề, Long Biên, Hà Nội</p>
-                </div>
-                <div class="fr-map-info-bar__actions">
-                  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=C%C6%A1m%20%C4%90%E1%BB%91t%20Th%E1%BB%91%20H%E1%BB%99i%20An%2C%208%20Ng%C3%B5%20158%20Nguy%E1%BB%85n%20S%C6%A1n%2C%20B%E1%BB%93%20%C4%90%E1%BB%81%2C%20Long%20Bi%C3%AAn%2C%20H%C3%A0%20N%E1%BB%99i" target="_blank" rel="noopener" class="fr-btn fr-btn--gold fr-btn--compact" id="mapActiveDir">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Chỉ đường
-                  </a>
+            <!-- 2. Thẻ Thông Tin Chi Tiết Cơ Sở (Spotlight Card) -->
+            <div class="fr-map-spotlight" id="mapInfoBar">
+              <div class="fr-map-spotlight__info">
+                <div class="fr-map-spotlight__meta">
+                  <span class="fr-map-spotlight__badge" id="mapActiveBadge">Flagship · Đang hoạt động</span>
+                  <span class="fr-map-spotlight__counter" id="mapActiveCounter">Cơ sở 1 / 8</span>
                 </div>
                 <h3 class="fr-map-spotlight__title" id="mapActiveName">Cơ Sở 1 — Nguyễn Sơn</h3>
                 <p class="fr-map-spotlight__addr" id="mapActiveAddr">
@@ -161,15 +121,11 @@
                 </p>
               </div>
 
-              <!-- 2 Nút hành động nổi bật: Chỉ đường (Vàng Gold) & Gọi Hotline (Đen Mun) -->
+              <!-- Nút Chỉ đường -->
               <div class="fr-map-spotlight__actions">
                 <a href="https://www.google.com/maps/dir/?api=1&amp;destination=C%C6%A1m%20%C4%90%E1%BB%91t%20Th%E1%BB%91%20H%E1%BB%99i%20An%2C%208%20Ng%C3%B5%20158%20Nguy%E1%BB%85n%20S%C6%A1n%2C%20B%E1%BB%93%20%C4%90%E1%BB%81%2C%20Long%20Bi%C3%AAn%2C%20H%C3%A0%20N%E1%BB%99i" target="_blank" rel="noopener" class="fr-mbtn fr-mbtn--dir" id="mapActiveDir">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                   <span>Chỉ đường</span>
-                </a>
-                <a href="tel:0866888118" class="fr-mbtn fr-mbtn--call" id="mapActiveCall">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  <span id="mapActiveCallText">0866 888 118</span>
                 </a>
               </div>
             </div>
@@ -219,6 +175,6 @@
 
   <div class="fr-lightbox" id="frLightbox" hidden><button aria-label="Đóng" id="frLightboxClose">×</button><img alt=""></div>
 
-  <script src="js/franchise.js?v=20261105r"></script>
+  <script src="js/franchise.js?v=20261105s"></script>
 </body>
 </html>
