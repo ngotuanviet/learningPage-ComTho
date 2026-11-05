@@ -5,7 +5,7 @@
   'use strict';
 
   // Địa chỉ backend. Chạy local thì tự dùng localhost:8000.
-  var PROD_API = 'https://api.comdotthohoian.vn'; // TODO Phase 4: đổi thành domain API thật
+  var PROD_API = 'https://comtho-api.vercel.app'; // đổi khi có domain riêng (nhớ thêm domain web vào PUBLIC_ALLOWED_ORIGINS)
   var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var API = (window.SHOP_API || (isLocal ? 'http://localhost:8000' : PROD_API)) + '/api/v1';
   var POLL_MS = 4000;
