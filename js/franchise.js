@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = item.dataset.name || '';
       const addr = item.dataset.addr || '';
       const tag = item.dataset.tag || '';
-      const query = item.dataset.query || `Cơm Đốt Thố Hội An, ${addr}`;
+      const query = item.dataset.query || addr;
+      const dirQuery = item.dataset.dirQuery || `Cơm Đốt Thố Hội An, ${addr}`;
       const isGold = item.dataset.gold === 'true';
       const mapPending = item.dataset.mapPending === 'true';
 
