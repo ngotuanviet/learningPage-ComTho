@@ -103,8 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
         else curOpenFull.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dirQuery)}`;
       }
 
-      if (item.scrollIntoView) {
-        item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      // Chỉ cuộn ngang thanh tab để tab đang chọn ra giữa; không cuộn cả trang (tránh nhảy trang khi vừa vào)
+      const track = item.parentElement;
+      if (track && track.scrollWidth > track.clientWidth) {
+        track.scrollTo({ left: item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2, behavior: 'smooth' });
       }
 
       if (doScroll) {
