@@ -48,13 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const curName = document.getElementById('mapActiveName');
     const curAddr = document.getElementById('mapActiveAddr');
     const curDir = document.getElementById('mapActiveDir');
-    const mapItems = mapSection.querySelectorAll('.fr-map-item');
+    const curCounter = document.getElementById('mapActiveCounter');
+    const curOpenFull = document.getElementById('mapOpenFullBtn');
+    const mapItems = mapSection.querySelectorAll('.fr-map-tab, .fr-map-item');
 
     // Chuyển cơ sở đang hiển thị trên bản đồ
     const selectStore = (item, doScroll = false) => {
       if (!item) return;
-      mapItems.forEach(i => i.classList.remove('active'));
+      mapItems.forEach(i => {
+        i.classList.remove('active');
+        i.setAttribute('aria-selected', 'false');
+      });
       item.classList.add('active');
+      item.setAttribute('aria-selected', 'true');
 
       const name = item.dataset.name || '';
       const addr = item.dataset.addr || '';
@@ -64,19 +70,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const mapPending = item.dataset.mapPending === 'true';
 
       if (curName) curName.textContent = name;
-      if (curAddr) curAddr.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+      if (curAddr) {
+        const addrSpan = curAddr.querySelector('span');
+        if (addrSpan) {
+          addrSpan.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+        } else {
+          curAddr.textContent = addr + (mapPending ? ' — Vị trí chính xác đang cập nhật.' : '');
+        }
+      }
       if (curBadge) {
         curBadge.textContent = tag;
-        curBadge.className = 'fr-map-info-tag' + (isGold ? ' fr-map-info-tag--gold' : '');
+        curBadge.className = (curBadge.className.includes('fr-map-spotlight__badge') ? 'fr-map-spotlight__badge' : 'fr-map-info-tag') + (isGold ? ' is-gold' : '');
       }
       if (curDir) {
         curDir.hidden = mapPending;
         if (mapPending) curDir.removeAttribute('href');
-        else curDir.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
+        else curDir.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dirQuery)}`;
       }
       if (storeFrame) {
         storeFrame.title = `${mapPending ? 'Khu vực dự kiến' : 'Bản đồ'} ${name} — Cơm Đốt Thố Hội An`;
-        storeFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${mapPending ? 12 : 17}&hl=vi&output=embed`;
+        storeFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${mapPending ? 12 : 16}&hl=vi&output=embed`;
+      }
+
+      const itemIndex = [...mapItems].indexOf(item);
+      if (curCounter && itemIndex >= 0) {
+        curCounter.textContent = `Cơ sở ${itemIndex + 1} / ${mapItems.length}`;
+      }
+      if (curOpenFull) {
+        curOpenFull.hidden = mapPending;
+        if (mapPending) curOpenFull.removeAttribute('href');
+        else curOpenFull.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dirQuery)}`;
+      }
+
+      if (item.scrollIntoView) {
+        item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
 
       if (doScroll) {
