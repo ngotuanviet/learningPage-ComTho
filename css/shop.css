@@ -1,0 +1,81 @@
+/* Bán tài liệu số: hộp mua + trang checkout. Dùng lại màu/nút/form của franchise.css */
+
+/* ---- Nút "Mua tài liệu số" (ẩn tới khi lấy được giá từ API) ---- */
+.fr-btn.shop-buy { line-height: inherit; }
+.fr-btn.shop-buy[hidden] { display: none; }
+.fr-center .shop-buy[hidden] + .fr-btn { margin-left: 0; }
+.fr-pkg-cta .shop-buy { margin: 0 0.5rem 0.6rem; }
+
+/* ---- Hộp nhập tên + email ---- */
+.shop-dialog {
+  width: min(440px, calc(100vw - 32px)); padding: 2rem 1.75rem 1.5rem; border: 0; border-radius: var(--radius-md, 14px);
+  background: #fff; color: var(--text-main); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.shop-dialog::backdrop { background: rgba(17, 17, 17, 0.6); }
+.shop-dialog__close { position: absolute; top: 0.6rem; right: 0.9rem; background: none; border: 0; font-size: 1.8rem; line-height: 1; cursor: pointer; color: var(--text-muted); }
+.shop-dialog__price { font-size: 1.5rem; font-weight: 700; color: var(--bronze); margin: 0.25rem 0 1.25rem; }
+.shop-dialog__form { display: grid; gap: 1rem; }
+.shop-dialog__form .form-group { margin: 0; }
+.shop-dialog__form .fr-form__foot { margin-top: 0.25rem; }
+.shop-dialog__hint { font-size: 0.8rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+.shop-dialog .fr-form__msg { margin: 0; text-align: center; }
+
+/* ---- Trang checkout ---- */
+/* Khối nào đặt display riêng (grid/flex) vẫn phải ẩn được bằng thuộc tính hidden */
+#shopCheckout [hidden] { display: none !important; }
+.shop-head h1 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+.shop-sec { padding: 2.5rem 0 4rem; }
+.shop-wrap { max-width: 880px; }
+
+.shop-steps { list-style: none; display: flex; justify-content: center; gap: 0.5rem; padding: 0; margin: 0 0 1.75rem; counter-reset: s; }
+.shop-steps li { display: flex; align-items: center; gap: 0.45rem; font-size: 0.82rem; color: var(--text-muted); }
+.shop-steps li:not(:last-child)::after { content: ''; width: 2.25rem; height: 1px; background: var(--border-gold); margin-left: 0.5rem; }
+.shop-steps i { font-style: normal; width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.75rem; font-weight: 700; border: 1.5px solid var(--border-gold); background: #fff; }
+.shop-steps li.current { color: var(--text-main); font-weight: 600; }
+.shop-steps li.current i { border-color: var(--bronze); color: var(--bronze); }
+.shop-steps li.done i { background: #1f7a4d; border-color: #1f7a4d; color: transparent; position: relative; }
+.shop-steps li.done i::before { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; }
+
+.shop-card { background: #fff; border: 1px solid var(--border-warm); border-radius: var(--radius-md, 14px); padding: 2rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); }
+.shop-center { text-align: center; }
+.shop-center .fr-btn { margin-top: 1rem; }
+.shop-muted { color: var(--text-muted); line-height: 1.6; }
+.shop-small { font-size: 0.8rem; margin-top: 0.5rem; }
+.shop-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin: 0 0 0.6rem; }
+
+.shop-pay { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
+.shop-pay__qr { text-align: center; }
+.shop-pay__qr img { width: 100%; max-width: 300px; height: auto; aspect-ratio: 1; border: 1px solid var(--border-warm); border-radius: 10px; background: #f8f2ea; }
+.shop-pay__qr p { font-size: 0.8rem; margin-top: 0.6rem; }
+.shop-order { margin: 0 0 1rem; font-size: 0.95rem; }
+.shop-dl { margin: 0; display: grid; gap: 0.1rem; }
+.shop-dl div { display: grid; grid-template-columns: 120px 1fr; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--border-warm); }
+.shop-dl dt { color: var(--text-muted); font-size: 0.85rem; }
+.shop-dl dd { margin: 0; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; word-break: break-all; }
+.shop-code { letter-spacing: 0.06em; color: var(--bronze); }
+.shop-copy { font: inherit; font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 6px; border: 1px solid var(--border-gold); background: var(--latte-subtle, #f8f2ea); cursor: pointer; color: var(--text-main); }
+.shop-copy:hover { border-color: var(--bronze); }
+.shop-note { margin-top: 1rem; padding: 0.75rem 0.9rem; border-radius: 8px; background: #fff7e6; border: 1px solid #f3d9a4; font-size: 0.85rem; line-height: 1.55; }
+.shop-wait { display: flex; align-items: center; gap: 0.6rem; margin-top: 1rem; font-size: 0.88rem; }
+.shop-spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-gold); border-top-color: var(--bronze); animation: shopSpin 0.9s linear infinite; flex: none; }
+@keyframes shopSpin { to { transform: rotate(360deg); } }
+
+.shop-done { text-align: center; }
+.shop-check { width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; background: #1f7a4d; color: #fff; display: grid; place-items: center; font-size: 2rem; font-weight: 700; }
+.shop-badge { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; background: #e5f4ec; color: #1f7a4d; }
+.shop-doc { display: flex; align-items: center; gap: 1rem; text-align: left; margin: 1.5rem 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--border-warm); border-radius: 12px; background: var(--latte-subtle, #f8f2ea); }
+.shop-doc__icon { width: 48px; height: 56px; border-radius: 6px; background: var(--ink, #111); color: var(--nav-gold, #d9a756); display: grid; place-items: center; font-size: 0.72rem; font-weight: 800; flex: none; }
+.shop-doc__body { flex: 1; display: grid; gap: 0.3rem; justify-items: start; }
+
+@media (max-width: 760px) {
+  .shop-pay { grid-template-columns: 1fr; gap: 1.25rem; }
+  .shop-pay__qr img { max-width: 260px; }
+  .shop-card { padding: 1.25rem; }
+  .shop-steps span { display: none; }
+  .shop-steps li:not(:last-child)::after { width: 1.5rem; }
+  .shop-dl div { grid-template-columns: 100px 1fr; }
+  .shop-doc { flex-wrap: wrap; }
+  .shop-doc .fr-btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) { .shop-spinner { animation: none; } }

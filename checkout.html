@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán — Cơm Đốt Thố Hội An</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20261105w">
+  <link rel="stylesheet" href="css/franchise.css?v=20261105w">
+  <link rel="stylesheet" href="css/shop.css?v=20261105a">
+</head>
+<body class="fr-body fr-page-checkout">
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Cơm Đốt Thố Hội An — trang chủ">
+        <img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo Cơm Đốt Thố Hội An">
+        <span class="nav__brand"><span class="nav__brand-l1">Cơm Đốt Thố</span><span class="nav__brand-l2">Hội An</span></span>
+      </a>
+      <nav class="nav__links" id="frLinks" aria-label="Điều hướng">
+        <a href="cong-thuc.html">Bộ Công Thức</a><a href="van-hanh.html">Quy Trình Vận Hành</a><a href="nhuong-quyen.html">Nhượng Quyền</a><a href="he-thong.html">Hệ Thống Nhà Hàng</a><a href="ho-so-nang-luc.html">Hồ Sơ Năng Lực</a>
+        <a href="dang-ky.html" class="nav__cta-mobile">Đăng Ký Tư Vấn</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="dang-ky.html" class="nav__btn-franchise">Đăng Ký Tư Vấn</a>
+      </div>
+      <button class="nav__menu-btn" id="frToggle" aria-label="Mở menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="fr-sub">
+    <div class="fr-pagehead shop-head">
+      <span class="fr-eyebrow">Thanh toán tài liệu số</span>
+      <h1><span class="fr-ln">Chuyển khoản QR —</span><br><span class="fr-ln">nhận tài liệu ngay</span></h1>
+    </div>
+
+    <section class="fr-sec shop-sec">
+      <div class="fr-wrap shop-wrap" id="shopCheckout">
+        <ol class="shop-steps" aria-label="Các bước">
+          <li><i>1</i><span>Đặt hàng</span></li>
+          <li><i>2</i><span>Chuyển khoản</span></li>
+          <li><i>3</i><span>Xác nhận</span></li>
+          <li><i>4</i><span>Nhận tài liệu</span></li>
+        </ol>
+
+        <div class="shop-card" id="viewLoading">
+          <p class="shop-muted">Đang tải thông tin đơn hàng…</p>
+        </div>
+
+        <!-- Chờ thanh toán -->
+        <div class="shop-card shop-pay" id="viewPending" hidden>
+          <div class="shop-pay__qr">
+            <img id="payQr" alt="Mã QR chuyển khoản" width="300" height="300">
+            <p class="shop-muted">Mở app ngân hàng → Quét QR. Số tiền và nội dung đã điền sẵn.</p>
+          </div>
+          <div class="shop-pay__info">
+            <p class="shop-order">Đơn <b data-order-code></b> · <span data-order-product></span></p>
+            <dl class="shop-dl">
+              <div><dt>Ngân hàng</dt><dd id="payBank"></dd></div>
+              <div><dt>Số tài khoản</dt><dd><span id="payAccount"></span> <button type="button" class="shop-copy" data-copy="account">Chép</button></dd></div>
+              <div><dt>Chủ tài khoản</dt><dd id="payName"></dd></div>
+              <div><dt>Số tiền</dt><dd><strong id="payAmount"></strong> <button type="button" class="shop-copy" data-copy="amount">Chép</button></dd></div>
+              <div><dt>Nội dung CK</dt><dd><strong id="payContent" class="shop-code"></strong> <button type="button" class="shop-copy" data-copy="content">Chép</button></dd></div>
+            </dl>
+            <div class="shop-note">
+              <b>Lưu ý:</b> chuyển <b>đúng số tiền</b> và giữ nguyên <b>nội dung chuyển khoản</b> để hệ thống tự xác nhận.
+            </div>
+            <div class="shop-wait">
+              <span class="shop-spinner" aria-hidden="true"></span>
+              <span>Đang chờ thanh toán… mã QR còn hiệu lực <b id="payCountdown">30:00</b></span>
+            </div>
+            <p class="shop-muted shop-small" id="pollError" hidden>Mất kết nối, đang thử lại…</p>
+          </div>
+        </div>
+
+        <!-- Đã thanh toán -->
+        <div class="shop-card shop-done" id="viewPaid" hidden>
+          <div class="shop-check" aria-hidden="true">✓</div>
+          <h2 class="shop-title">Thanh toán thành công</h2>
+          <p class="shop-muted">Đơn <b data-order-code></b> · <span data-order-amount></span> · <span class="shop-badge">Đã thanh toán</span></p>
+          <div class="shop-doc">
+            <div class="shop-doc__icon" aria-hidden="true">PDF</div>
+            <div class="shop-doc__body">
+              <b data-order-product></b>
+              <span class="shop-badge shop-badge--ok">Sẵn sàng</span>
+            </div>
+            <a id="paidLink" class="fr-btn fr-btn--gold" target="_blank" rel="noopener noreferrer">Mở tài liệu (Google Drive)</a>
+          </div>
+          <p class="shop-muted shop-small" id="paidEmail" hidden>Link tài liệu cũng đã được gửi vào email của bạn. Hãy lưu lại để mở khi cần.</p>
+          <p class="shop-muted shop-small">Hãy lưu link này hoặc giữ email để mở lại tài liệu sau.</p>
+        </div>
+
+        <!-- Hết hạn -->
+        <div class="shop-card shop-center" id="viewExpired" hidden>
+          <h2 class="shop-title">Mã thanh toán đã hết hạn</h2>
+          <p class="shop-muted">Đơn <b data-order-code></b> chưa nhận được thanh toán trong thời gian quy định.</p>
+          <p class="shop-muted">Nếu bạn <b>đã chuyển khoản</b>, đừng lo: hệ thống vẫn ghi nhận và gửi tài liệu qua email. Cần hỗ trợ, gọi <a href="tel:0975388886">097 538 88 86</a>.</p>
+          <a href="cong-thuc.html" class="fr-btn fr-btn--dark">Đặt lại đơn mới</a>
+        </div>
+
+        <!-- Cần kiểm tra -->
+        <div class="shop-card shop-center" id="viewReview" hidden>
+          <h2 class="shop-title">Đang kiểm tra giao dịch</h2>
+          <p class="shop-muted">Chúng tôi đã nhận giao dịch cho đơn <b data-order-code></b> nhưng số tiền chưa khớp. Nhân viên sẽ kiểm tra và liên hệ qua email trong thời gian sớm nhất.</p>
+          <p class="shop-muted">Hỗ trợ nhanh: <a href="tel:0975388886">097 538 88 86</a></p>
+        </div>
+
+        <!-- Không có phiên -->
+        <div class="shop-card shop-center" id="viewMissing" hidden>
+          <h2 class="shop-title">Không tìm thấy phiên thanh toán</h2>
+          <p class="shop-muted">Trang này chỉ mở được trên trình duyệt đã đặt hàng. Nếu bạn đã thanh toán, link tài liệu đã được gửi vào email.</p>
+          <p class="shop-muted">Cần hỗ trợ, gọi <a href="tel:0975388886">097 538 88 86</a>.</p>
+          <a href="cong-thuc.html" class="fr-btn fr-btn--dark">Về trang Bộ Công Thức</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fr-footer">
+    <div class="fr-footer__grid">
+      <div>
+        <div class="fr-footer__brand"><img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo"><span>Cơm Đốt Thố Hội An</span></div>
+        <p>Nghệ thuật đốt thố trên than hồng, chuẩn hóa để hợp tác và nhân rộng.</p>
+      </div>
+      <div>
+        <h4>Liên hệ</h4>
+        <p>Hotline nhượng quyền: <a href="tel:0975388886">097 538 88 86</a></p>
+        <p><a href="https://www.facebook.com/comdotthohoian" target="_blank" rel="noopener">Fanpage nhượng quyền</a></p>
+      </div>
+    </div>
+    <div class="fr-footer__bottom">Công ty TNHH VFX Group · 42/111 Nguyễn Xiển, Hà Nội<br>© 2026 Cơm Đốt Thố Hội An. Bảo lưu mọi quyền.</div>
+  </footer>
+
+  <script src="js/franchise.js?v=20261105w"></script>
+  <script src="js/shop.js?v=20261105a"></script>
+</body>
+</html>
