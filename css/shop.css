@@ -21,6 +21,22 @@
 .shop-dialog__form .fr-form__foot { margin-top: 0.25rem; }
 .shop-dialog__hint { font-size: 0.8rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
 .shop-dialog .fr-form__msg { margin: 0; text-align: center; }
+.shop-addons { display: grid; gap: 0.5rem; }
+.shop-addons[hidden] { display: none; }
+.shop-addon {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.6rem; cursor: pointer;
+  padding: 0.7rem 0.85rem; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--latte-subtle, #f8f2ea);
+  font-size: 0.88rem; line-height: 1.35;
+}
+.shop-addon:has(input:checked) { border-color: var(--bronze); background: #fff4dc; }
+.shop-addon input { width: 18px; height: 18px; accent-color: var(--bronze); margin: 0; }
+.shop-addon__name { font-weight: 600; }
+.shop-addon__price { font-weight: 700; color: var(--bronze); white-space: nowrap; }
+.shop-total { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6rem 0 0.2rem; border-top: 1px dashed var(--border-gold); }
+.shop-total span { color: var(--text-muted); font-size: 0.88rem; }
+.shop-total__value { font-size: 1.3rem; color: var(--bronze); }
+#paidDocs { display: grid; gap: 0.75rem; margin: 1.5rem 0 1rem; }
+#paidDocs .shop-doc { margin: 0; }
 
 /* ---- Trang checkout ---- */
 /* Khối nào đặt display riêng (grid/flex) vẫn phải ẩn được bằng thuộc tính hidden */
@@ -81,3 +97,31 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .shop-spinner { animation: none; } }
+
+/* ---- Trang Bộ Công Thức ---- */
+.fr-pagehead h1.shop-h1 { font-size: clamp(1.6rem, 3.1vw, 2.6rem); line-height: 1.2; }
+/* Khung giá có ảnh món ăn phía sau, phủ lớp tối để chữ vẫn dễ đọc */
+.fr-pkg-box.shop-pkg--photo {
+  background:
+    linear-gradient(180deg, rgba(17, 15, 12, 0.55) 0%, rgba(17, 15, 12, 0.62) 50%, rgba(17, 15, 12, 0.8) 100%),
+    url("../images/hero/Five-dish-grilled-feast-cluster.webp") center 40% / cover no-repeat,
+    #15120e;
+}
+.shop-pkg--photo .fr-pkg-title,
+.shop-pkg--photo .fr-eyebrow { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7); }
+
+/* 9 mục nội dung, 2 cột (5 + 4): mỗi cột co theo độ dài chữ, cả khối căn giữa */
+.shop-toc { display: grid; grid-template-columns: repeat(2, max-content); justify-content: center; gap: 0.75rem; margin-top: 0.2rem; }
+.shop-toc ol {
+  list-style: none; margin: 0; padding: 0.25rem 1rem; border-radius: 12px;
+  background: rgba(14, 12, 10, 0.62); border: 1px solid rgba(245, 184, 46, 0.18);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.shop-toc li { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.45rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.shop-toc li:last-child { border-bottom: 0; }
+.shop-toc b { color: var(--nav-gold, #f5b82e); font-weight: 800; font-size: 1rem; min-width: 1.5rem; font-variant-numeric: tabular-nums; }
+.shop-toc span { color: var(--cream, #faf6f0); font-size: 0.95rem; line-height: 1.4; }
+@media (max-width: 760px) {
+  .shop-toc { grid-template-columns: 1fr; gap: 0.5rem; }
+  .shop-toc ol { padding: 0.2rem 0.85rem; }
+}

@@ -6,8 +6,17 @@
 
   // Địa chỉ backend. Chạy local thì tự dùng localhost:8000.
   var PROD_API = 'https://comtho-api.vercel.app'; // đổi khi có domain riêng (nhớ thêm domain web vào PUBLIC_ALLOWED_ORIGINS)
-  var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  var API = (window.SHOP_API || (isLocal ? 'http://localhost:8000' : PROD_API)) + '/api/v1';
+  // Mặc định luôn dùng API thật (kể cả khi xem trang ở máy).
+  // Lập trình viên thử với API local: mở trang kèm ?api=local (được nhớ trong tab này).
+  function pickApi() {
+    var wanted = new URLSearchParams(location.search).get('api');
+    try {
+      if (wanted === 'local' || wanted === 'prod') sessionStorage.setItem('shop:api', wanted);
+      wanted = sessionStorage.getItem('shop:api');
+    } catch (e) { /* private mode */ }
+    return wanted === 'local' ? 'http://localhost:8000' : PROD_API;
+  }
+  var API = (window.SHOP_API || pickApi()) + '/api/v1';
   var POLL_MS = 4000;
 
   function vnd(n) { return new Intl.NumberFormat('vi-VN').format(n) + ' đ'; }
@@ -75,12 +84,23 @@
     });
   }
 
+  // Danh sách sản phẩm đang bán (cho ô "mua kèm"); tải một lần.
+  var catalog = null;
+  function loadCatalog() {
+    if (!catalog) catalog = api('/products').catch(function () { return []; });
+    return catalog;
+  }
+
   var dialog;
   function openBuyDialog(product) {
     if (dialog) dialog.remove();
     var msg = el('p', { class: 'fr-form__msg', role: 'alert' });
     var submit = el('button', { type: 'submit', class: 'fr-btn fr-btn--gold', text: 'Tiếp tục thanh toán' });
+    var addons = el('div', { class: 'shop-addons' });
+    var total = el('strong', { class: 'shop-total__value', text: vnd(product.price) });
     var form = el('form', { class: 'shop-dialog__form', novalidate: '' }, [
+      addons,
+      el('div', { class: 'shop-total' }, [el('span', { text: 'Tổng thanh toán' }), total]),
       el('div', { class: 'form-group' }, [
         el('label', { class: 'form-label', for: 'shop-name', text: 'Họ và tên *' }),
         el('input', { id: 'shop-name', name: 'name', class: 'form-input', required: '', maxlength: '100', autocomplete: 'name', placeholder: 'Nguyễn Văn A' })
@@ -106,6 +126,29 @@
     dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', function () { dialog.remove(); dialog = null; });
 
+    // Ô "mua kèm" cho các tài liệu khác đang bán. Tổng tiền chỉ để hiển thị:
+    // số tiền thật do máy chủ tính lại từ giá trong database.
+    var extras = [];
+    function selected() {
+      return [product].concat(extras.filter(function (x) { return x.box.checked; }).map(function (x) { return x.product; }));
+    }
+    function updateTotal() {
+      total.textContent = vnd(selected().reduce(function (sum, p) { return sum + p.price; }, 0));
+    }
+    loadCatalog().then(function (list) {
+      list.filter(function (p) { return p.slug !== product.slug; }).forEach(function (p) {
+        var box = el('input', { type: 'checkbox', name: 'addon', value: p.slug });
+        box.addEventListener('change', updateTotal);
+        addons.appendChild(el('label', { class: 'shop-addon' }, [
+          box,
+          el('span', { class: 'shop-addon__name', text: 'Mua kèm ' + p.name }),
+          el('span', { class: 'shop-addon__price', text: '+' + vnd(p.price) })
+        ]));
+        extras.push({ product: p, box: box });
+      });
+      addons.hidden = !extras.length;
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = form.name.value.trim();
@@ -120,7 +163,10 @@
       submit.disabled = true;
       submit.textContent = 'Đang tạo đơn…';
       msg.textContent = '';
-      api('/orders', { method: 'POST', body: { product_slug: product.slug, customer_name: name, customer_email: email } })
+      var slugs = selected().map(function (p) { return p.slug; });
+      var body = { customer_name: name, customer_email: email };
+      if (slugs.length > 1) body.product_slugs = slugs; else body.product_slug = slugs[0];
+      api('/orders', { method: 'POST', body: body })
         .then(function (order) {
           saveToken(order.code, order.access_token);
           location.href = 'checkout.html?code=' + encodeURIComponent(order.code);
@@ -192,9 +238,21 @@
         return true; // tiếp tục hỏi trạng thái
       }
       clearInterval(countdown);
-      if (o.status === 'paid' && o.drive_url) {
-        var link = $('paidLink');
-        link.href = o.drive_url;
+      var docs = (o.items && o.items.length) ? o.items : [{ name: o.product_name, drive_url: o.drive_url }];
+      if (o.status === 'paid' && docs.every(function (d) { return d.drive_url; })) {
+        var box = $('paidDocs');
+        box.textContent = '';
+        docs.forEach(function (d) {
+          box.appendChild(el('div', { class: 'shop-doc' }, [
+            el('div', { class: 'shop-doc__icon', 'aria-hidden': 'true', text: 'PDF' }),
+            el('div', { class: 'shop-doc__body' }, [
+              el('b', { text: d.name }),
+              el('span', { class: 'shop-badge shop-badge--ok', text: 'Sẵn sàng' })
+            ]),
+            // href is an https Drive link from our API; el() sets it as a plain attribute
+            el('a', { class: 'fr-btn fr-btn--gold', href: d.drive_url, target: '_blank', rel: 'noopener noreferrer', text: 'Mở tài liệu (Google Drive)' })
+          ]));
+        });
         $('paidEmail').hidden = !o.email_sent;
         show('viewPaid');
         return false;

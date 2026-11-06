@@ -8,8 +8,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.config import get_settings
-from app.models import Order, Product, utcnow
-from app.schemas import OrderStatusOut, PaymentInfo
+from app.models import Order, OrderItem, Product, utcnow
+from app.schemas import OrderItemOut, OrderStatusOut, PaymentInfo
 from app.security import new_order_code, new_token, sha256_hex
 
 
@@ -46,7 +46,23 @@ def expire_if_due(db: Session, order: Order) -> None:
         db.commit()
 
 
+MAX_ITEMS = 5
+
+
+def order_items(order: Order) -> list[tuple[Product, str, int]]:
+    """(product, name snapshot, price snapshot) for each document in the order."""
+    if order.items:
+        return [(i.product, i.product_name, i.price) for i in order.items]
+    # Orders created before order_items existed hold a single product.
+    return [(order.product, order.product_name, order.amount)]
+
+
 def to_status(order: Order) -> OrderStatusOut:
+    paid = order.status == "paid"
+    items = [
+        OrderItemOut(slug=p.slug, name=name, price=price, drive_url=p.drive_url if paid else None)
+        for p, name, price in order_items(order)
+    ]
     return OrderStatusOut(
         code=order.code,
         status=order.status,
@@ -55,19 +71,28 @@ def to_status(order: Order) -> OrderStatusOut:
         expires_at=order.expires_at,
         paid_at=order.paid_at,
         payment=payment_info(order) if order.status == "pending" else None,
-        drive_url=order.product.drive_url if order.status == "paid" else None,
+        items=items,
+        # Kept for older checkout pages: link of the first document.
+        drive_url=items[0].drive_url if items else None,
         email_sent=order.email_sent_at is not None,
     )
 
 
-def create_order(db: Session, product_slug: str, name: str, email: str, ip_hash: str) -> tuple[Order, str]:
+def create_order(db: Session, slugs: list[str], name: str, email: str, ip_hash: str) -> tuple[Order, str]:
     s = get_settings()
     now = utcnow()
     email = email.lower()
 
-    product = db.scalar(select(Product).where(Product.slug == product_slug, Product.is_active.is_(True)))
-    if product is None:
+    slugs = list(dict.fromkeys(slugs))  # unique, keep the order the buyer chose
+    if not 1 <= len(slugs) <= MAX_ITEMS:
+        raise OrderError(422, "Danh sách sản phẩm không hợp lệ.")
+    found = {
+        p.slug: p
+        for p in db.scalars(select(Product).where(Product.slug.in_(slugs), Product.is_active.is_(True)))
+    }
+    if len(found) != len(slugs):
         raise OrderError(404, "Sản phẩm không tồn tại hoặc đã ngừng bán.")
+    products = [found[slug] for slug in slugs]
 
     pending = db.scalar(
         select(func.count()).where(
@@ -86,9 +111,9 @@ def create_order(db: Session, product_slug: str, name: str, email: str, ip_hash:
     for _ in range(5):  # retry on the (very unlikely) code collision
         order = Order(
             code=new_order_code(),
-            product_id=product.id,
-            product_name=product.name,
-            amount=product.price,
+            product_id=products[0].id,
+            product_name=" + ".join(p.name for p in products)[:200],
+            amount=sum(p.price for p in products),  # always from the database
             customer_name=name,
             customer_email=email,
             access_token_hash=sha256_hex(token),
@@ -96,6 +121,7 @@ def create_order(db: Session, product_slug: str, name: str, email: str, ip_hash:
             expires_at=now + timedelta(minutes=s.order_ttl_minutes),
             ip_hash=ip_hash,
             created_at=now,
+            items=[OrderItem(product_id=p.id, product_name=p.name, price=p.price) for p in products],
         )
         db.add(order)
         try:
