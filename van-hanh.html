@@ -23,9 +23,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261105w">
-  <link rel="stylesheet" href="css/franchise.css?v=20261105w">
-  <link rel="stylesheet" href="css/shop.css?v=20261106e">
+  <link rel="stylesheet" href="css/style.css?v=20261106a">
+  <link rel="stylesheet" href="css/franchise.css?v=20261106d">
+  <link rel="stylesheet" href="css/shop.css?v=20261107c">
 </head>
 <body class="fr-body">
 
@@ -49,9 +49,27 @@
   </header>
 
   <main class="fr-sub">
-    <div class="fr-pagehead">
+    <div class="fr-pagehead shop-head--compact">
       <span class="fr-eyebrow">Quy trình vận hành</span>
-      <h1><span class="fr-ln">Chuẩn hóa quy trình —</span><br><span class="fr-ln">đồng nhất chất lượng</span></h1>
+      <h1 class="shop-h1 shop-h1--line"><span class="fr-ln">Chuẩn hóa quy trình — đồng nhất chất lượng</span></h1>
+      <!-- Khối giá: giá gốc gạch, giá ưu đãi, % giảm (shop.js điền từ hệ thống) -->
+      <div class="shop-deal" data-deal="quy-trinh-van-hanh">
+        <div class="shop-deal__card">
+          <p class="shop-deal__was" data-deal-was><span>Giá gốc</span><s data-deal-list>10.000.000 đ</s></p>
+          <div class="shop-deal__now">
+            <span class="shop-deal__label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 11.6 12.4 2.6A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7c0 .5.2 1 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8ZM6.5 8a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>Chỉ còn</span>
+            <strong class="shop-deal__new" data-deal-price>3.900.000 đ</strong>
+          </div>
+          <em class="shop-deal__off" data-deal-off>-61%</em>
+          <i class="shop-deal__spark shop-deal__spark--1" aria-hidden="true">✦</i>
+          <i class="shop-deal__spark shop-deal__spark--2" aria-hidden="true">✦</i>
+          <i class="shop-deal__spark shop-deal__spark--3" aria-hidden="true">✦</i>
+        </div>
+        <p class="shop-deal__note">🔥 Ưu đãi chỉ còn <b>3 bộ tài liệu</b> với giá này</p>
+      </div>
+      <!-- Mua ngay: shop.js mở hộp mua + QR. Nếu API lỗi, nút vẫn dẫn tới trang đăng ký tư vấn. -->
+      <a href="dang-ky.html?model=Quy%20tr%C3%ACnh%20v%E1%BA%ADn%20h%C3%A0nh" class="fr-btn fr-btn--gold fr-btn--round shop-head-buy" data-buy="quy-trinh-van-hanh" data-buy-label="Mua Ngay Tài Liệu Vận Hành">Mua Ngay Tài Liệu Vận Hành</a>
+      <p class="shop-legal"><span class="shop-legal__a">Tài liệu thuộc bản quyền VFXGroup.</span> <span class="shop-legal__b">Nghiêm cấm <span class="shop-legal__full">sao chép, </span>phát tán<span class="shop-legal__full"> hoặc kinh doanh lại</span> khi chưa được cho phép.</span><br><a href="#chinh-sach-ban-quyen" class="shop-legal__link" data-policy>Chính sách bản quyền và sử dụng tài liệu <span aria-hidden="true">↗</span></a></p>
       
     </div>
     <section class="fr-sec">
@@ -82,11 +100,6 @@
             <b>06</b><h3>Kiểm soát chất lượng</h3><p>Checklist kiểm tra hằng ngày, tiêu chuẩn vệ sinh, chất lượng món ăn và đánh giá hoạt động.</p>
           </li>
         </ol>
-        <div class="fr-center">
-          <button type="button" class="fr-btn fr-btn--gold shop-buy" data-buy="quy-trinh-van-hanh" data-buy-label="Mua Ngay Tài Liệu Vận Hành" hidden>Mua Ngay Tài Liệu Vận Hành</button>
-          <a href="dang-ky.html?model=Quy%20tr%C3%ACnh%20v%E1%BA%ADn%20h%C3%A0nh" class="fr-btn fr-btn--dark">Tìm Hiểu Chuyển Giao Quy Trình</a>
-          <a href="dang-ky.html?model=%C4%90%C3%A0o%20t%E1%BA%A1o%20tr%E1%BB%B1c%20ti%E1%BA%BFp" class="fr-btn fr-btn--gold">Tìm Hiểu Đào Tạo Trực Tiếp</a>
-        </div>
       </div>
     </section>
   </main>
@@ -109,6 +122,6 @@
   <div class="fr-lightbox" id="frLightbox" hidden><button aria-label="Đóng" id="frLightboxClose">×</button><img alt=""></div>
 
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261106e"></script>
+  <script src="js/shop.js?v=20261106k"></script>
 </body>
 </html>

@@ -59,7 +59,10 @@ def test_client_cannot_set_price_or_status(client):
 def test_input_validation(client):
     make_product()
     assert order(client, email="not-an-email").status_code == 422
+    # Name is optional since checkout asks only for a phone number.
     r = client.post("/api/v1/orders", json={"product_slug": "goi-cong-thuc", "customer_name": "", "customer_email": "a@example.com"})
+    assert r.status_code == 201
+    r = client.post("/api/v1/orders", json={"product_slug": "goi-cong-thuc", "customer_name": "x" * 101, "customer_phone": "0912345678"})
     assert r.status_code == 422
 
 

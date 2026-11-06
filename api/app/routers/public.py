@@ -41,7 +41,8 @@ def get_product(slug: str, db: Session = Depends(get_db)):
 def post_order(body: OrderCreateIn, request: Request, db: Session = Depends(get_db)):
     try:
         order, token = create_order(
-            db, body.slugs, body.customer_name, body.customer_email, keyed_hash("ip:" + client_ip(request))
+            db, body.slugs, body.customer_name, body.customer_email, body.customer_phone,
+            keyed_hash("ip:" + client_ip(request)),
         )
     except OrderError as e:
         raise HTTPException(e.status_code, e.message) from None

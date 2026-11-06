@@ -44,7 +44,7 @@
       return res.json().catch(function () { return {}; }).then(function (data) {
         if (!res.ok) {
           var msg = typeof data.detail === 'string' ? data.detail : 'Có lỗi xảy ra, vui lòng thử lại.';
-          if (res.status === 422) msg = 'Vui lòng kiểm tra lại họ tên và email.';
+          if (res.status === 422) msg = 'Vui lòng kiểm tra lại số điện thoại.';
           var err = new Error(msg); err.status = res.status; throw err;
         }
         return data;
@@ -65,16 +65,30 @@
   // nút dạng link luôn hiện, API lỗi thì vẫn đi theo href (trang đăng ký tư vấn).
   // data-buy-label: giữ nhãn cố định (vd "Mua Ngay"); không có thì hiện kèm giá.
   // Phần tử data-buy-price="<slug>" được điền giá bán thật.
+  // Khối data-deal="<slug>" được điền giá gốc (gạch), giá bán và % giảm.
+  function percentOff(p) {
+    return p.list_price && p.list_price > p.price ? Math.round((1 - p.price / p.list_price) * 100) : 0;
+  }
+
+  function renderDeal(box, p) {
+    var off = percentOff(p);
+    box.querySelectorAll('[data-deal-price]').forEach(function (n) { n.textContent = vnd(p.price); });
+    box.querySelectorAll('[data-deal-list]').forEach(function (n) { n.textContent = vnd(p.list_price || p.price); });
+    box.querySelectorAll('[data-deal-off]').forEach(function (n) { n.textContent = '-' + off + '%'; n.hidden = !off; });
+    box.querySelectorAll('[data-deal-was]').forEach(function (n) { n.hidden = !off; });
+  }
+
   function initBuyButtons() {
     var slugs = {};
-    document.querySelectorAll('[data-buy], [data-buy-price]').forEach(function (n) {
-      slugs[n.getAttribute('data-buy') || n.getAttribute('data-buy-price')] = true;
+    document.querySelectorAll('[data-buy], [data-buy-price], [data-deal]').forEach(function (n) {
+      slugs[n.getAttribute('data-buy') || n.getAttribute('data-buy-price') || n.getAttribute('data-deal')] = true;
     });
     Object.keys(slugs).forEach(function (slug) {
       api('/products/' + encodeURIComponent(slug)).then(function (product) {
         document.querySelectorAll('[data-buy-price="' + slug + '"]').forEach(function (n) {
           n.textContent = vnd(product.price);
         });
+        document.querySelectorAll('[data-deal="' + slug + '"]').forEach(function (box) { renderDeal(box, product); });
         document.querySelectorAll('[data-buy="' + slug + '"]').forEach(function (btn) {
           btn.textContent = btn.getAttribute('data-buy-label') || ('Mua tài liệu số · ' + vnd(product.price));
           btn.hidden = false;
@@ -91,25 +105,31 @@
     return catalog;
   }
 
+  // Giá gạch + giá bán + % giảm, dùng trong hộp mua (gói chính và gói mua kèm).
+  function dealLine(p, cls, sign) {
+    var off = percentOff(p);
+    return el('span', { class: 'shop-dealline ' + cls }, [
+      off ? el('s', { class: 'shop-dealline__was', text: vnd(p.list_price) }) : null,
+      el('strong', { class: 'shop-dealline__now', text: (sign || '') + vnd(p.price) }),
+      off ? el('em', { class: 'shop-dealline__off', text: '-' + off + '%' }) : null
+    ]);
+  }
+
   var dialog;
   function openBuyDialog(product) {
     if (dialog) dialog.remove();
     var msg = el('p', { class: 'fr-form__msg', role: 'alert' });
-    var submit = el('button', { type: 'submit', class: 'fr-btn fr-btn--gold', text: 'Tiếp tục thanh toán' });
+    var submit = el('button', { type: 'submit', class: 'fr-btn fr-btn--gold fr-btn--round', text: 'Tiếp tục thanh toán' });
     var addons = el('div', { class: 'shop-addons' });
     var total = el('strong', { class: 'shop-total__value', text: vnd(product.price) });
     var form = el('form', { class: 'shop-dialog__form', novalidate: '' }, [
       addons,
       el('div', { class: 'shop-total' }, [el('span', { text: 'Tổng thanh toán' }), total]),
       el('div', { class: 'form-group' }, [
-        el('label', { class: 'form-label', for: 'shop-name', text: 'Họ và tên *' }),
-        el('input', { id: 'shop-name', name: 'name', class: 'form-input', required: '', maxlength: '100', autocomplete: 'name', placeholder: 'Nguyễn Văn A' })
+        el('label', { class: 'form-label', for: 'shop-phone', text: 'Số điện thoại *' }),
+        el('input', { id: 'shop-phone', name: 'phone', type: 'tel', inputmode: 'tel', class: 'form-input', required: '', maxlength: '20', autocomplete: 'tel', placeholder: '09xx xxx xxx' })
       ]),
-      el('div', { class: 'form-group' }, [
-        el('label', { class: 'form-label', for: 'shop-email', text: 'Email nhận tài liệu *' }),
-        el('input', { id: 'shop-email', name: 'email', type: 'email', class: 'form-input', required: '', maxlength: '320', autocomplete: 'email', placeholder: 'ban@email.com' })
-      ]),
-      el('p', { class: 'shop-dialog__hint', text: 'Link tài liệu sẽ hiện ngay sau khi chuyển khoản thành công và được gửi vào email này.' }),
+      el('p', { class: 'shop-dialog__hint', text: 'Link tài liệu hiện ngay sau khi chuyển khoản thành công. Chúng tôi chỉ dùng số điện thoại để hỗ trợ khi bạn cần.' }),
       el('div', { class: 'fr-form__foot' }, [submit]),
       msg
     ]);
@@ -118,7 +138,7 @@
       close,
       el('span', { class: 'fr-eyebrow', text: 'Tài liệu số' }),
       el('h2', { id: 'shop-dialog-title', class: 'fr-form__title', text: product.name }),
-      el('p', { class: 'shop-dialog__price', text: vnd(product.price) }),
+      dealLine(product, 'shop-dialog__price'),
       form
     ]);
     document.body.appendChild(dialog);
@@ -142,7 +162,7 @@
         addons.appendChild(el('label', { class: 'shop-addon' }, [
           box,
           el('span', { class: 'shop-addon__name', text: 'Mua kèm ' + p.name }),
-          el('span', { class: 'shop-addon__price', text: '+' + vnd(p.price) })
+          dealLine(p, 'shop-addon__price', '+')
         ]));
         extras.push({ product: p, box: box });
       });
@@ -151,20 +171,23 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name = form.name.value.trim();
-      var email = form.email.value.trim();
-      form.name.classList.toggle('invalid', !name);
-      form.email.classList.toggle('invalid', !form.email.checkValidity() || !email);
-      if (!name || !email || !form.email.checkValidity()) {
+      var phoneInput = form.querySelector('#shop-phone');
+      var phone = phoneInput.value.trim();
+      // Same rule as the server: 10 digits starting with 03/05/07/08/09 (+84 allowed).
+      var digits = phone.replace(/[\s.\-()]/g, '').replace(/^\+?84(?=\d{9}$)/, '0');
+      var ok = /^0[35789]\d{8}$/.test(digits);
+      phoneInput.classList.toggle('invalid', !ok);
+      if (!ok) {
         msg.className = 'fr-form__msg err';
-        msg.textContent = 'Vui lòng nhập họ tên và email hợp lệ.';
+        msg.textContent = 'Vui lòng nhập số điện thoại hợp lệ (10 số, vd 0912 345 678).';
+        phoneInput.focus();
         return;
       }
       submit.disabled = true;
       submit.textContent = 'Đang tạo đơn…';
       msg.textContent = '';
       var slugs = selected().map(function (p) { return p.slug; });
-      var body = { customer_name: name, customer_email: email };
+      var body = { customer_phone: digits };
       if (slugs.length > 1) body.product_slugs = slugs; else body.product_slug = slugs[0];
       api('/orders', { method: 'POST', body: body })
         .then(function (order) {
@@ -179,7 +202,7 @@
         });
     });
     dialog.showModal();
-    form.name.focus();
+    form.querySelector('#shop-phone').focus();
   }
 
   /* ---------- Trang checkout ---------- */
@@ -294,7 +317,38 @@
     poll();
   }
 
-  function init() { initBuyButtons(); initCheckout(); }
+  // ---- Popup chính sách bản quyền (link [data-policy]) ----
+  var POLICY = [
+    ['1. Quyền sở hữu', 'Toàn bộ nội dung tài liệu (công thức, định lượng, quy trình chế biến và vận hành, hình ảnh, video, biểu mẫu) thuộc quyền sở hữu của VFXGroup và được bảo hộ theo pháp luật Việt Nam về sở hữu trí tuệ.'],
+    ['2. Phạm vi được sử dụng', 'Người mua được dùng tài liệu cho hoạt động kinh doanh của chính mình, được lưu trữ và in ấn để đào tạo nhân viên nội bộ.'],
+    ['3. Hành vi bị nghiêm cấm', 'Sao chép, chia sẻ link tài liệu, đăng tải lên mạng, phân phối, mua bán, cho thuê hoặc khai thác thương mại tài liệu dưới bất kỳ hình thức nào khi chưa có sự đồng ý bằng văn bản của VFXGroup.'],
+    ['4. Xử lý vi phạm', 'VFXGroup có quyền yêu cầu chấm dứt hành vi vi phạm, gỡ bỏ nội dung, bồi thường thiệt hại và xử lý theo quy định của pháp luật về sở hữu trí tuệ.'],
+    ['5. Liên hệ', 'Cần sử dụng tài liệu ngoài phạm vi trên, vui lòng liên hệ hotline 097 538 88 86 để được hỗ trợ.']
+  ];
+  function openPolicy() {
+    var close = el('button', { type: 'button', class: 'shop-dialog__close', 'aria-label': 'Đóng', text: '×' });
+    var body = el('div', { class: 'shop-policy__body' }, POLICY.map(function (s) {
+      return el('section', {}, [el('h3', { text: s[0] }), el('p', { text: s[1] })]);
+    }));
+    var dlg = el('dialog', { class: 'shop-dialog shop-policy', 'aria-labelledby': 'shop-policy-title' }, [
+      close,
+      el('p', { class: 'fr-eyebrow', text: 'VFXGroup' }),
+      el('h2', { id: 'shop-policy-title', class: 'fr-form__title', text: 'Chính sách bản quyền và sử dụng tài liệu' }),
+      body
+    ]);
+    close.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () { dlg.remove(); });
+    document.body.appendChild(dlg);
+    dlg.showModal();
+  }
+  function initPolicy() {
+    document.querySelectorAll('[data-policy]').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); openPolicy(); });
+    });
+  }
+
+  function init() { initBuyButtons(); initCheckout(); initPolicy(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
