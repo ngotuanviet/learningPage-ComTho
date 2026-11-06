@@ -324,3 +324,22 @@ p.shop-legal { text-wrap: balance; }
   .shop-pkg--photo .shop-toc li { padding: 0.32rem 0; }
 }
 }
+/* Phones: 16px inputs so iOS does not zoom in; dialog fits the screen */
+.shop-dialog:focus { outline: none; }
+@media (max-width: 760px) {
+  .shop-dialog .form-input { font-size: 16px; }
+  .shop-dialog { max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; }
+}
+/* Checkout: different QR hint for phones (cannot scan their own screen) */
+.shop-hint--touch { display: none; }
+@media (pointer: coarse) {
+  .shop-hint--desk { display: none; }
+  .shop-hint--touch { display: block; margin-top: 0.75rem; padding: 0.7rem 0.85rem; border-radius: 10px; background: #fff7e6; border: 1px solid #f3d9a4; font-size: 0.85rem; line-height: 1.5; text-align: left; }
+  .shop-hint--touch p { margin: 0 0 0.4rem; }
+  .shop-hint--touch ol { margin: 0 0 0.45rem; padding-left: 1.2rem; }
+  .shop-hint--touch li { margin-bottom: 0.2rem; }
+  .shop-copy { padding: 0.35rem 0.8rem; font-size: 0.8rem; }
+}
+/* Save-QR button (all devices) */
+.shop-qr-save { margin-top: 0.75rem; width: 100%; max-width: 300px; }
+.shop-qr-saved { margin: 0.5rem auto 0; max-width: 300px; font-size: 0.82rem; color: #1f7a4d; font-weight: 600; }

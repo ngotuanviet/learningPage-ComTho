@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
   <title>Thanh Toán — Cơm Đốt Thố Hội An</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261106a">
   <link rel="stylesheet" href="css/franchise.css?v=20261106d">
-  <link rel="stylesheet" href="css/shop.css?v=20261107c">
+  <link rel="stylesheet" href="css/shop.css?v=20261107f">
 </head>
 <body class="fr-body fr-page-checkout">
 
@@ -60,7 +60,18 @@
         <div class="shop-card shop-pay" id="viewPending" hidden>
           <div class="shop-pay__qr">
             <img id="payQr" alt="Mã QR chuyển khoản" width="300" height="300">
-            <p class="shop-muted">Mở app ngân hàng → Quét QR. Số tiền và nội dung đã điền sẵn.</p>
+            <p class="shop-muted shop-hint--desk">Mở app ngân hàng → Quét QR. Số tiền và nội dung đã điền sẵn.</p>
+            <button type="button" id="payQrSave" class="fr-btn fr-btn--gold fr-btn--round shop-qr-save">⬇ Lưu ảnh QR về máy</button>
+            <p class="shop-qr-saved" id="payQrSaved" role="status" hidden></p>
+            <div class="shop-hint--touch">
+              <p><b>Đang mua trên điện thoại?</b></p>
+              <ol>
+                <li>Bấm <b>Lưu ảnh QR về máy</b> (hoặc nhấn giữ ảnh QR → Lưu ảnh).</li>
+                <li>Mở app ngân hàng → <b>Quét QR</b> → chọn <b>ảnh từ thư viện</b>.</li>
+                <li>Kiểm tra số tiền, nội dung rồi xác nhận. Quay lại trang này để nhận tài liệu.</li>
+              </ol>
+              <p>Hoặc bấm <b>Chép</b> số tài khoản, số tiền và nội dung bên dưới để chuyển khoản tay.</p>
+            </div>
           </div>
           <div class="shop-pay__info">
             <p class="shop-order">Đơn <b data-order-code></b> · <span data-order-product></span></p>
@@ -135,7 +146,7 @@
   </footer>
 
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261106k"></script>
+  <script src="js/shop.js?v=20261107d"></script>
   <!-- Vercel Web Analytics: đếm lượt truy cập (không dùng cookie) -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>

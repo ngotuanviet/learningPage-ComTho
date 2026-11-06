@@ -52,11 +52,17 @@
     });
   }
 
+  // Kept in localStorage so the order survives switching to the bank app, the browser
+  // closing the tab, or reopening the checkout link later (session copy as a fallback).
   function saveToken(code, token) {
+    try { localStorage.setItem('shop:' + code, token); } catch (e) { /* private mode */ }
     try { sessionStorage.setItem('shop:' + code, token); } catch (e) { /* private mode */ }
   }
   function loadToken(code) {
-    try { return sessionStorage.getItem('shop:' + code); } catch (e) { return null; }
+    var t = null;
+    try { t = localStorage.getItem('shop:' + code); } catch (e) { /* blocked */ }
+    if (!t) { try { t = sessionStorage.getItem('shop:' + code); } catch (e) { /* blocked */ } }
+    return t;
   }
 
   /* ---------- Nút "Mua ngay" ---------- */
@@ -127,7 +133,7 @@
       el('div', { class: 'shop-total' }, [el('span', { text: 'Tổng thanh toán' }), total]),
       el('div', { class: 'form-group' }, [
         el('label', { class: 'form-label', for: 'shop-phone', text: 'Số điện thoại *' }),
-        el('input', { id: 'shop-phone', name: 'phone', type: 'tel', inputmode: 'tel', class: 'form-input', required: '', maxlength: '20', autocomplete: 'tel', placeholder: '09xx xxx xxx' })
+        el('input', { id: 'shop-phone', name: 'phone', type: 'tel', inputmode: 'tel', class: 'form-input', required: '', maxlength: '20', autocomplete: 'tel', enterkeyhint: 'go', placeholder: '09xx xxx xxx' })
       ]),
       el('p', { class: 'shop-dialog__hint', text: 'Link tài liệu hiện ngay sau khi chuyển khoản thành công. Chúng tôi chỉ dùng số điện thoại để hỗ trợ khi bạn cần.' }),
       el('div', { class: 'fr-form__foot' }, [submit]),
@@ -201,8 +207,14 @@
           submit.textContent = 'Tiếp tục thanh toán';
         });
     });
+    // Keep the field and the pay button visible above the on-screen keyboard.
+    form.querySelector('#shop-phone').addEventListener('focus', function (e) {
+      setTimeout(function () { e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 300);
+    });
     dialog.showModal();
-    form.querySelector('#shop-phone').focus();
+    // Phones: no keyboard until the buyer taps the phone field.
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) form.querySelector('#shop-phone').focus();
+    else { dialog.setAttribute('tabindex', '-1'); dialog.focus(); dialog.scrollTop = 0; }
   }
 
   /* ---------- Trang checkout ---------- */
@@ -240,6 +252,43 @@
       countdown = setInterval(tick, 1000);
     }
 
+    // "Lưu ảnh QR": the API returns the PNG (vietqr.app blocks direct browser downloads).
+    // Fetched in advance so the tap can open the share sheet at once (iPhone needs that).
+    var qrFile = null, qrFor = null;
+    function prepareQrSave(code, url) {
+      var btn = $('payQrSave');
+      if (!btn) return;
+      btn.dataset.fallback = url;
+      if (qrFor === code) return;
+      qrFor = code;
+      fetch(API + '/orders/' + encodeURIComponent(code) + '/qr', { headers: { Authorization: 'Bearer ' + token }, cache: 'no-store', credentials: 'omit' })
+        .then(function (r) { if (!r.ok) throw new Error(); return r.blob(); })
+        .then(function (b) { qrFile = new File([b], 'QR-' + code + '.png', { type: 'image/png' }); })
+        .catch(function () { qrFile = null; });
+    }
+    function saveQr() {
+      var btn = $('payQrSave'), done = $('payQrSaved');
+      function ok(text) { if (done) { done.textContent = text; done.hidden = false; } }
+      if (!qrFile) { window.open(btn.dataset.fallback, '_blank', 'noopener'); ok('Ảnh QR đã mở ở thẻ mới: nhấn giữ ảnh → Lưu ảnh.'); return; }
+      var touch = window.matchMedia('(pointer: coarse)').matches;
+      if (touch && navigator.canShare && navigator.canShare({ files: [qrFile] })) {
+        navigator.share({ files: [qrFile] })
+          .then(function () { ok('Đã lưu. Mở app ngân hàng → Quét QR → chọn ảnh vừa lưu.'); })
+          .catch(function (e) { if (e && e.name !== 'AbortError') download(); });
+        return;
+      }
+      download();
+      function download() {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(qrFile);
+        a.download = qrFile.name;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+        ok(touch ? 'Đã tải ảnh QR. Mở app ngân hàng → Quét QR → chọn ảnh vừa lưu.' : 'Đã tải ảnh QR về máy (thư mục Tải xuống).');
+      }
+    }
+    if ($('payQrSave')) $('payQrSave').addEventListener('click', function (e) { e.preventDefault(); saveQr(); });
+
     function render(o) {
       document.querySelectorAll('[data-order-code]').forEach(function (n) { n.textContent = o.code; });
       document.querySelectorAll('[data-order-product]').forEach(function (n) { n.textContent = o.product_name; });
@@ -248,6 +297,7 @@
       if (o.status === 'pending' && o.payment) {
         var p = o.payment;
         $('payQr').src = p.qr_url;
+        prepareQrSave(o.code, p.qr_url);
         $('payBank').textContent = p.bank_code;
         $('payAccount').textContent = p.account_number;
         $('payName').textContent = p.account_name;
