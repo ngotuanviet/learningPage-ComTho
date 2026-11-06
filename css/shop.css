@@ -103,7 +103,25 @@
 /* Khung giá có ảnh món ăn phía sau, phủ lớp tối để chữ vẫn dễ đọc */
 .fr-pkg-box.shop-pkg--photo {
   background:
-    linear-gradient(180deg, rgba(17, 15, 12, 0.78) 0%, rgba(17, 15, 12, 0.86) 55%, rgba(17, 15, 12, 0.93) 100%),
+    linear-gradient(180deg, rgba(17, 15, 12, 0.55) 0%, rgba(17, 15, 12, 0.62) 50%, rgba(17, 15, 12, 0.8) 100%),
     url("../images/hero/Five-dish-grilled-feast-cluster.webp") center 40% / cover no-repeat,
     #15120e;
+}
+.shop-pkg--photo .fr-pkg-title,
+.shop-pkg--photo .fr-eyebrow { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7); }
+
+/* 9 mục nội dung, 2 cột (5 + 4) */
+.shop-toc { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-top: 0.4rem; }
+.shop-toc ol {
+  list-style: none; margin: 0; padding: 0.5rem 1.1rem; border-radius: 12px;
+  background: rgba(14, 12, 10, 0.62); border: 1px solid rgba(245, 184, 46, 0.18);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.shop-toc li { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.62rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.shop-toc li:last-child { border-bottom: 0; }
+.shop-toc b { color: var(--nav-gold, #f5b82e); font-weight: 800; font-size: 1.05rem; min-width: 1.7rem; font-variant-numeric: tabular-nums; }
+.shop-toc span { color: var(--cream, #faf6f0); font-size: 0.95rem; line-height: 1.45; }
+@media (max-width: 760px) {
+  .shop-toc { grid-template-columns: 1fr; gap: 0.6rem; }
+  .shop-toc ol { padding: 0.35rem 0.9rem; }
 }
