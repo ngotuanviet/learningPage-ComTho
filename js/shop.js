@@ -52,16 +52,26 @@
 
   /* ---------- Nút "Mua ngay" ---------- */
 
+  // Nút có data-buy="<slug>". Nút ẩn sẵn (hidden) chỉ hiện khi lấy được giá;
+  // nút dạng link luôn hiện, API lỗi thì vẫn đi theo href (trang đăng ký tư vấn).
+  // data-buy-label: giữ nhãn cố định (vd "Mua Ngay"); không có thì hiện kèm giá.
+  // Phần tử data-buy-price="<slug>" được điền giá bán thật.
   function initBuyButtons() {
-    var buttons = document.querySelectorAll('[data-buy]');
-    if (!buttons.length) return;
-    Array.prototype.forEach.call(buttons, function (btn) {
-      var slug = btn.getAttribute('data-buy');
+    var slugs = {};
+    document.querySelectorAll('[data-buy], [data-buy-price]').forEach(function (n) {
+      slugs[n.getAttribute('data-buy') || n.getAttribute('data-buy-price')] = true;
+    });
+    Object.keys(slugs).forEach(function (slug) {
       api('/products/' + encodeURIComponent(slug)).then(function (product) {
-        btn.textContent = 'Mua tài liệu số · ' + vnd(product.price);
-        btn.hidden = false;
-        btn.addEventListener('click', function () { openBuyDialog(product); });
-      }).catch(function () { /* sản phẩm chưa mở bán hoặc API lỗi: giữ nút ẩn */ });
+        document.querySelectorAll('[data-buy-price="' + slug + '"]').forEach(function (n) {
+          n.textContent = vnd(product.price);
+        });
+        document.querySelectorAll('[data-buy="' + slug + '"]').forEach(function (btn) {
+          btn.textContent = btn.getAttribute('data-buy-label') || ('Mua tài liệu số · ' + vnd(product.price));
+          btn.hidden = false;
+          btn.addEventListener('click', function (e) { e.preventDefault(); openBuyDialog(product); });
+        });
+      }).catch(function () { /* chưa mở bán hoặc API lỗi: nút ẩn vẫn ẩn, link vẫn dẫn tới trang tư vấn */ });
     });
   }
 

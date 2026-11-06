@@ -1,5 +1,6 @@
 import hmac
 import json
+import logging
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
@@ -12,6 +13,7 @@ from app.models import WebhookEvent, utcnow
 from app.payments import InvalidPayload, process_sepay
 
 router = APIRouter(prefix="/webhooks", tags=["webhooks"])
+log = logging.getLogger("comtho.webhooks")
 
 # SePay counts 200/201 + {"success": true} as delivered; 201 works for every webhook type.
 _OK = {"success": True}
@@ -25,8 +27,12 @@ async def sepay_webhook(
 ):
     key = get_settings().sepay_webhook_api_key
     if not key:
+        log.warning("sepay webhook: SEPAY_WEBHOOK_API_KEY not configured")
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "webhook not configured")
     if not hmac.compare_digest((authorization or "").encode(), f"Apikey {key}".encode()):
+        # Log only the scheme (never the key) to tell "no header" from "wrong key".
+        scheme = (authorization or "").split(" ", 1)[0] or "<none>"
+        log.warning("sepay webhook rejected: bad api key (auth scheme=%s)", scheme[:20])
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid api key")
 
     raw = await request.body()
@@ -55,6 +61,7 @@ async def sepay_webhook(
 
     event.result, event.processed_at = outcome.result, utcnow()
     db.commit()
+    log.warning("sepay webhook tx %s -> %s", event.provider_event_id, outcome.result)
 
     # Email after the payment is committed. A failed email never fails the webhook:
     # the customer still sees the link on the checkout page, and the CLI can resend.

@@ -74,6 +74,12 @@ class InvalidPayload(ValueError):
     pass
 
 
+def lock_orders_query(codes: list[str]):
+    # Order eager-loads its product with a LEFT JOIN; Postgres refuses FOR UPDATE on the
+    # nullable side of an outer join, so lock only the orders table (FOR UPDATE OF orders).
+    return select(Order).where(Order.code.in_(codes)).with_for_update(of=Order)
+
+
 def process_sepay(db: Session, payload: dict) -> Outcome:
     tx_id = payload.get("id")
     amount = _to_int(payload.get("transferAmount"))
@@ -96,7 +102,7 @@ def process_sepay(db: Session, payload: dict) -> Outcome:
     order = None
     if candidates:
         # Row lock so two concurrent deliveries cannot both mark the order paid (no-op on SQLite).
-        matches = db.scalars(select(Order).where(Order.code.in_(candidates)).with_for_update()).all()
+        matches = db.scalars(lock_orders_query(candidates)).all()
         by_code = {o.code: o for o in matches}
         order = next((by_code[c] for c in candidates if c in by_code), None)
     code = order.code if order else (candidates[0] if candidates else None)

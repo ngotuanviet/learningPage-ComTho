@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="css/menu-book.css?v=20261104a">
   <link rel="stylesheet" href="css/style.css?v=20261105w">
   <link rel="stylesheet" href="css/franchise.css?v=20261105w">
-  <link rel="stylesheet" href="css/shop.css?v=20261105a">
+  <link rel="stylesheet" href="css/shop.css?v=20261106a">
 </head>
 <body class="fr-body fr-page-congthuc">
 
@@ -65,8 +65,8 @@
             <span class="fr-eyebrow">Chuyển giao chuyên nghiệp</span>
             <h2 class="fr-pkg-title">BỘ CÔNG THỨC CƠM ĐỐT THỐ HỘI AN</h2>
             <div class="fr-pkg-price">
-              <span>Phí chuyển giao bộ công thức:</span>
-              <strong>20.000.000 đồng</strong>
+              <span>Giá bộ công thức:</span>
+              <strong data-buy-price="goi-cong-thuc">Liên hệ</strong>
             </div>
           </div>
 
@@ -91,8 +91,8 @@
           </div>
 
           <div class="fr-pkg-cta">
-            <button type="button" class="fr-btn fr-btn--gold shop-buy" data-buy="goi-cong-thuc" hidden>Mua tài liệu số</button>
-            <a href="dang-ky.html?model=Chuy%E1%BB%83n%20giao%20c%C3%B4ng%20th%E1%BB%A9c" class="fr-btn fr-btn--gold">Tìm Hiểu Chuyển Giao Công Thức</a>
+            <!-- Mua ngay: shop.js mở hộp mua + QR. Nếu API lỗi, nút vẫn dẫn tới trang đăng ký tư vấn. -->
+            <a href="dang-ky.html?model=Chuy%E1%BB%83n%20giao%20c%C3%B4ng%20th%E1%BB%A9c" class="fr-btn fr-btn--gold" data-buy="goi-cong-thuc" data-buy-label="Mua Ngay">Mua Ngay</a>
             <p class="fr-pkg-note">Định lượng và tỷ lệ gia vị là tài liệu nội bộ, chỉ chuyển giao khi hợp tác. Bấm vào ảnh menu bên dưới để phóng to.</p>
           </div>
         </div>
@@ -144,6 +144,6 @@
 
   <script src="js/menu-book.js?v=20261104a"></script>
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261105a"></script>
+  <script src="js/shop.js?v=20261106a"></script>
 </body>
 </html>
