@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261105w">
   <link rel="stylesheet" href="css/franchise.css?v=20261105w">
-  <link rel="stylesheet" href="css/shop.css?v=20261106b">
+  <link rel="stylesheet" href="css/shop.css?v=20261106c">
 </head>
 <body class="fr-body fr-page-checkout">
 
@@ -87,14 +87,8 @@
           <div class="shop-check" aria-hidden="true">✓</div>
           <h2 class="shop-title">Thanh toán thành công</h2>
           <p class="shop-muted">Đơn <b data-order-code></b> · <span data-order-amount></span> · <span class="shop-badge">Đã thanh toán</span></p>
-          <div class="shop-doc">
-            <div class="shop-doc__icon" aria-hidden="true">PDF</div>
-            <div class="shop-doc__body">
-              <b data-order-product></b>
-              <span class="shop-badge shop-badge--ok">Sẵn sàng</span>
-            </div>
-            <a id="paidLink" class="fr-btn fr-btn--gold" target="_blank" rel="noopener noreferrer">Mở tài liệu (Google Drive)</a>
-          </div>
+          <!-- Một thẻ cho mỗi tài liệu trong đơn (shop.js điền vào) -->
+          <div id="paidDocs"></div>
           <p class="shop-muted shop-small" id="paidEmail" hidden>Link tài liệu cũng đã được gửi vào email của bạn. Hãy lưu lại để mở khi cần.</p>
           <p class="shop-muted shop-small">Hãy lưu link này hoặc giữ email để mở lại tài liệu sau.</p>
         </div>
@@ -141,6 +135,6 @@
   </footer>
 
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261106a"></script>
+  <script src="js/shop.js?v=20261106c"></script>
 </body>
 </html>

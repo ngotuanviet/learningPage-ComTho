@@ -21,6 +21,22 @@
 .shop-dialog__form .fr-form__foot { margin-top: 0.25rem; }
 .shop-dialog__hint { font-size: 0.8rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
 .shop-dialog .fr-form__msg { margin: 0; text-align: center; }
+.shop-addons { display: grid; gap: 0.5rem; }
+.shop-addons[hidden] { display: none; }
+.shop-addon {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.6rem; cursor: pointer;
+  padding: 0.7rem 0.85rem; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--latte-subtle, #f8f2ea);
+  font-size: 0.88rem; line-height: 1.35;
+}
+.shop-addon:has(input:checked) { border-color: var(--bronze); background: #fff4dc; }
+.shop-addon input { width: 18px; height: 18px; accent-color: var(--bronze); margin: 0; }
+.shop-addon__name { font-weight: 600; }
+.shop-addon__price { font-weight: 700; color: var(--bronze); white-space: nowrap; }
+.shop-total { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6rem 0 0.2rem; border-top: 1px dashed var(--border-gold); }
+.shop-total span { color: var(--text-muted); font-size: 0.88rem; }
+.shop-total__value { font-size: 1.3rem; color: var(--bronze); }
+#paidDocs { display: grid; gap: 0.75rem; margin: 1.5rem 0 1rem; }
+#paidDocs .shop-doc { margin: 0; }
 
 /* ---- Trang checkout ---- */
 /* Khối nào đặt display riêng (grid/flex) vẫn phải ẩn được bằng thuộc tính hidden */
@@ -81,3 +97,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .shop-spinner { animation: none; } }
+
+/* ---- Trang Bộ Công Thức ---- */
+.fr-pagehead h1.shop-h1 { font-size: clamp(1.6rem, 3.1vw, 2.6rem); line-height: 1.2; }
+/* Khung giá có ảnh món ăn phía sau, phủ lớp tối để chữ vẫn dễ đọc */
+.fr-pkg-box.shop-pkg--photo {
+  background:
+    linear-gradient(180deg, rgba(17, 15, 12, 0.78) 0%, rgba(17, 15, 12, 0.86) 55%, rgba(17, 15, 12, 0.93) 100%),
+    url("../images/hero/Five-dish-grilled-feast-cluster.webp") center 40% / cover no-repeat,
+    #15120e;
+}

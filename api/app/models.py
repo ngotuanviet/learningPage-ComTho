@@ -98,6 +98,28 @@ class Order(Base):
     created_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, index=True)
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
 
+    # First item of the order (kept for older code paths); the full list is `items`.
+    product: Mapped[Product] = relationship(lazy="joined")
+    items: Mapped[list["OrderItem"]] = relationship(
+        lazy="selectin", order_by="OrderItem.id", cascade="all, delete-orphan"
+    )
+
+
+class OrderItem(Base):
+    """One document in an order. Name and price are snapshots taken when the order was made."""
+
+    __tablename__ = "order_items"
+    __table_args__ = (
+        CheckConstraint("price > 0", name="price_positive"),
+        UniqueConstraint("order_id", "product_id", name="uq_order_items_order_product"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id", ondelete="RESTRICT"), index=True)
+    product_name: Mapped[str] = mapped_column(String(200))
+    price: Mapped[int] = mapped_column(BigInteger)
+
     product: Mapped[Product] = relationship(lazy="joined")
 
 

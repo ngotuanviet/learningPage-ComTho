@@ -23,6 +23,12 @@ def client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 
+@router.get("/products", response_model=list[ProductOut])
+def list_products(db: Session = Depends(get_db)):
+    """Active products, for the "buy together" checkboxes. Never includes Drive links."""
+    return db.scalars(select(Product).where(Product.is_active.is_(True)).order_by(Product.id)).all()
+
+
 @router.get("/products/{slug}", response_model=ProductOut)
 def get_product(slug: str, db: Session = Depends(get_db)):
     product = db.scalar(select(Product).where(Product.slug == slug, Product.is_active.is_(True)))
@@ -35,7 +41,7 @@ def get_product(slug: str, db: Session = Depends(get_db)):
 def post_order(body: OrderCreateIn, request: Request, db: Session = Depends(get_db)):
     try:
         order, token = create_order(
-            db, body.product_slug, body.customer_name, body.customer_email, keyed_hash("ip:" + client_ip(request))
+            db, body.slugs, body.customer_name, body.customer_email, keyed_hash("ip:" + client_ip(request))
         )
     except OrderError as e:
         raise HTTPException(e.status_code, e.message) from None
