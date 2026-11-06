@@ -199,3 +199,14 @@ def test_send_skipped_without_key(client, db, settings):
     order(client)
     settings.resend_api_key = None
     assert email_mod.send_drive_email(db.scalar(select(Order))) is False
+
+
+def test_order_lock_is_valid_postgres_sql():
+    """SQLite ignores FOR UPDATE, so check the Postgres SQL directly (regression: 500 in production)."""
+    from sqlalchemy.dialects import postgresql
+
+    from app.payments import lock_orders_query
+
+    sql = str(lock_orders_query(["CTAAAAAAAA"]).compile(dialect=postgresql.dialect()))
+    assert "LEFT OUTER JOIN products" in sql  # product is eager-loaded...
+    assert sql.rstrip().endswith("FOR UPDATE OF orders")  # ...so only orders may be locked
