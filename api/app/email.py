@@ -19,7 +19,7 @@ def _vnd(n: int) -> str:
 
 def build_drive_email(order: Order) -> dict:
     s = get_settings()
-    name = html.escape(order.customer_name)
+    name = html.escape(order.customer_name or "bạn")
     subject = f"Tài liệu của bạn – đơn {order.code}"
     docs = order_items(order)
     rows = "".join(
@@ -39,7 +39,7 @@ def build_drive_email(order: Order) -> dict:
 </div>"""
     links = "\n".join(f"- {pname}: {p.drive_url}" for p, pname, _ in docs)
     text = (
-        f"Chào {order.customer_name},\n\n"
+        f"Chào {order.customer_name or 'bạn'},\n\n"
         f"Đã nhận thanh toán cho đơn {order.code} ({_vnd(order.amount)}).\n"
         f"Tài liệu của bạn:\n{links}\n\n"
         "Vui lòng giữ email này để mở lại tài liệu khi cần.\n"
@@ -53,6 +53,8 @@ def build_drive_email(order: Order) -> dict:
 def send_drive_email(order: Order) -> bool:
     """Returns True when the email was accepted by Resend. Never raises."""
     s = get_settings()
+    if not order.customer_email:
+        return False  # phone-only checkout: the link is shown on the checkout page
     if not s.resend_api_key:
         log.warning("RESEND_API_KEY not set, skipped email for order %s", order.code)
         return False

@@ -1,6 +1,8 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
+import re
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
 
 
 class StrictModel(BaseModel):
@@ -15,6 +17,7 @@ class ProductOut(BaseModel):
     name: str
     description: str
     price: int
+    list_price: int | None = None  # struck-through original price, if any
     currency: str = "VND"
 
 
@@ -22,8 +25,23 @@ class OrderCreateIn(StrictModel):
     # One of the two. product_slug is kept for older pages; product_slugs buys a bundle.
     product_slug: str | None = Field(default=None, min_length=1, max_length=200)
     product_slugs: list[str] | None = Field(default=None, min_length=1, max_length=5)
-    customer_name: str = Field(min_length=1, max_length=100)
-    customer_email: EmailStr
+    customer_phone: str | None = Field(default=None, max_length=20)
+    customer_name: str | None = Field(default=None, max_length=100)
+    customer_email: EmailStr | None = None
+
+    @field_validator("customer_phone")
+    @classmethod
+    def _phone(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        digits = re.sub(r"[\s.\-()]", "", value)
+        if digits.startswith("+84"):
+            digits = "0" + digits[3:]
+        elif digits.startswith("84") and len(digits) == 11:
+            digits = "0" + digits[2:]
+        if not re.fullmatch(r"0[35789]\d{8}", digits):
+            raise ValueError("Số điện thoại không hợp lệ")
+        return digits
 
     @model_validator(mode="after")
     def _one_product_field(self):
@@ -31,6 +49,8 @@ class OrderCreateIn(StrictModel):
             raise ValueError("send product_slug or product_slugs")
         if self.product_slugs is not None and any(not s or len(s) > 200 for s in self.product_slugs):
             raise ValueError("invalid product slug")
+        if not self.customer_phone and not self.customer_email:
+            raise ValueError("customer_phone is required")
         return self
 
     @property

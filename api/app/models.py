@@ -63,7 +63,9 @@ class Product(Base):
     name: Mapped[str] = mapped_column(String(200))
     slug: Mapped[str] = mapped_column(String(200), unique=True)
     description: Mapped[str] = mapped_column(Text, default="")
-    price: Mapped[int] = mapped_column(BigInteger)  # VND, integer
+    price: Mapped[int] = mapped_column(BigInteger)  # VND, integer: what the buyer pays
+    # Original price shown struck through next to `price` (display only, never charged).
+    list_price: Mapped[int | None] = mapped_column(BigInteger)
     # Public Google Drive link. Only revealed to buyers of a paid order.
     drive_url: Mapped[str] = mapped_column(String(1000))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
@@ -86,8 +88,10 @@ class Order(Base):
     # Snapshot at order time, so later price/name changes do not affect this order.
     product_name: Mapped[str] = mapped_column(String(200))
     amount: Mapped[int] = mapped_column(BigInteger)
-    customer_name: Mapped[str] = mapped_column(String(100))
-    customer_email: Mapped[str] = mapped_column(String(320), index=True)
+    # Checkout asks only for a phone number; name/email are optional (older orders have them).
+    customer_name: Mapped[str | None] = mapped_column(String(100))
+    customer_email: Mapped[str | None] = mapped_column(String(320), index=True)
+    customer_phone: Mapped[str | None] = mapped_column(String(15), index=True)  # 0xxxxxxxxx
     # sha256 of the access token given to the buyer once; raw token is never stored.
     access_token_hash: Mapped[str] = mapped_column(String(64))
     status: Mapped[str] = mapped_column(String(20), default="pending", index=True)

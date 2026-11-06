@@ -59,3 +59,14 @@ def test_reconciliation_commands(client, db, monkeypatch, capsys):
     assert row.status == "paid" and row.email_sent_at is not None
     run("list-review")
     assert "Giao dịch cần kiểm tra: 0" in capsys.readouterr().out
+
+
+def test_list_price(client, db):
+    run("add-product", "--slug", "goi-a", "--name", "Gói A", "--price", "10000000", "--drive-url", DRIVE)
+    run("set-price", "--slug", "goi-a", "--price", "3900000", "--list-price", "10000000")
+    body = client.get("/api/v1/products/goi-a").json()
+    assert (body["price"], body["list_price"]) == (3_900_000, 10_000_000)
+    with pytest.raises(SystemExit):  # struck price must be higher than the selling price
+        run("set-price", "--slug", "goi-a", "--price", "3900000", "--list-price", "3000000")
+    run("set-price", "--slug", "goi-a", "--price", "3900000", "--no-list-price")
+    assert client.get("/api/v1/products/goi-a").json()["list_price"] is None

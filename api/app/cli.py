@@ -78,6 +78,8 @@ def main(argv: list[str] | None = None) -> None:
     sp = sub.add_parser("set-price")
     sp.add_argument("--slug", type=_slug, required=True)
     sp.add_argument("--price", type=_price, required=True)
+    sp.add_argument("--list-price", type=_price, help="giá gốc hiển thị gạch ngang")
+    sp.add_argument("--no-list-price", action="store_true", help="bỏ giá gạch")
 
     su = sub.add_parser("set-drive-url")
     su.add_argument("--slug", type=_slug, required=True)
@@ -116,8 +118,15 @@ def main(argv: list[str] | None = None) -> None:
             product = _get(db, args.slug)
             old = product.price
             product.price = args.price
+            if args.no_list_price:
+                product.list_price = None
+            elif args.list_price is not None:
+                if args.list_price <= args.price:
+                    sys.exit("Giá gốc phải lớn hơn giá bán.")
+                product.list_price = args.list_price
             db.commit()
-            print(f"Đã đổi giá '{args.slug}': {_vnd(old)} -> {_vnd(args.price)} (đơn cũ giữ giá cũ).")
+            extra = f" (giá gốc gạch: {_vnd(product.list_price)})" if product.list_price else ""
+            print(f"Đã đổi giá '{args.slug}': {_vnd(old)} -> {_vnd(args.price)}{extra} (đơn cũ giữ giá cũ).")
         elif args.command == "set-drive-url":
             _get(db, args.slug).drive_url = args.url
             db.commit()
@@ -136,7 +145,7 @@ def main(argv: list[str] | None = None) -> None:
                 query = query.where(Order.status == args.status)
             for o in db.scalars(query):
                 when = o.created_at.astimezone().strftime("%d/%m %H:%M")
-                print(f"{o.code:14} {o.status:12} {_vnd(o.amount):>15}  {when}  {o.customer_email}  {o.product_name}")
+                print(f"{o.code:14} {o.status:12} {_vnd(o.amount):>15}  {when}  {o.customer_phone or o.customer_email}  {o.product_name}")
 
         elif args.command == "list-review":
             txs = db.scalars(
@@ -149,7 +158,7 @@ def main(argv: list[str] | None = None) -> None:
             orders = db.scalars(select(Order).where(Order.status == "needs_review")).all()
             print(f"Đơn cần kiểm tra: {len(orders)}")
             for o in orders:
-                print(f"  {o.code:14} {_vnd(o.amount):>15}  {o.customer_email}")
+                print(f"  {o.code:14} {_vnd(o.amount):>15}  {o.customer_phone or o.customer_email}")
         elif args.command in ("mark-paid", "resend-email"):
             order = db.scalar(select(Order).where(Order.code == args.code.upper()))
             if order is None:

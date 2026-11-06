@@ -23,12 +23,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261105w">
-  <link rel="stylesheet" href="css/franchise.css?v=20261105w">
+  <link rel="stylesheet" href="css/style.css?v=20261106a">
+  <link rel="stylesheet" href="css/franchise.css?v=20261106d">
   <link rel="stylesheet" href="css/menu-book.css?v=20261104a">
-  <link rel="stylesheet" href="css/style.css?v=20261105w">
-  <link rel="stylesheet" href="css/franchise.css?v=20261105w">
-  <link rel="stylesheet" href="css/shop.css?v=20261106e">
+  <link rel="stylesheet" href="css/style.css?v=20261106a">
+  <link rel="stylesheet" href="css/franchise.css?v=20261106d">
+  <link rel="stylesheet" href="css/shop.css?v=20261107c">
 </head>
 <body class="fr-body fr-page-congthuc">
 
@@ -63,13 +63,24 @@
           <div class="fr-pkg-header">
             <span class="fr-eyebrow">Dành cho người mới mở quán - chủ nhà hàng, cafe muốn thêm món</span>
             <h2 class="fr-pkg-title">BỘ CÔNG THỨC VÀ QUY TRÌNH CHẾ BIẾN</h2>
-            <div class="fr-pkg-price">
-              <span>Giá bộ công thức:</span>
-              <strong data-buy-price="goi-cong-thuc">10.000.000 đ</strong>
+            <!-- Khối giá: giá gốc gạch, giá ưu đãi, % giảm (shop.js điền từ hệ thống) -->
+            <div class="shop-deal" data-deal="goi-cong-thuc">
+              <div class="shop-deal__card">
+                <p class="shop-deal__was" data-deal-was><span>Giá gốc</span><s data-deal-list>10.000.000 đ</s></p>
+                <div class="shop-deal__now">
+                  <span class="shop-deal__label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 11.6 12.4 2.6A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7c0 .5.2 1 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8ZM6.5 8a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>Chỉ còn</span>
+                  <strong class="shop-deal__new" data-deal-price>3.900.000 đ</strong>
+                </div>
+                <em class="shop-deal__off" data-deal-off>-61%</em>
+                <i class="shop-deal__spark shop-deal__spark--1" aria-hidden="true">✦</i>
+                <i class="shop-deal__spark shop-deal__spark--2" aria-hidden="true">✦</i>
+                <i class="shop-deal__spark shop-deal__spark--3" aria-hidden="true">✦</i>
+              </div>
+              <p class="shop-deal__note">🔥 Ưu đãi chỉ còn <b>3 bộ công thức</b> với giá này</p>
             </div>
           </div>
 
-          <!-- Nội dung bộ tài liệu: 9 mục, chia 2 cột (5 + 4) -->
+          <!-- Nội dung bộ tài liệu: 10 mục, chia 2 cột (5 + 5) -->
           <div class="shop-toc">
             <ol>
               <li><b>01</b><span>Công thức và định lượng chế biến</span></li>
@@ -83,13 +94,14 @@
               <li><b>07</b><span>Biểu mẫu quản lý nhập – xuất – tồn</span></li>
               <li><b>08</b><span>Biểu mẫu ghi nhận nguyên liệu hỏng, hủy</span></li>
               <li><b>09</b><span>Bảng theo dõi chi phí hằng tháng</span></li>
+              <li><b>10</b><span>Quy trình đảm bảo chất lượng món ăn</span></li>
             </ol>
           </div>
 
           <div class="fr-pkg-cta">
             <!-- Mua ngay: shop.js mở hộp mua + QR. Nếu API lỗi, nút vẫn dẫn tới trang đăng ký tư vấn. -->
-            <a href="dang-ky.html?model=Chuy%E1%BB%83n%20giao%20c%C3%B4ng%20th%E1%BB%A9c" class="fr-btn fr-btn--gold" data-buy="goi-cong-thuc" data-buy-label="Mua Ngay Bộ Công Thức 46 Món">Mua Ngay Bộ Công Thức 46 Món</a>
-            <p class="fr-pkg-note">Định lượng và tỷ lệ gia vị là tài liệu nội bộ, chỉ chuyển giao khi hợp tác. Bấm vào ảnh menu bên dưới để phóng to.</p>
+            <a href="dang-ky.html?model=Chuy%E1%BB%83n%20giao%20c%C3%B4ng%20th%E1%BB%A9c" class="fr-btn fr-btn--gold fr-btn--round" data-buy="goi-cong-thuc" data-buy-label="Mua Ngay Bộ Công Thức 46 Món">Mua Ngay Bộ Công Thức 46 Món</a>
+            <p class="shop-legal"><span class="shop-legal__a">Tài liệu thuộc bản quyền VFXGroup.</span> <span class="shop-legal__b">Nghiêm cấm <span class="shop-legal__full">sao chép, </span>phát tán<span class="shop-legal__full"> hoặc kinh doanh lại</span> khi chưa được cho phép.</span><br><a href="#chinh-sach-ban-quyen" class="shop-legal__link" data-policy>Chính sách bản quyền và sử dụng tài liệu <span aria-hidden="true">↗</span></a></p>
           </div>
         </div>
         <h2 class="fr-mh" id="mon-chinh">Món chính</h2>
@@ -140,6 +152,6 @@
 
   <script src="js/menu-book.js?v=20261104a"></script>
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261106e"></script>
+  <script src="js/shop.js?v=20261106k"></script>
 </body>
 </html>

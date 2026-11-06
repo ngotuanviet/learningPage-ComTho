@@ -78,10 +78,12 @@ def to_status(order: Order) -> OrderStatusOut:
     )
 
 
-def create_order(db: Session, slugs: list[str], name: str, email: str, ip_hash: str) -> tuple[Order, str]:
+def create_order(
+    db: Session, slugs: list[str], name: str | None, email: str | None, phone: str | None, ip_hash: str
+) -> tuple[Order, str]:
     s = get_settings()
     now = utcnow()
-    email = email.lower()
+    email = email.lower() if email else None
 
     slugs = list(dict.fromkeys(slugs))  # unique, keep the order the buyer chose
     if not 1 <= len(slugs) <= MAX_ITEMS:
@@ -94,13 +96,12 @@ def create_order(db: Session, slugs: list[str], name: str, email: str, ip_hash: 
         raise OrderError(404, "Sản phẩm không tồn tại hoặc đã ngừng bán.")
     products = [found[slug] for slug in slugs]
 
+    who = Order.customer_phone == phone if phone else Order.customer_email == email
     pending = db.scalar(
-        select(func.count()).where(
-            Order.customer_email == email, Order.status == "pending", Order.expires_at > now
-        )
+        select(func.count()).where(who, Order.status == "pending", Order.expires_at > now)
     )
     if pending >= s.max_pending_orders_per_email:
-        raise OrderError(429, "Email này đang có nhiều đơn chờ thanh toán. Vui lòng hoàn tất hoặc thử lại sau.")
+        raise OrderError(429, "Số điện thoại này đang có nhiều đơn chờ thanh toán. Vui lòng hoàn tất hoặc thử lại sau.")
     recent = db.scalar(
         select(func.count()).where(Order.ip_hash == ip_hash, Order.created_at > now - timedelta(hours=1))
     )
@@ -114,8 +115,9 @@ def create_order(db: Session, slugs: list[str], name: str, email: str, ip_hash: 
             product_id=products[0].id,
             product_name=" + ".join(p.name for p in products)[:200],
             amount=sum(p.price for p in products),  # always from the database
-            customer_name=name,
+            customer_name=(name or None),
             customer_email=email,
+            customer_phone=phone,
             access_token_hash=sha256_hex(token),
             status="pending",
             expires_at=now + timedelta(minutes=s.order_ttl_minutes),
