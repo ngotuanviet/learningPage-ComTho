@@ -6,7 +6,9 @@ Rules (an order becomes "paid" only here, never from the browser):
 - Order code is read from the "code" field, or found in the transfer note.
 - Amount must equal the order amount exactly. Otherwise the order goes to "needs_review"
   and no link is sent (refund / fix manually).
-- A late but exact payment (order already expired) is still accepted: the money arrived.
+- A late but exact payment (order already expired) is accepted only within
+  ORDER_LATE_GRACE_MINUTES after expiry (slow bank). Later ones go to "needs_review":
+  no link, the owner checks and refunds or marks paid with the CLI.
 - A second payment for an already-paid order is recorded as "needs_review" (refund manually).
 """
 
@@ -118,6 +120,8 @@ def process_sepay(db: Session, payload: dict) -> Outcome:
     elif amount != order.amount:
         order.status = "needs_review"
         result, note = "needs_review:amount_mismatch", f"nhận {amount}, cần {order.amount}"
+    elif order.expires_at + timedelta(minutes=get_settings().order_late_grace_minutes) < now:
+        result, note = "needs_review:too_late", "trả sau khi đơn hết hạn quá lâu – kiểm tra rồi hoàn tiền hoặc mark-paid"
     else:
         late = order.status == "expired" or order.expires_at <= now
         order.status = "paid"
