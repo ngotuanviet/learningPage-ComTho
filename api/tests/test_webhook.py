@@ -132,6 +132,36 @@ def test_late_exact_payment_is_accepted(client, new_order, sent, db):
     assert db.scalar(select(WebhookEvent.result)) == "late_matched"
 
 
+def test_payment_long_after_expiry_needs_review(client, new_order, sent, db, settings):
+    # An old order (e.g. made at an old, lower price) must not unlock the documents weeks later.
+    settings.order_late_grace_minutes = 120
+    db.execute(update(Order).values(expires_at=utcnow() - timedelta(days=3)))
+    db.commit()
+    hook(client, tx(new_order["code"]))
+    st = get_status(client, new_order)
+    assert st["status"] == "expired"
+    assert st["drive_url"] is None and all(i["drive_url"] is None for i in st["items"])
+    assert db.scalar(select(PaymentTransaction.status)) == "needs_review"
+    assert db.scalar(select(WebhookEvent.result)) == "needs_review:too_late"
+    assert sent == []
+
+
+def test_payment_just_inside_grace_is_accepted(client, new_order, sent, db, settings):
+    settings.order_late_grace_minutes = 120
+    db.execute(update(Order).values(expires_at=utcnow() - timedelta(minutes=110)))
+    db.commit()
+    hook(client, tx(new_order["code"]))
+    assert get_status(client, new_order)["status"] == "paid"
+
+
+def test_unpaid_states_never_show_links(client, new_order, sent, db):
+    # pending, wrong amount (needs_review) and expired: no Drive link anywhere in the response.
+    assert DRIVE not in str(get_status(client, new_order))
+    hook(client, tx(new_order["code"], amount=1_000))
+    st = get_status(client, new_order)
+    assert st["status"] == "needs_review" and DRIVE not in str(st)
+
+
 def test_second_payment_for_paid_order_needs_review(client, new_order, sent, db):
     hook(client, tx(new_order["code"], tx_id=1))
     hook(client, tx(new_order["code"], tx_id=2))

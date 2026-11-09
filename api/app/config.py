@@ -31,6 +31,10 @@ class Settings(BaseSettings):
     # Order code = prefix + random chars. Configure the same prefix in SePay.
     order_code_prefix: str = "CT"
     order_ttl_minutes: int = 30
+    # A late but exact payment is accepted only this long after the QR expired (slow banks).
+    # Later payments go to "needs_review": an old order must not unlock the documents at an
+    # old price weeks later.
+    order_late_grace_minutes: int = 120
 
     # SePay webhook: SePay sends header "Authorization: Apikey <key>".
     sepay_webhook_api_key: str | None = None
