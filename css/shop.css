@@ -104,7 +104,7 @@
 .fr-pkg-box.shop-pkg--photo {
   background:
     linear-gradient(180deg, rgba(17, 15, 12, 0.55) 0%, rgba(17, 15, 12, 0.62) 50%, rgba(17, 15, 12, 0.8) 100%),
-    url("../images/hero/Five-dish-grilled-feast-cluster.webp") center 40% / cover no-repeat,
+    url("../images/opt/hero/Five-dish-grilled-feast-cluster.webp") center 40% / cover no-repeat,
     #15120e;
 }
 .shop-pkg--photo .fr-pkg-title,
@@ -343,3 +343,31 @@ p.shop-legal { text-wrap: balance; }
 /* Save-QR button (all devices) */
 .shop-qr-save { margin-top: 0.75rem; width: 100%; max-width: 300px; }
 .shop-qr-saved { margin: 0.5rem auto 0; max-width: 300px; font-size: 0.82rem; color: #1f7a4d; font-weight: 600; }
+
+/* Checkout: promise line + "open bank app" deeplinks (phones only) */
+.shop-promise { margin: 0.7rem auto 0; max-width: 340px; font-size: 0.84rem; line-height: 1.5; color: #1f5f3f; background: #eaf6ef; border: 1px solid #bfe3cd; border-radius: 10px; padding: 0.55rem 0.75rem; }
+.shop-promise a { color: inherit; font-weight: 700; white-space: nowrap; }
+.shop-bankapps { text-align: left; margin-bottom: 0.9rem; }
+.shop-bankapps__title { margin: 0 0 0.55rem; font-size: 0.9rem; }
+.shop-bankapps__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.45rem; }
+.shop-bankapp { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.55rem 0.2rem 0.45rem; border: 1px solid var(--border-warm, #eadfce); border-radius: 12px; background: #fff; color: var(--text-main, #1c140a); text-decoration: none; font-size: 0.68rem; line-height: 1.2; text-align: center; min-height: 76px; }
+.shop-bankapp:active { background: #fff7e6; border-color: var(--border-gold, #e3c17a); }
+.shop-bankapp img, .shop-bankapp__dot { width: 40px; height: 40px; border-radius: 10px; object-fit: contain; }
+.shop-bankapp__dot { display: grid; place-items: center; background: #f3ead9; font-weight: 800; font-size: 1rem; }
+.shop-bankapp__auto { position: absolute; top: 4px; right: 5px; font-style: normal; font-size: 0.65rem; font-weight: 800; color: #fff; background: #1f7a4d; border-radius: 99px; width: 15px; height: 15px; display: grid; place-items: center; }
+.shop-bankapp.is-extra { display: none; }
+.shop-bankapps__grid.show-all .shop-bankapp.is-extra { display: flex; }
+.shop-bankapps__more { margin-top: 0.5rem; width: 100%; background: none; border: 1px dashed var(--border-gold, #e3c17a); border-radius: 10px; padding: 0.5rem; font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--bronze, #9a3b1b); cursor: pointer; }
+.shop-bankapps__note { margin: 0.55rem 0 0; font-size: 0.75rem; color: var(--text-muted, #6b5a45); line-height: 1.45; }
+.shop-bankapps__or { margin: 0.8rem 0 0.2rem; text-align: center; font-size: 0.75rem; color: var(--text-muted, #6b5a45); display: flex; align-items: center; gap: 0.6rem; }
+.shop-bankapps__or::before, .shop-bankapps__or::after { content: ''; flex: 1; height: 1px; background: var(--border-warm, #eadfce); }
+@media (max-width: 360px) { .shop-bankapps__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Phones: smaller copy of the recipe box photo (about 3x lighter) */
+@media (max-width: 760px) {
+  .fr-pkg-box.shop-pkg--photo {
+    background:
+      linear-gradient(180deg, rgba(17, 15, 12, 0.55) 0%, rgba(17, 15, 12, 0.62) 50%, rgba(17, 15, 12, 0.8) 100%),
+      url("../images/opt/hero/Five-dish-grilled-feast-cluster-m.webp") center 40% / cover no-repeat,
+      #15120e;
+  }
+}
