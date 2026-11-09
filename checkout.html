@@ -14,14 +14,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261106a">
   <link rel="stylesheet" href="css/franchise.css?v=20261106d">
-  <link rel="stylesheet" href="css/shop.css?v=20261107f">
+  <link rel="stylesheet" href="css/shop.css?v=20261109a">
 </head>
 <body class="fr-body fr-page-checkout">
 
   <header class="nav" id="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo" aria-label="Cơm Đốt Thố Hội An — trang chủ">
-        <img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo Cơm Đốt Thố Hội An">
+        <img src="images/opt/brand%20identity/04-dai-dien-logo.webp" alt="Logo Cơm Đốt Thố Hội An">
         <span class="nav__brand"><span class="nav__brand-l1">Cơm Đốt Thố</span><span class="nav__brand-l2">Hội An</span></span>
       </a>
       <nav class="nav__links" id="frLinks" aria-label="Điều hướng">
@@ -59,14 +59,22 @@
         <!-- Chờ thanh toán -->
         <div class="shop-card shop-pay" id="viewPending" hidden>
           <div class="shop-pay__qr">
+            <div class="shop-bankapps" id="bankApps" hidden>
+              <p class="shop-bankapps__title"><b>Thanh toán nhanh:</b> bấm vào app ngân hàng bạn đang dùng</p>
+              <div class="shop-bankapps__grid" id="bankAppsGrid"></div>
+              <button type="button" class="shop-bankapps__more" id="bankAppsMore" hidden>Xem thêm ngân hàng</button>
+              <p class="shop-bankapps__note">App có dấu <b>✓</b> tự điền sẵn số tiền và nội dung. App khác: nội dung chuyển khoản đã được chép sẵn, bạn chỉ cần dán.</p>
+              <p class="shop-bankapps__or"><span>hoặc quét / lưu mã QR</span></p>
+            </div>
             <img id="payQr" alt="Mã QR chuyển khoản" width="300" height="300">
+            <p class="shop-promise">⚡ Link tài liệu <b>hiện tự động ngay trên trang này</b> khoảng 30 giây sau khi hệ thống nhận được chuyển khoản. Hotline hỗ trợ: <a href="tel:0975388886">097 538 88 86</a></p>
             <p class="shop-muted shop-hint--desk">Mở app ngân hàng → Quét QR. Số tiền và nội dung đã điền sẵn.</p>
             <button type="button" id="payQrSave" class="fr-btn fr-btn--gold fr-btn--round shop-qr-save">⬇ Lưu ảnh QR về máy</button>
             <p class="shop-qr-saved" id="payQrSaved" role="status" hidden></p>
             <div class="shop-hint--touch">
               <p><b>Đang mua trên điện thoại?</b></p>
               <ol>
-                <li>Bấm <b>Lưu ảnh QR về máy</b> (hoặc nhấn giữ ảnh QR → Lưu ảnh).</li>
+                <li>Nhanh nhất: bấm <b>app ngân hàng</b> ở trên. App của bạn không có trong danh sách thì bấm <b>Lưu ảnh QR về máy</b> (hoặc nhấn giữ ảnh QR → Lưu ảnh).</li>
                 <li>Mở app ngân hàng → <b>Quét QR</b> → chọn <b>ảnh từ thư viện</b>.</li>
                 <li>Kiểm tra số tiền, nội dung rồi xác nhận. Quay lại trang này để nhận tài liệu.</li>
               </ol>
@@ -133,7 +141,7 @@
   <footer class="fr-footer">
     <div class="fr-footer__grid">
       <div>
-        <div class="fr-footer__brand"><img src="images/brand%20identity/04-dai-dien-logo.jpg" alt="Logo"><span>Cơm Đốt Thố Hội An</span></div>
+        <div class="fr-footer__brand"><img src="images/opt/brand%20identity/04-dai-dien-logo.webp" alt="Logo"><span>Cơm Đốt Thố Hội An</span></div>
         <p>Nghệ thuật đốt thố trên than hồng, chuẩn hóa để hợp tác và nhân rộng.</p>
       </div>
       <div>
@@ -146,7 +154,7 @@
   </footer>
 
   <script src="js/franchise.js?v=20261105w"></script>
-  <script src="js/shop.js?v=20261107d"></script>
+  <script src="js/shop.js?v=20261109a"></script>
   <!-- Vercel Web Analytics: đếm lượt truy cập (không dùng cookie) -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>

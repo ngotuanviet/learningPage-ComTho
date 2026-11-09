@@ -289,6 +289,50 @@
     }
     if ($('payQrSave')) $('payQrSave').addEventListener('click', function (e) { e.preventDefault(); saveQr(); });
 
+    // "Mở app ngân hàng" (phones): VietQR deeplinks open the buyer's bank app with the
+    // transfer filled in (apps with autofill = 1); other apps just open, and the transfer
+    // note is copied so it can be pasted. Docs: https://www.vietqr.io/deeplink
+    var BANK_IDS = { mbbank: 'mb', mb: 'mb', vietcombank: 'vcb', techcombank: 'tcb', bidv: 'bidv', vietinbank: 'icb', acb: 'acb', tpbank: 'tpb', vpbank: 'vpb', agribank: 'vba' };
+    var FALLBACK_APPS = [['mb', 'MB Bank', 1], ['bidv', 'BIDV SmartBanking', 1], ['icb', 'VietinBank iPay', 1], ['acb', 'ACB ONE', 1], ['vcb', 'VCB Digibank', 0], ['tcb', 'Techcombank Mobile', 0], ['vpb', 'VPBank NEO', 0], ['tpb', 'TPBank Mobile', 0], ['vba', 'Agribank Plus', 0]]
+      .map(function (a) { return { appId: a[0], appName: a[1], autofill: a[2] }; });
+    var bankAppsFor = null;
+    function bankAppLink(p, appId, back) {
+      var bankId = BANK_IDS[String(p.bank_code).toLowerCase()] || String(p.bank_code).toLowerCase();
+      // Format from the docs: keep "@" in ba and the return url as-is (not percent-encoded).
+      return 'https://dl.vietqr.io/pay?app=' + encodeURIComponent(appId) + '&am=' + p.amount +
+        '&tn=' + encodeURIComponent(p.content) + '&ba=' + encodeURIComponent(p.account_number) + '@' + bankId +
+        '&bn=' + encodeURIComponent(p.account_name).replace(/%20/g, '+') + '&url=' + back;
+    }
+    function renderBankApps(code, p) {
+      var box = $('bankApps'), grid = $('bankAppsGrid'), more = $('bankAppsMore');
+      if (!box || bankAppsFor === code || !window.matchMedia('(pointer: coarse)').matches) return;
+      bankAppsFor = code;
+      var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var back = location.origin + location.pathname + '?code=' + encodeURIComponent(code);
+      function draw(apps) {
+        apps = apps.slice().sort(function (a, b) { return (b.autofill - a.autofill) || ((b.monthlyInstall || 0) - (a.monthlyInstall || 0)); });
+        grid.textContent = '';
+        apps.forEach(function (a, i) {
+          var item = el('a', { class: 'shop-bankapp' + (i >= 8 ? ' is-extra' : ''), href: bankAppLink(p, a.appId, back), rel: 'noopener' }, [
+            a.appLogo ? el('img', { src: a.appLogo, alt: '', loading: 'lazy', width: '40', height: '40' }) : el('span', { class: 'shop-bankapp__dot', text: a.appName.charAt(0) }),
+            el('span', { class: 'shop-bankapp__name', text: a.appName.replace(/ (SmartBanking|Mobile|Digibank|Smart Banking)$/i, '') }),
+            a.autofill ? el('i', { class: 'shop-bankapp__auto', title: 'Tự điền số tiền và nội dung', text: '✓' }) : null
+          ]);
+          item.addEventListener('click', function () {
+            if (navigator.clipboard) navigator.clipboard.writeText(p.content).catch(function () {});
+          });
+          grid.appendChild(item);
+        });
+        more.hidden = apps.length <= 8;
+        box.hidden = false;
+      }
+      more.addEventListener('click', function () { grid.classList.add('show-all'); more.hidden = true; });
+      fetch('https://api.vietqr.io/v2/' + (ios ? 'ios' : 'android') + '-app-deeplinks', { credentials: 'omit' })
+        .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function (d) { var apps = (d && d.apps) || []; if (!apps.length) throw new Error(); draw(apps); })
+        .catch(function () { draw(FALLBACK_APPS); });
+    }
+
     function render(o) {
       document.querySelectorAll('[data-order-code]').forEach(function (n) { n.textContent = o.code; });
       document.querySelectorAll('[data-order-product]').forEach(function (n) { n.textContent = o.product_name; });
@@ -298,6 +342,7 @@
         var p = o.payment;
         $('payQr').src = p.qr_url;
         prepareQrSave(o.code, p.qr_url);
+        renderBankApps(o.code, p);
         $('payBank').textContent = p.bank_code;
         $('payAccount').textContent = p.account_number;
         $('payName').textContent = p.account_name;
