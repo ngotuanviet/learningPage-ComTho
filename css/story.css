@@ -20,6 +20,7 @@
 .st-head { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem clamp(1rem, 3vw, 2.2rem); background: linear-gradient(#0c0a08, rgba(12, 10, 8, 0)); }
 .st-head .nav__logo { display: flex; align-items: center; gap: 0.7rem; }
 .st-head .nav__logo img { width: 42px; height: 42px; border-radius: 50%; }
+.st-head .nav__logo .nav__brand--img { width: auto; height: 40px; border-radius: 0; }
 .st-back { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250, 246, 240, 0.7); transition: color 0.2s; }
 .st-back:hover { color: var(--nav-gold); }
 
