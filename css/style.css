@@ -1372,3 +1372,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.9rem;
   font-weight: 500;
 }
+
+/* Brand name as an image (images/opt/brand identity/brandname-white.webp, transparent) */
+.nav__logo .nav__brand--img { display: block; height: 42px; width: auto; border-radius: 0; object-fit: contain; text-shadow: none; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35)); }
+@media (max-width: 760px) { .nav__logo .nav__brand--img { height: 36px; width: auto; } }
